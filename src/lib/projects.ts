@@ -45,6 +45,14 @@ export const projects: ProjectType[] = [
 		image: '/Leetcodeapi.png',
 		techstack: ['JavaScript']
 	},
+	{
+		title: 'Color Recognition',
+		description:
+			'Color Recognition is a simple project developed using Python. It is a simple project that helps to recognize different colors. The project is mainly for beginners to gain knowledge about how to use OpenCV and python. The project is developed using Python 3.7 and OpenCV 2.7.',
+		href: 'https://github.com/kmr-rohit/color-python/',
+		image: '/CR.gif',
+		techstack: ['Python']
+	},
 
 	
 ];
