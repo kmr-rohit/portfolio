@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
-	import {
-		PUBLIC_CATEGORY,
-		PUBLIC_CATEGORY_ID,
-		PUBLIC_GITHUB_REPO,
-		PUBLIC_GITHUB_REPO_ID,
-		PUBLIC_GITHUB_USERNAME
-	} from '$env/static/public';
+	// import {
+	// 	PUBLIC_CATEGORY,
+	// 	PUBLIC_CATEGORY_ID,
+	// 	PUBLIC_GITHUB_REPO,
+	// 	PUBLIC_GITHUB_REPO_ID,
+	// 	PUBLIC_GITHUB_USERNAME	
+	// } from '';
 	import { BlogMetatags } from '$lib/components/site';
 	import { Giscus } from '$lib/components/site/gicsus_';
 	import X from '$lib/components/site/icons/X.svelte';
@@ -23,6 +23,12 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	export let data;
+
+	let PUBLIC_GITHUB_REPO = 'kmr-rohit/portfolio'
+	let PUBLIC_GITHUB_USERNAME = 'kmr-rohit'
+	let PUBLIC_GITHUB_REPO_ID = 'R_kgDOK1mc9w'
+	let PUBLIC_CATEGORY = 'Q&A'
+	let PUBLIC_CATEGORY_ID = 'DIC_kwDOK1mc984Cbfaz'
 
 	let { content, meta } = data;
 
