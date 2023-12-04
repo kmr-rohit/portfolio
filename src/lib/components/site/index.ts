@@ -15,7 +15,7 @@ export { default as Projects } from './projects.svelte'
 export { default as Masonry } from './masonry.svelte';
 export { default as ProjectCard } from './project-card.svelte';
 export { default as Icons } from "./icons.svelte";
-
+export { default as FeaturedProjects } from './featured-projects.svelte'
 
 import { Drizzle, MySQL, Streamlit, Tailwind } from './icons';
 

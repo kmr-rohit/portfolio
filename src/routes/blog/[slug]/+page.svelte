@@ -24,11 +24,11 @@
 	import { fly } from 'svelte/transition';
 	export let data;
 
-	let PUBLIC_GITHUB_REPO = 'kmr-rohit/portfolio'
+	let PUBLIC_GITHUB_REPO = 'portfolio'
 	let PUBLIC_GITHUB_USERNAME = 'kmr-rohit'
-	let PUBLIC_GITHUB_REPO_ID = 'R_kgDOK1mc9w'
-	let PUBLIC_CATEGORY = 'Q&A'
-	let PUBLIC_CATEGORY_ID = 'DIC_kwDOK1mc984Cbfaz'
+	let PUBLIC_GITHUB_REPO_ID = ''
+	let PUBLIC_CATEGORY = 'General'
+	let PUBLIC_CATEGORY_ID = ''
 
 	let { content, meta } = data;
 
