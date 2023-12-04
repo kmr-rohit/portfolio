@@ -14,7 +14,7 @@ type socialsType = {
 };
 
 
-export const siteurl = 'https://prabhukirankonda.vercel.app'
+export const siteurl = 'https://kmrrohit.vercel.app'
 
 export const routes: routesType[] = [
 	{
