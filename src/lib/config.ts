@@ -17,10 +17,10 @@ type socialsType = {
 export const siteurl = 'https://prabhukirankonda.vercel.app'
 
 export const routes: routesType[] = [
-	// {
-	// 	name: 'Blog',
-	// 	link: '/blog'
-	// },
+	{
+		name: 'Blog',
+		link: '/blog'
+	},
 	{
 		name: 'Projects',
 		link: '/projects'
