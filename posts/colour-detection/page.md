@@ -113,8 +113,8 @@ cv2.destroyAllWindows()
 
 ## Output
 
-![](https://im4.ezgif.com/tmp/ezgif-4-bb0036bba5.gif)
 https://drive.google.com/file/d/1SYSGG01YLwJMZLECBb4CJQq1XNijyAvv/view
+
 
 ### Source Code 
 ```py {2} showLineNumbers title="color_detection.py"# pip install pandas opencv-python
