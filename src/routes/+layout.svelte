@@ -8,15 +8,16 @@
 	import { Navbar, Footer, MetaTags } from '$lib/components/site';
 	import { Toaster } from 'svelte-french-toast';
 	import MobileNavbar from '$lib/components/site/mobile-navbar.svelte';
-	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
- 
-
+	import { dev } from '$app/environment';
+	import { inject } from '@vercel/analytics';
+	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit"
+	inject({ mode: dev ? 'development' : 'production' });
 	onNavigate(() => {
 		if ($openMobileMenu) {
 			$openMobileMenu = false;
 		}
 	});
-
+	injectSpeedInsights()
 	preparePageTransition();
 
 	$: {
