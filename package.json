@@ -47,6 +47,7 @@
 	"type": "module",
 	"dependencies": {
 		"@vercel/analytics": "^1.1.1",
+		"@vercel/speed-insights": "^1.0.1",
 		"bits-ui": "^0.9.4",
 		"clsx": "^2.0.0",
 		"cmdk-sv": "^0.0.7",
