@@ -9,19 +9,16 @@
 	import { Toaster } from 'svelte-french-toast';
 	import MobileNavbar from '$lib/components/site/mobile-navbar.svelte';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
-	import { dev } from '$app/environment';
-	import { inject } from '@vercel/analytics';
  
-
 
 	onNavigate(() => {
 		if ($openMobileMenu) {
 			$openMobileMenu = false;
 		}
 	});
-	inject({ mode: dev ? 'development' : 'production' });
+
 	preparePageTransition();
-	injectSpeedInsights();
+
 	$: {
 		if (browser) {
 			if ($openMobileMenu) {
