@@ -13,7 +13,7 @@
 	},
 	"devDependencies": {
 		"@huntabyte/mdsvex": "^0.16.8",
-		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-vercel": "^3.1.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@types/hast": "^3.0.3",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
