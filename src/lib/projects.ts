@@ -1,58 +1,151 @@
-import type { TechStack } from './components/site';
-
-export type ProjectType = {
-	title: string;
-	featured?: boolean,
+export type ProjectLink = {
+	label: string;
 	href: string;
-	image: string;
-	description: string;
-	techstack: TechStack[];
-
 };
 
-export const projects: ProjectType[] = [
-	{
-		title: 'Personal Portfolio with Markdown Blog',
-		description:
-			'This website, is my personal website with a markdown blog written in SvelteKit and deployed using Vercel. Styled using Taiwind CSS and Shadcn-UI and completely written in TypeScript.',
-		href: 'https://kmrrohit.vercel.app',
-		image: '/sveltekit-portfolio.png',
-		techstack: ['SvelteKit', 'Tailwind', 'TypeScript']
-	},
-	{
-		title: 'CodeNitw',
-		description:
-			'Website built for students of NITW to help them prepare for placements. It has a user-friendly interface, and Firebase Database Management. Retrieved leaderboard data through the Codeforces-API',
-		href: 'https://codenitw.vercel.app',
-		image: '/codenitw.png',
-		techstack: ['React', 'JavaScript', 'Firebase', 'Tailwind'],
-		featured: true
-	},
-	{
-		title: 'Drifty',
-		description:
-			'Drifty is an open-source interactive File Downloader system built using Java.It is both available in Command-line Interface (CLI) and Graphical User Interface (GUI) mode.Updated Main files for GUI & CLI, in order to check Updates.Download the latest available update using GitHub API.',
-		href: 'https://saptarshisarkar12.github.io/Drifty/',
-		image: '/Drifty.png',
-		techstack: ['Java'],
-		featured: true
-	},
-	{
-		title: 'Leetcode-API',
-		description:
-			'LeetCode provides graphql query api. This is public api. But querying graphql little bit messy. So I have created this to easily get desired data.I have added query to fetch Recent Submission along with all you have.Add your leetcode username to last of url to get your data.',
-		href: 'https://leetcode-api-sooty.vercel.app/',
-		image: '/Leetcodeapi.png',
-		techstack: ['JavaScript']
-	},
-	{
-		title: 'Color Recognition',
-		description:
-			'Color Recognition is a simple project developed using Python. It is a simple project that helps to recognize different colors. The project is mainly for beginners to gain knowledge about how to use OpenCV and python. The project is developed using Python 3.7 and OpenCV 2.7.',
-		href: 'https://github.com/kmr-rohit/color-python/',
-		image: '/CR.gif',
-		techstack: ['Python']
-	},
+export type Project = {
+	title: string;
+	/** One line. Shown in the list view, so keep it to a single sentence. */
+	summary: string;
+	/** Longer paragraphs, shown on the projects page under the summary. */
+	detail?: string[];
+	year: string;
+	stack: string[];
+	links?: ProjectLink[];
+	featured?: boolean;
+	/**
+	 * Ordering bucket. `work` is open source and production systems, `lab` is
+	 * smaller experiments kept around because the idea was worth writing down.
+	 */
+	group: 'work' | 'lab';
+};
 
-	
+export const projects: Project[] = [
+	{
+		title: 'Kubeflow docs-agent',
+		summary:
+			'Agentic RAG over the whole Kubeflow surface — docs, GitHub issues, manifests and source — served as an MCP toolset behind the Kubeflow website.',
+		detail: [
+			'My Google Summer of Code 2026 project, and the thing I spend most of my open source time on. The starting point was a documentation chatbot that could only read Markdown. A Kubeflow user with a broken pipeline does not have a documentation problem, they have a "this exact error appeared in an issue eighteen months ago" problem, so the agent needed to read more than prose.',
+			'I added ingestion pipelines for GitHub issues, application code and Kubernetes manifests, and exposed them as separate MCP tools so the agent can choose where to look instead of retrieving from one undifferentiated blob. Every chunk carries path, product area, version and source metadata, which is what makes filtered retrieval possible at query time.',
+			'The largest change was merged as a single 5.4k-line PR covering a three-tool MCP server, TEI embeddings, the issues and code pipelines, and CI/CD onto OKE. Since then the work has moved to the edge: rate limits, CORS lockdown and anonymous session-JWT auth for the public chatbot, with the Istio configuration migrated into a Helm chart so the guardrails ship with the deployment rather than living in someone\'s cluster.'
+		],
+		year: '2026',
+		stack: ['Python', 'MCP', 'Agentic RAG', 'Kubeflow Pipelines', 'KServe', 'Istio', 'Helm', 'OKE'],
+		links: [
+			{ label: 'Repository', href: 'https://github.com/kubeflow/docs-agent' },
+			{
+				label: 'My pull requests',
+				href: 'https://github.com/kubeflow/docs-agent/pulls?q=is%3Apr+author%3Akmr-rohit'
+			}
+		],
+		featured: true,
+		group: 'work'
+	},
+	{
+		title: 'CrackRound',
+		summary:
+			'An agentic mock-interview platform: five streaming interviewer personas, a real-time voice loop, and a live code judge wired into the model context.',
+		detail: [
+			'Built end to end, from an empty repository to something people pay per session to use. The interviewer is not a chat window with a prompt — it is a persona that holds a rubric, drives the round, interrupts, and follows up on a weak answer.',
+			'The voice loop is the part I am most happy with: streaming speech-to-text into GPT-4o and back out through streamed TTS over a WebSocket, at roughly 1.5 seconds end to end. Anything slower and the conversation stops feeling like an interview.',
+			'A DSA judge and a system-design whiteboard both feed into the model context, so the interviewer can see what you actually wrote rather than what you claimed. Scoring is JSON-schema constrained across five dimensions, with latency tracing and a hard $2-per-session cost ceiling.'
+		],
+		year: '2025',
+		stack: [
+			'Next.js',
+			'TypeScript',
+			'GPT-4o',
+			'WebSockets',
+			'Prisma',
+			'PostgreSQL',
+			'Sarvam'
+		],
+		featured: true,
+		group: 'work'
+	},
+	{
+		title: 'AirCab',
+		summary:
+			'A voice-first booking agent that turns a spoken request into a confirmed ride, with the whole conversation under one tool-calling loop.',
+		detail: [
+			'An experiment in how far you can push a voice agent when the task has real side effects. Booking a ride is a good test case because it is short, has a clear success condition, and punishes a model that hallucinates a confirmation.',
+			'The interesting problem was not the speech pipeline but the state machine underneath it: what the agent is allowed to assume, when it must read back a detail before committing, and how to recover when the user changes their mind three turns in.'
+		],
+		year: '2025',
+		stack: ['Python', 'LLM tool calling', 'STT/TTS', 'FastAPI'],
+		group: 'work'
+	},
+	{
+		title: 'FlowForge',
+		summary:
+			'A node-based canvas for composing LLM workflows, where the graph you draw is the execution plan the runtime actually walks.',
+		detail: [
+			'Visual agent builders usually stop at demo quality because the canvas and the runtime drift apart. FlowForge keeps one representation: the graph is compiled straight into the execution plan, so what runs is what you drew.',
+			'Nodes cover the usual set — prompts, tools, retrievers, branches, loops — and the runtime handles fan-out and joins. It exists because I got tired of rewriting the same orchestration glue by hand for every new agent idea.'
+		],
+		year: '2025',
+		stack: ['TypeScript', 'React', 'ReactFlow', 'LangGraph', 'FastAPI'],
+		group: 'work'
+	},
+	{
+		title: 'AI Learn',
+		summary:
+			'Voice-to-voice learning platform that teaches interview topics in Hinglish, built as a Next.js PWA over a FastAPI provider layer.',
+		detail: [
+			'Most tutoring products assume you want to read. This one assumes you are commuting. The teaching style is deliberately Hinglish because that is how the explanation actually sounds when a senior engineer walks a junior through a concept in an Indian office.',
+			'STT, TTS and the LLM sit behind swappable adapters, so the same session logic runs against mocks in tests and Sarvam in production.'
+		],
+		year: '2026',
+		stack: ['Next.js', 'FastAPI', 'Sarvam', 'PWA'],
+		links: [
+			{ label: 'Live', href: 'https://aitutor-two-hazel.vercel.app' },
+			{ label: 'Source', href: 'https://github.com/kmr-rohit/aitutor' }
+		],
+		group: 'work'
+	},
+	{
+		title: 'VizCode',
+		summary:
+			'Generates step-by-step algorithm visualisations from a prompt, with Gemini emitting a structured trace the renderer replays.',
+		detail: [
+			'The trick is to never let the model draw. It emits a typed trace of state transitions — array writes, pointer moves, node visits — and a deterministic renderer animates it. That keeps the visualisation correct even when the explanation is not.'
+		],
+		year: '2025',
+		stack: ['TypeScript', 'React', 'Gemini', 'Python'],
+		links: [{ label: 'Source', href: 'https://github.com/kmr-rohit/VizCode' }],
+		group: 'lab'
+	},
+	{
+		title: 'Blog to Podcast',
+		summary:
+			'Scrapes any public blog post and returns a listenable episode: Firecrawl for extraction, GPT-4 for the script, ElevenLabs for the voice.',
+		year: '2025',
+		stack: ['Python', 'Streamlit', 'GPT-4', 'Firecrawl', 'ElevenLabs'],
+		links: [{ label: 'Source', href: 'https://github.com/kmr-rohit/P1-BlogToPodcast' }],
+		group: 'lab'
+	},
+	{
+		title: 'Online handwriting recognition',
+		summary:
+			'BiLSTM + CTC over pen-stroke sequences from IAM-OnDB — recognising handwriting from how it was written, not how it looks.',
+		detail: [
+			'Offline HTR throws away the most informative signal in handwriting: the order and velocity of the strokes. This model takes the raw coordinate sequence through a 1D CNN into a bidirectional LSTM with a CTC head, trained on 12,179 lines from 221 writers.'
+		],
+		year: '2025',
+		stack: ['PyTorch', 'BiLSTM', 'CTC', 'IAM-OnDB'],
+		links: [{ label: 'Source', href: 'https://github.com/kmr-rohit/LstmOnlineHTR' }],
+		group: 'lab'
+	},
+	{
+		title: 'CodeNITW',
+		summary:
+			'Placement-prep site for NIT Warangal students, with a Codeforces-API leaderboard that a few hundred people actually used.',
+		year: '2023',
+		stack: ['React', 'Firebase', 'Tailwind'],
+		links: [{ label: 'Live', href: 'https://codenitw.vercel.app' }],
+		group: 'lab'
+	}
 ];
+
+export const featuredProjects = projects.filter((project) => project.featured);

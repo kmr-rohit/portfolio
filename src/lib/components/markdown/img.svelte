@@ -2,7 +2,7 @@
 	import type { HTMLImgAttributes } from 'svelte/elements';
 	import { cn } from '$lib/utils';
 	import { dev } from '$app/environment';
-	import { githubConfig, localToGithubURL } from '$lib/config';
+	import { localToGithubURL } from '$lib/config';
 
 	let className: string | undefined | null = undefined;
 	export { className as class };
@@ -14,7 +14,9 @@
 	}
 </script>
 
-<div>
-	<img {src} {alt} class={cn('rounded-md mt-4', className)} {...$$restProps} />
-	<p class="text-center text-muted-foreground text-sm">{alt ? alt : ''}</p>
-</div>
+<figure class="my-8">
+	<img {src} {alt} loading="lazy" class={cn('w-full rounded', className)} {...$$restProps} />
+	{#if alt}
+		<figcaption class="mt-3 text-sm text-ink-50">{alt}</figcaption>
+	{/if}
+</figure>

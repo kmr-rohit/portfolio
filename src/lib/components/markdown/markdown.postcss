@@ -1,107 +1,92 @@
-[data-theme='default'] {
-	display: flex;
-	flex-direction: column;
+/*
+ * Long-form article body. The measure is deliberately narrower than the page
+ * container so paragraphs stay around 75 characters.
+ */
+.mdsvex {
+	@apply max-w-prose;
 }
 
-[data-rehype-pretty-code-fragment] [data-line-numbers] > [data-line]::before {
-	@apply text-xs text-white/70;
+/* Inline code inside prose. */
+.mdsvex :where(p, li, td) > code,
+.mdsvex :where(p, li, td) span[data-rehype-pretty-code-fragment] code {
+	@apply rounded border border-foreground/10 bg-foreground/[0.04] px-1 py-0.5 font-mono text-[0.85em] text-foreground;
+}
+
+.mdsvex span[data-rehype-pretty-code-fragment] {
+	@apply inline-flex w-fit;
+}
+
+/* Block code. Colours come from the Shiki theme; layout comes from here. */
+.mdsvex [data-rehype-pretty-code-fragment] {
+	@apply relative;
+}
+
+.mdsvex pre {
+	@apply max-h-[32rem] overflow-auto py-4 font-mono text-[0.8125rem] leading-relaxed;
+	scrollbar-width: thin;
+}
+
+.mdsvex pre code {
+	@apply grid min-w-full border-0 bg-transparent p-0 text-inherit;
+	counter-reset: line;
+	box-decoration-break: clone;
+}
+
+.mdsvex pre code [data-line] {
+	@apply inline-block w-full border-l-2 border-l-transparent px-4;
+}
+
+.mdsvex pre code [data-highlighted-line] {
+	@apply border-l-amber-400/60 bg-amber-400/[0.07];
+}
+
+.mdsvex [data-line-numbers] > [data-line]::before {
+	@apply mr-4 inline-block w-4 text-right text-white/25;
 	counter-increment: line;
 	content: counter(line);
-	display: inline-block;
-	width: 1rem;
-	margin-right: 1rem;
-	text-align: right;
 }
 
-
-span[data-rehype-pretty-code-fragment] {
-	@apply inline-flex w-fit;
-
+.mdsvex [data-rehype-pretty-code-title] {
+	@apply px-4 pt-4 font-mono text-2xs uppercase tracking-label text-white/40;
 }
 
-span[data-rehype-pretty-code-fragment] code {
-	@apply bg-zinc-800 rounded-md px-2 text-base;
+.mdsvex [data-chars-id] {
+	@apply pb-0.5 shadow-none;
 }
 
-
-p > code {
-	/* to style code element `` */
-	@apply bg-slate-200 dark:bg-zinc-700/70 px-1 rounded-md mx-1 border border-primary font-mono tracking-wide text-base;
+.mdsvex [data-chars-id='ul'] {
+	@apply border-b border-b-emerald-400/70 !important;
 }
 
-
-[data-metadata] [data-code-copy] {
-	@apply top-16 !important;
+.mdsvex [data-chars-id='hi'] {
+	@apply rounded bg-teal-500/30 px-1 !important;
 }
 
-
-[data-rehype-pretty-code-fragment] {
-	@apply relative;
-
-	& pre {
-		@apply overflow-x-auto py-2 text-base font-medium;
-	}
-
-	& code {
-		@apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
-		counter-reset: line;
-		box-decoration-break: clone;
-	}
-
-	& [data-line] {
-		@apply inline-block w-full basis-4 border-l-[3px] border-l-transparent py-0.5 pl-2 pr-5;
-	}
-
-
-	& [data-highlighted-line] {
-		@apply border-l-orange-500 dark:border-l-orange-800 bg-orange-500/[0.1];
-	}
-
-	& [data-chars-id] {
-		@apply pb-0.5 shadow-none;
-	}
+.mdsvex [data-chars-id='rb'] {
+	@apply rounded border border-red-500/60 px-[2px] !important;
 }
 
-[data-comp-preview] [data-rehype-pretty-code-fragment] {
-	& pre {
-		@apply mt-0 rounded-b-lg rounded-t-none;
-	}
+.mdsvex [data-chars-id='yb'] {
+	@apply rounded border border-amber-500/60 px-[2px] !important;
 }
 
-
-[data-chars-id='ul'] {
-	@apply border-b border-b-green-500 font-bold !important;
-}
-
-[data-chars-id='hi'] {
-	@apply rounded bg-teal-700/60 p-1 font-bold !important;
-}
-
-[data-chars-id='rb'] {
-	@apply border-red-600 border rounded p-[2px] font-bold !important;
-}
-
-[data-chars-id='yb'] {
-	@apply border-yellow-600 border p-[2px] rounded font-bold !important;
-}
-
-
-[data-rehype-pretty-code-title] {
-	@apply mt-2 px-4 pt-6 text-sm font-medium;
-}
-
-[data-rehype-pretty-code-title] + pre {
-	@apply mt-2;
-}
-
-[data-callout] > p:last-child {
-	@apply mb-0 !important;
-}
-
-[data-comp-preview] + p {
-	@apply mt-6;
-}
-
-[data-metadata]:not(:has(pre)) {
+.mdsvex [data-metadata]:not(:has(pre)) {
 	display: none;
+}
+
+/* Tables occasionally show up in the serving posts for benchmark numbers. */
+.mdsvex table {
+	@apply my-8 w-full border-collapse text-sm;
+}
+
+.mdsvex th {
+	@apply border-b py-2 pr-4 text-left font-medium text-foreground;
+}
+
+.mdsvex td {
+	@apply border-b py-2 pr-4 align-top text-ink-70;
+}
+
+.mdsvex .katex-display {
+	@apply my-8 overflow-x-auto overflow-y-hidden py-1;
 }

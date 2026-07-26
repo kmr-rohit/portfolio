@@ -66,3 +66,35 @@ export function formatDate(date: string, dateStyle: DateStyle = 'medium', locale
 	const dateFormatter = new Intl.DateTimeFormat(locales, { dateStyle })
 	return dateFormatter.format(dateToFormat)
 }
+
+/** "July 2" — the year is already the group heading, so it is left off. */
+export function formatDayMonth(date: string | Date, locales = 'en') {
+	const value = typeof date === 'string' ? new Date(date.replaceAll('-', '/')) : date;
+	return new Intl.DateTimeFormat(locales, { month: 'long', day: 'numeric' }).format(value);
+}
+
+export function getYear(date: string) {
+	return new Date(date.replaceAll('-', '/')).getFullYear();
+}
+
+/**
+ * Buckets dated items into descending years, preserving the order they arrive
+ * in within each year.
+ */
+export function groupByYear<T extends { date: string }>(items: T[]) {
+	const years = new Map<number, T[]>();
+
+	for (const item of items) {
+		const year = getYear(item.date);
+		const bucket = years.get(year);
+		if (bucket) {
+			bucket.push(item);
+		} else {
+			years.set(year, [item]);
+		}
+	}
+
+	return [...years.entries()]
+		.sort((a, b) => b[0] - a[0])
+		.map(([year, entries]) => ({ year, entries }));
+}

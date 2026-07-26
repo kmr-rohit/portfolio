@@ -1,17 +1,6 @@
-import { error } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
+import type { PageLoad } from './$types';
 
-export const load = async ({ params }) => {
-	let post;
-
-	try {
-		post = await import(`../../../../posts/${params.slug}/page.md`);
-
-    } catch (e) {
-        error(404, 'post not found')
-	}
-	
-	return {
-		content: post.default,
-		meta: post.metadata
-	};
+export const load: PageLoad = ({ params }) => {
+	throw redirect(308, `/writing/${params.slug}`);
 };

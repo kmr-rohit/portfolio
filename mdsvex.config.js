@@ -77,6 +77,13 @@ const prettyCodeOptions = {
 					'shell',
 					'python',
 					'java',
+					'cpp',
+					'rust',
+					'go',
+					'sql',
+					'yaml',
+					'json',
+					'diff',
 					'md'
 				].includes(id);
 			})
@@ -88,8 +95,7 @@ const prettyCodeOptions = {
 export const mdsvexOptions = {
 	extensions: ['.md'],
 	layout: {
-		_: resolve('./src/lib/components/markdown/layout.svelte'),
-		about: resolve('./src/lib/components/markdown/about-layout.svelte')
+		_: resolve('./src/lib/components/markdown/layout.svelte')
 	},
 	// comment if not working
 	// highlight: {
@@ -109,6 +115,21 @@ export const mdsvexOptions = {
 	]
 };
 
+/** Flattens a heading's children to plain text so ids survive inline code and links. */
+function headingText(node) {
+	if (node.type === 'text' || node.type === 'raw') return node.value ?? '';
+	if (!Array.isArray(node.children)) return '';
+	return node.children.map(headingText).join('');
+}
+
+function slugify(value) {
+	return value
+		.trim()
+		.toLowerCase()
+		.replace(/[^\w\s-]/g, '')
+		.replace(/\s+/g, '-');
+}
+
 function rehypeCustomComponents() {
 	return async (tree) => {
 		const hTags = [
@@ -123,7 +144,10 @@ function rehypeCustomComponents() {
 		visit(tree, (node) => {
 			// Check h tags, and pass some extra parameters to the custom components.
 			if (node?.type === 'element' && hTags.includes(node?.tagName)) {
-				node.properties['id'] = node.children[0].value.split(' ').join('-');
+				const id = slugify(headingText(node));
+				if (id) {
+					node.properties['id'] = id;
+				}
 				node.properties['headerTag'] = node.tagName.split('.')[1];
 			}
 		});

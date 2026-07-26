@@ -5,9 +5,6 @@
 	export { className as class };
 </script>
 
-<p
-	class={cn('leading-7 [&:not(:first-child)]:mt-6 text-primary/90 md:text-lg', className)}
-	{...$$restProps}
->
+<p class={cn('leading-relaxed text-ink-70 [&:not(:first-child)]:mt-5', className)} {...$$restProps}>
 	<slot />
 </p>

@@ -5,6 +5,6 @@
 	export { className as class };
 </script>
 
-<li class={cn('mt-2 leading-7 md:text-lg text-primary/90', className)} {...$$restProps}>
+<li class={cn('pl-1 leading-relaxed text-ink-70', className)} {...$$restProps}>
 	<slot />
 </li>

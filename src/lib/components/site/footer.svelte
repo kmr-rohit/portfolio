@@ -1,17 +1,24 @@
-<script>
-	import { Svelte } from './icons';
+<script lang="ts">
+	import { site, socials } from '$lib/config';
 
-	let currentYear = new Date().getFullYear();
+	const year = new Date().getFullYear();
 </script>
 
-<div class="container">
-	<div class="flex items-center md:justify-between md:flex-row flex-col-reverse p-2">
-		<div>
-			Rohit Kumar | © {currentYear}
-		</div>
-		<div class="flex items-center gap-2">
-			<h1>Made with</h1>
-			<Svelte class="w-7 h-7 inline-block" />
+<footer class="mx-auto w-full max-w-screen-md px-5 pb-10">
+	<hr class="rule mb-6" />
+	<div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 text-sm text-ink-50">
+		<p>&copy; {year} {site.name}</p>
+		<div class="flex flex-wrap items-baseline gap-5">
+			{#each socials as social (social.href)}
+				<a
+					href={social.href}
+					class="link-quiet"
+					target={social.href.startsWith('http') ? '_blank' : undefined}
+					rel={social.href.startsWith('http') ? 'noreferrer' : undefined}
+				>
+					{social.display}
+				</a>
+			{/each}
 		</div>
 	</div>
-</div>
+</footer>

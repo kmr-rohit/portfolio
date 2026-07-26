@@ -5,6 +5,6 @@
 	export { className as class };
 </script>
 
-<ol class={cn('my-6 ml-6 list-decimal', className)} {...$$restProps}>
+<ol class={cn('my-5 ml-5 list-decimal space-y-2 marker:text-ink-30', className)} {...$$restProps}>
 	<slot />
 </ol>

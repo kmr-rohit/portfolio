@@ -5,4 +5,4 @@
 	export { className as class };
 </script>
 
-<hr class={cn('my-4 md:my-8', className)} {...$$restProps} />
+<hr class={cn('rule my-12', className)} {...$$restProps} />

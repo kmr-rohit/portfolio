@@ -1,7 +1,6 @@
-import { writable, type Writable } from "svelte/store";
+import { writable, type Writable } from 'svelte/store';
 
-type theme = 'light' | 'dark' | 'system'
+type Theme = 'light' | 'dark' | 'system';
 
-export const openMobileMenu: Writable<boolean> = writable(false)
-export const theme: Writable<theme> = writable<theme>()
-export const searchOpen: Writable<boolean> = writable(false)
+/** Mirrors the active colour mode so the giscus iframe can follow it. */
+export const theme: Writable<Theme> = writable<Theme>();

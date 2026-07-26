@@ -1,78 +1,63 @@
-import { LinkedIn, X } from '$lib/components/site/icons';
-import { FileText, Github, Mail } from 'lucide-svelte';
+export const site = {
+	name: 'Rohit Kumar',
+	handle: 'rohit',
+	url: 'https://kmrrohit.vercel.app',
+	title: 'Rohit Kumar',
+	role: 'AI engineer',
+	description:
+		'AI engineer working on agentic systems, retrieval and LLM serving. Oracle by day, Kubeflow maintainer via Google Summer of Code, and host of a weekly AI systems session.',
+	email: 'rr7433446@gmail.com',
+	location: 'Bengaluru, India'
+};
 
-type routesType = {
+export type Route = {
 	name: string;
 	link: string;
 };
 
-type socialsType = {
-	href: string;
-	icon: typeof Github;
+export const routes: Route[] = [
+	{ name: 'Writing', link: '/writing' },
+	{ name: 'Projects', link: '/projects' },
+	{ name: 'Meetup', link: '/meetup' },
+	{ name: 'About', link: '/about' }
+];
+
+export type Social = {
 	display: string;
-	class?: string;
+	href: string;
+	/** Shown as the visible label in prose contexts, e.g. "kmr-rohit". */
+	handle: string;
 };
 
-
-export const siteurl = 'https://kmrrohit.vercel.app'
-
-export const routes: routesType[] = [
+export const socials: Social[] = [
+	{ display: 'GitHub', href: 'https://github.com/kmr-rohit', handle: 'kmr-rohit' },
 	{
-		name: 'Blog',
-		link: '/blog'
+		display: 'LinkedIn',
+		href: 'https://www.linkedin.com/in/rr7433446/',
+		handle: 'in/rr7433446'
 	},
-	{
-		name: 'Projects',
-		link: '/projects'
-	},
-	{
-		name: 'About',
-		link: '/about'
-	}
+	{ display: 'Email', href: 'mailto:rr7433446@gmail.com', handle: 'rr7433446@gmail.com' },
+	{ display: 'Résumé', href: '/Rohit Kumar.pdf', handle: 'PDF' }
 ];
-
-const socials: socialsType[] = [
-	{
-		href: 'https://github.com/kmr-rohit',
-		icon: Github,
-		display: 'GitHub'
-	},
-	{
-		href: 'https://linkedin.com/in/rr7433446',
-		icon: LinkedIn,
-		display: 'LinkedIn'
-	},
-	{
-		href: 'https://x.com/kmrrohit2001',
-		icon: X,
-		display: 'Twitter',
-		class: 'h-4 w-4'
-	},
-	{
-		href: 'mailto:rr7433446@gmail.com',
-		icon: Mail,
-		display: 'Mail',
-		class: 'h-4 w-4'
-	},
-	{
-		href: '/Rohit Kumar.pdf',
-		icon: FileText,
-		display: 'Resume'
-	}
-];
-
-export const getSocials = ({ exclude }: { exclude?: string } = {}): socialsType[] => {
-	if (exclude) {
-		return socials.filter((social) => social.display !== exclude);
-	}
-	return socials;
-};
 
 export const githubConfig = {
 	username: 'kmr-rohit',
 	repo: 'portfolio',
 	branch: 'main'
 };
+
+/**
+ * Comments only render once both ids are filled in from the giscus setup page,
+ * so an unconfigured install shows nothing rather than a broken widget.
+ */
+export const giscus = {
+	repo: 'kmr-rohit/portfolio',
+	repoId: '',
+	category: 'General',
+	categoryId: ''
+};
+
+export const commentsEnabled = Boolean(giscus.repoId && giscus.categoryId);
 
 export const localToGithubURL = ({ src }: { src: string }) => {
 	return `https://raw.githubusercontent.com/${githubConfig.username}/${githubConfig.repo}/${githubConfig.branch}${src}`;
