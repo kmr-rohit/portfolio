@@ -10,12 +10,12 @@ const config = {
 
 	kit: {
 		/*
-		 * Pinned rather than resolved through adapter-auto: the version
-		 * adapter-auto installs derives the runtime from the build machine's
-		 * Node version and only knows about the retired 16.x and 18.x, so it
-		 * fails outright on current Vercel builders.
+		 * The runtime has to be stated outright: left to itself the adapter
+		 * infers it from the build machine's Node version and only recognises
+		 * 16, 18 and 20, so it throws on a Node 24 builder. Keep this major in
+		 * step with `engines.node` in package.json.
 		 */
-		adapter: adapter({ runtime: 'nodejs22.x' })
+		adapter: adapter({ runtime: 'nodejs24.x' })
 	}
 };
 
