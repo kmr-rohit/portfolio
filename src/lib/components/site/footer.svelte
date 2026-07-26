@@ -19,6 +19,7 @@
 					{social.display}
 				</a>
 			{/each}
+			<a href="/rss.xml" class="link-quiet">RSS</a>
 		</div>
 	</div>
 </footer>
