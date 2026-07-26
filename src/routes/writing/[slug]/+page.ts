@@ -13,10 +13,12 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 	const posts: Post[] = await (await fetch('/api/posts')).json();
 	const index = posts.findIndex((entry) => entry.slug === params.slug);
+	const meta = post.metadata as Omit<Post, 'slug'>;
 
 	return {
 		content: post.default,
-		meta: post.metadata as Omit<Post, 'slug'>,
+		// Read time is derived from the source rather than frontmatter.
+		meta: { ...meta, readTime: posts[index]?.readTime ?? meta.readTime },
 		slug: params.slug,
 		// The feed is newest-first, so the previous index is the newer post.
 		newer: index > 0 ? posts[index - 1] : null,

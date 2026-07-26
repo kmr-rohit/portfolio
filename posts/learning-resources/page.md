@@ -4,7 +4,6 @@ description: Collection of Resources to learn different technologies.
 date: '2023-12-05'
 tags:
     - 
-readTime: 4
 draft: false
 ---
 

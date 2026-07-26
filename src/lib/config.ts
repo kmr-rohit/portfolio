@@ -50,7 +50,12 @@ export const githubConfig = {
  * Comments only render once both ids are filled in from the giscus setup page,
  * so an unconfigured install shows nothing rather than a broken widget.
  */
-export const giscus = {
+export const giscus: {
+	repo: `${string}/${string}`;
+	repoId: string;
+	category: string;
+	categoryId: string;
+} = {
 	repo: 'kmr-rohit/portfolio',
 	repoId: '',
 	category: 'General',

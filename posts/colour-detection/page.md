@@ -4,7 +4,6 @@ description: Implementation Details of Colour Detection Project
 date: '2023-11-20'
 tags:
     - Python
-readTime: 6
 draft: false
 ---
 
