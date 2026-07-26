@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PostList, Section, Seo } from '$lib/components/site';
 	import { site, socials } from '$lib/config';
-	import { meetup, nextSession } from '$lib/meetup';
+	import { call, nextCall } from '$lib/community';
 	import { featuredProjects } from '$lib/projects';
 	import { formatDayMonth } from '$lib/utils';
 
@@ -11,7 +11,7 @@
 	const linkedin = socials.find((s) => s.display === 'LinkedIn');
 
 	$: recent = data.posts.slice(0, 6);
-	$: next = nextSession();
+	$: next = nextCall();
 </script>
 
 <Seo description={site.description} />
@@ -30,16 +30,16 @@
 			better. The model is rarely the hard part.
 		</p>
 		<p>
-			Through Google Summer of Code 2026 I maintain
+			Through Google Summer of Code 2026 I work on
 			<a href="https://github.com/kubeflow/docs-agent" class="link" target="_blank" rel="noreferrer">
 				kubeflow/docs-agent</a
 			>, turning a documentation chatbot into an agentic RAG reference architecture for Kubeflow —
 			multi-index retrieval over docs, issues, manifests and source, served through MCP.
 		</p>
 		<p>
-			Every Saturday I host <a href="/meetup" class="link">{meetup.name}</a>, an hour spent taking
-			one piece of the AI stack apart. I write here mostly to force myself to understand things
-			properly.
+			The project runs a <a href="/community" class="link">community call every other Saturday</a>,
+			which is where most of the design argument happens. I write here mostly to force myself to
+			understand things properly.
 		</p>
 		<p>
 			You can find me on
@@ -76,13 +76,13 @@
 		</ul>
 	</Section>
 
-	<Section title="Weekly" href="/meetup" linkLabel="Details">
+	<Section title="Community" href="/community" linkLabel="Details">
 		<div class="max-w-prose space-y-2">
 			<p class="text-ink-70">
-				<span class="text-foreground">{meetup.name}</span> — {meetup.tagline} Next session
-				<span class="tnum">{formatDayMonth(next)}</span>, {meetup.localTime} ({meetup.utcTime}).
+				<span class="text-foreground">{call.name}</span>. {call.cadence}, {call.localTime} ({call.utcTime}).
+				Next one <span class="tnum">{formatDayMonth(next)}</span>.
 			</p>
-			<p class="text-sm text-ink-50">{meetup.audience}</p>
+			<p class="text-sm text-ink-50">{call.audience}</p>
 		</div>
 	</Section>
 </div>

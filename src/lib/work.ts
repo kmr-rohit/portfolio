@@ -9,7 +9,7 @@ export type Role = {
 
 export const roles: Role[] = [
 	{
-		title: 'Open source maintainer, docs-agent',
+		title: 'Open source contributor, docs-agent',
 		org: 'Kubeflow · Google Summer of Code 2026',
 		orgHref: 'https://github.com/kubeflow/docs-agent',
 		period: 'May 2026 — present',

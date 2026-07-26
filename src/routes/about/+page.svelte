@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Seo } from '$lib/components/site';
 	import { socials } from '$lib/config';
-	import { meetup } from '$lib/meetup';
+	import { call } from '$lib/community';
 	import { achievements, education, roles, skills } from '$lib/work';
 </script>
 
 <Seo
 	title="About"
-	description="AI engineer at Oracle, Kubeflow maintainer through Google Summer of Code 2026, working on agentic systems, retrieval and LLM serving."
+	description="AI engineer at Oracle and a Google Summer of Code 2026 contributor on Kubeflow Docs Agent, working on agentic systems, retrieval and LLM serving."
 />
 
 <div class="space-y-14">
@@ -28,15 +28,15 @@
 				which is a good teacher.
 			</p>
 			<p>
-				Outside that I maintain <a
+				Outside that I work on <a
 					href="https://github.com/kubeflow/docs-agent"
 					class="link"
 					target="_blank"
 					rel="noreferrer">kubeflow/docs-agent</a
 				>
-				through Google Summer of Code 2026, and host
-				<a href="/meetup" class="link">{meetup.name}</a> — an hour every Saturday spent reading one
-				system down to the mechanism.
+				through Google Summer of Code 2026, and turn up to the
+				<a href="/community" class="link">{call.name}</a> every other Saturday to argue about where
+				it should go next.
 			</p>
 			<p>
 				I'm looking for senior AI engineering work: agent platforms, inference and serving, or

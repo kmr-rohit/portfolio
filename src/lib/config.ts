@@ -5,7 +5,7 @@ export const site = {
 	title: 'Rohit Kumar',
 	role: 'AI engineer',
 	description:
-		'AI engineer working on agentic systems, retrieval and LLM serving. Oracle by day, Kubeflow maintainer via Google Summer of Code, and host of a weekly AI systems session.',
+		'AI engineer working on agentic systems, retrieval and LLM serving. Oracle by day, and a Google Summer of Code contributor on Kubeflow Docs Agent.',
 	email: 'rr7433446@gmail.com',
 	location: 'Bengaluru, India'
 };
@@ -18,7 +18,7 @@ export type Route = {
 export const routes: Route[] = [
 	{ name: 'Writing', link: '/writing' },
 	{ name: 'Projects', link: '/projects' },
-	{ name: 'Meetup', link: '/meetup' },
+	{ name: 'Community', link: '/community' },
 	{ name: 'About', link: '/about' }
 ];
 
