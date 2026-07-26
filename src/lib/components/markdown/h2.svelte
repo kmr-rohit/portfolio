@@ -5,12 +5,6 @@
 	export { className as class };
 </script>
 
-<h2
-	class={cn(
-		'mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0',
-		className
-	)}
-	{...$$restProps}
->
+<h2 class={cn('mt-14 text-lg leading-snug first:mt-0', className)} {...$$restProps}>
 	<slot />
 </h2>

@@ -4,15 +4,8 @@ description: Implementation Details of Colour Detection Project
 date: '2023-11-20'
 tags:
     - Python
-image: https://miro.medium.com/v2/resize:fit:786/format:webp/1*iYHkmrXnhEZZt-qv4S78JA.jpeg
 draft: false
 ---
-
-<script>
-    import { ThemeToggle } from '$lib/components/site';
-    import Katex from 'svelte-katex'
-</script>
-
 
 ## Introduction
 This article will take you through a **Color Recognition** task with **Python**. Basically, we are going to create a basic application that will help us detect color’s in an image. The program will let us return the RGB value, which is useful.

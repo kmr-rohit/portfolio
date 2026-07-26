@@ -1,38 +1,54 @@
-# create-svelte
+# kmrrohit.vercel.app
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+Personal site and writing, built with SvelteKit, mdsvex and Tailwind, deployed on Vercel.
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+`npm run build` produces the production bundle, `npm run check` runs `svelte-check`.
 
-To create a production version of your app:
+## Where things live
 
-```bash
-npm run build
+| What | Where |
+|---|---|
+| Name, nav, social links, giscus ids | `src/lib/config.ts` |
+| Projects | `src/lib/projects.ts` |
+| Experience, skills, achievements | `src/lib/work.ts` |
+| Community call details, LinkedIn posts | `src/lib/community.ts` |
+| Posts | `posts/<slug>/page.md` |
+| Colour tokens and link styles | `src/app.postcss` |
+| Article prose styles | `src/lib/components/markdown/` |
+
+## Writing a post
+
+Create `posts/<slug>/page.md`. The folder name becomes the URL at `/writing/<slug>`.
+
+```yaml
+---
+title: The two clocks
+description: One sentence, used for the listing and the social card.
+date: '2026-03-14'
+tags:
+  - Inference
+draft: false
+---
 ```
 
-You can preview the production build with `npm run preview`.
+Read time is computed from the source in `src/lib/posts.ts`, so there is nothing to maintain by hand. Set `readTime` in frontmatter only to override it.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Two things to know about the markdown pipeline:
+
+- Prose is compiled as Svelte, so a bare `{` in body text is parsed as an expression. Escape it or wrap it in backticks.
+- Fenced blocks accept the languages listed in `mdsvex.config.js`. A fence with no language renders as an unhighlighted monospace block, which is what the ASCII diagrams use.
+
+## Routes
+
+`/` home · `/writing` index · `/writing/[slug]` post · `/projects` · `/about` · `/community` · `/rss.xml` · `/sitemap.xml`
+
+`/blog` and `/blog/[slug]` 308-redirect to their `/writing` equivalents.
+
+## Comments
+
+Giscus is wired up but inactive until `repoId` and `categoryId` are filled in `src/lib/config.ts` — get them from [giscus.app](https://giscus.app). Until then the comments section is not rendered.

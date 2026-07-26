@@ -1,55 +1,35 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { Laptop, Sun } from 'lucide-svelte';
-
-	import { setMode, resetMode } from 'mode-watcher';
-	import { Moon } from './icons';
+	import { mode, setMode } from 'mode-watcher';
 	import { theme } from '$lib/stores';
+
+	function toggle() {
+		const next = $mode === 'dark' ? 'light' : 'dark';
+		$theme = next;
+		setMode(next);
+	}
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger asChild let:builder>
-		<Button builders={[builder]} variant="ghost" size="icon" class="md:w-9 md:h-9">
-			<Sun
-				class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-			/>
-			<Moon
-				class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-			/>
-			<span class="sr-only">Toggle theme</span>
-		</Button>
-	</DropdownMenu.Trigger>
-	<DropdownMenu.Content>
-		<DropdownMenu.Item
-			on:click={() => {
-				$theme = 'light';
-				setMode('light');
-			}}
-			class="flex items-center space-x-2"
-		>
-			<Sun class="h-[1.2rem] w-[1.2rem]" />
-			<span>Light</span>
-		</DropdownMenu.Item>
-		<DropdownMenu.Item
-			on:click={() => {
-				$theme = 'dark';
-				setMode('dark');
-			}}
-			class="flex items-center space-x-2"
-		>
-			<Moon class="h-[1.2rem] w-[1.2rem]" />
-			<span>Dark</span>
-		</DropdownMenu.Item>
-		<DropdownMenu.Item
-			on:click={() => {
-				$theme = 'dark';
-				resetMode();
-			}}
-			class="flex items-center space-x-2"
-		>
-			<Laptop class="h-[1.2rem] w-[1.2rem]" />
-			<span>System</span>
-		</DropdownMenu.Item>
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
+<button
+	type="button"
+	on:click={toggle}
+	class="no-highlight -my-1 translate-y-[1px] text-ink-30 transition-colors hover:text-foreground"
+	aria-label="Toggle colour theme"
+	title="Toggle colour theme"
+>
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="1.5"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		class="h-4 w-4"
+		aria-hidden="true"
+	>
+		<!-- A single circle that fills in on dark, rather than swapping icons. -->
+		<circle cx="12" cy="12" r="7" />
+		<path d="M12 5a7 7 0 0 0 0 14z" class="fill-current dark:hidden" />
+		<path d="M12 5a7 7 0 0 1 0 14z" class="hidden fill-current dark:block" />
+	</svg>
+</button>

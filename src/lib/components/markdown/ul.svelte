@@ -5,6 +5,6 @@
 	export { className as class };
 </script>
 
-<ul class={cn('my-6 ml-6 list-disc', className)} {...$$restProps}>
+<ul class={cn('my-5 ml-5 list-disc space-y-2 marker:text-ink-30', className)} {...$$restProps}>
 	<slot />
 </ul>

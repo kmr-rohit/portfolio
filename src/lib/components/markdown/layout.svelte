@@ -22,14 +22,24 @@
 </script>
 
 <script>
-	// these props are what we expect in frontmatter
-	// typescript cannot be used in this file.
-	export let title;
-	export let date;
-	export let description;
-	export let tags;
-	export let image;
-	export let draft;
+	/*
+	 * mdsvex spreads frontmatter onto this layout, so every key used in a post's
+	 * frontmatter has to be declared here. The page itself renders the header,
+	 * so these are accepted and ignored. TypeScript cannot be used in this file.
+	 */
+	// svelte-ignore unused-export-let
+	export let title = '';
+	// svelte-ignore unused-export-let
+	export let date = '';
+	// svelte-ignore unused-export-let
+	export let description = '';
+	// svelte-ignore unused-export-let
+	/** @type {string[]} */
+	export let tags = [];
+	// svelte-ignore unused-export-let
+	export let image = '';
+	// svelte-ignore unused-export-let
+	export let draft = false;
 </script>
 
 <svelte:head>
@@ -41,4 +51,4 @@
 	/>
 </svelte:head>
 
-<slot {title} {date} {description} {tags} {image} {draft} />
+<slot />

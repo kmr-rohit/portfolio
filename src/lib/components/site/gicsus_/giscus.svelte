@@ -2,14 +2,14 @@
 	import { onMount } from 'svelte';
 	import type { AvailableLanguage, BooleanString, InputPosition, Loading, Mapping, Theme } from '.';
 
-	export let id: string = undefined;
+	export let id: string | undefined = undefined;
 	export let host = 'https://giscus.app';
 	export let repo: `${string}/${string}`;
 	export let repoId: string;
-	export let category: string = undefined;
-	export let categoryId: string = undefined;
+	export let category: string | undefined = undefined;
+	export let categoryId: string | undefined = undefined;
 	export let mapping: Mapping = 'pathname';
-	export let term: string = undefined;
+	export let term: string | undefined = undefined;
 	export let strict: BooleanString = '0';
 	export let reactionsEnabled: BooleanString = '1';
 	export let emitMetadata: BooleanString = '0';

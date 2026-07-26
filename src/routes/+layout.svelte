@@ -1,49 +1,23 @@
-<script>
+<script lang="ts">
 	import '../app.postcss';
-	import { ModeWatcher } from 'mode-watcher';
-	import { onNavigate } from '$app/navigation';
-	import { browser } from '$app/environment';
-	import { openMobileMenu } from '$lib/stores';
-	import { preparePageTransition } from '$lib/scripts/page-transitions';
-	import { Navbar, Footer, MetaTags } from '$lib/components/site';
-	import { Toaster } from 'svelte-french-toast';
-	import MobileNavbar from '$lib/components/site/mobile-navbar.svelte';
 	import { dev } from '$app/environment';
+	import { ModeWatcher } from 'mode-watcher';
 	import { inject } from '@vercel/analytics';
-	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit"
-	inject({ mode: dev ? 'development' : 'production' });
-	onNavigate(() => {
-		if ($openMobileMenu) {
-			$openMobileMenu = false;
-		}
-	});
-	injectSpeedInsights()
-	preparePageTransition();
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+	import { preparePageTransition } from '$lib/scripts/page-transitions';
+	import { Header, Footer } from '$lib/components/site';
 
-	$: {
-		if (browser) {
-			if ($openMobileMenu) {
-				document.body.classList.add('overflow-hidden');
-			} else if (!$openMobileMenu) {
-				document.body.classList.remove('overflow-hidden');
-			}
-		}
-	}
+	inject({ mode: dev ? 'development' : 'production' });
+	injectSpeedInsights();
+	preparePageTransition();
 </script>
 
 <ModeWatcher />
-<MetaTags />
-<Toaster />
-<Navbar />
-<!-- no-highlight (touch highlights in mobile) -->
-<div class="no-highlight">
-	<MobileNavbar />
-</div>
-<div class="min-h-screen md:pt-10 flex flex-col">
-	<div class="flex-1 mb-16 md:mb-0">
+
+<div class="flex min-h-dvh flex-col">
+	<Header />
+	<main class="mx-auto w-full max-w-screen-md flex-1 px-5 pb-24 pt-14 md:pt-20">
 		<slot />
-	</div>
-	<footer class="border-t hidden md:block">
-		<Footer />
-	</footer>
+	</main>
+	<Footer />
 </div>

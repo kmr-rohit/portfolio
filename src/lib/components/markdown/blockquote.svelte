@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
-	import { Info } from 'lucide-svelte';
 
 	let className: string | undefined | null = undefined;
 	export { className as class };
@@ -8,15 +7,10 @@
 
 <blockquote
 	class={cn(
-		'mt-6 border-l-8 border-primary pl-3 italic bg-muted rounded-lg font-medium',
+		'my-8 border-l pl-5 text-ink-50 [&>p]:mt-3 [&>p:first-child]:mt-0',
 		className
 	)}
 	{...$$restProps}
 >
-	<div class="flex items-center gap-3 p-1">
-		<Info class="h-10 w-10 md:h-5 md:w-5" />
-		<div>
-			<slot />
-		</div>
-	</div>
+	<slot />
 </blockquote>
