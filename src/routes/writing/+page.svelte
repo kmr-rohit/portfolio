@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { PostList, Seo } from '$lib/components/site';
+	import { reveal } from '$lib/actions/reveal';
 
 	export let data;
 </script>
@@ -10,7 +11,7 @@
 />
 
 <div class="space-y-12">
-	<header class="max-w-prose space-y-4">
+	<header use:reveal class="max-w-prose space-y-4">
 		<h1 class="text-2xl text-foreground">Writing</h1>
 		<p class="text-ink-70">
 			Mostly long-form notes on how LLM systems actually work underneath the API — serving engines,
@@ -19,5 +20,7 @@
 		</p>
 	</header>
 
-	<PostList posts={data.posts} />
+	<div use:reveal={{ delay: 60 }}>
+		<PostList posts={data.posts} />
+	</div>
 </div>

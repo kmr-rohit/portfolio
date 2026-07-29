@@ -3,6 +3,7 @@
 	import { socials } from '$lib/config';
 	import { call } from '$lib/community';
 	import { achievements, education, roles, skills } from '$lib/work';
+	import { reveal } from '$lib/actions/reveal';
 </script>
 
 <Seo
@@ -11,7 +12,7 @@
 />
 
 <div class="space-y-14">
-	<header class="max-w-prose space-y-4">
+	<header use:reveal class="max-w-prose space-y-4">
 		<h1 class="text-2xl text-foreground">About</h1>
 		<div class="space-y-4 text-ink-70">
 			<p>
@@ -45,7 +46,7 @@
 		</div>
 	</header>
 
-	<section class="space-y-8">
+	<section use:reveal={{ delay: 40 }} class="space-y-8">
 		<h2 class="font-mono text-2xs uppercase tracking-label text-ink-30">Experience</h2>
 		{#each roles as role (role.title + role.period)}
 			<article class="max-w-prose space-y-2">
@@ -70,7 +71,7 @@
 		{/each}
 	</section>
 
-	<section class="space-y-5">
+	<section use:reveal class="space-y-5">
 		<h2 class="font-mono text-2xs uppercase tracking-label text-ink-30">What I work with</h2>
 		<dl class="max-w-prose space-y-4">
 			{#each skills as group (group.label)}
@@ -82,7 +83,7 @@
 		</dl>
 	</section>
 
-	<section class="space-y-5">
+	<section use:reveal class="space-y-5">
 		<h2 class="font-mono text-2xs uppercase tracking-label text-ink-30">Selected</h2>
 		<ul class="max-w-prose list-none space-y-2 text-sm text-ink-70">
 			{#each achievements as achievement}
@@ -91,7 +92,7 @@
 		</ul>
 	</section>
 
-	<section class="space-y-5">
+	<section use:reveal class="space-y-5">
 		<h2 class="font-mono text-2xs uppercase tracking-label text-ink-30">Education</h2>
 		<div class="max-w-prose">
 			<div class="flex flex-col gap-x-4 md:flex-row md:items-baseline md:justify-between">
@@ -102,7 +103,7 @@
 		</div>
 	</section>
 
-	<section class="space-y-5">
+	<section use:reveal class="space-y-5">
 		<h2 class="font-mono text-2xs uppercase tracking-label text-ink-30">Elsewhere</h2>
 		<ul class="max-w-prose list-none space-y-2 text-sm">
 			{#each socials as social (social.href)}
