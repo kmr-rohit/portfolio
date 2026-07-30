@@ -4,6 +4,7 @@
 	import { call, nextCall } from '$lib/community';
 	import { featuredProjects } from '$lib/projects';
 	import { formatDayMonth } from '$lib/utils';
+	import { reveal } from '$lib/actions/reveal';
 
 	export let data;
 
@@ -17,7 +18,7 @@
 <Seo description={site.description} />
 
 <div class="space-y-14 md:space-y-16">
-	<section class="max-w-prose space-y-4 text-ink-70">
+	<section use:reveal={{ delay: 0 }} class="max-w-prose space-y-4 text-ink-70">
 		<p>
 			I'm Rohit — an AI engineer at
 			<span class="text-foreground">Oracle</span>, where I build agentic and retrieval systems
@@ -49,40 +50,46 @@
 		</p>
 	</section>
 
-	<Section title="Writing" href="/writing" linkLabel="All posts">
-		<PostList posts={recent} />
-	</Section>
+	<div use:reveal={{ delay: 60 }}>
+		<Section title="Writing" href="/writing" linkLabel="All posts">
+			<PostList posts={recent} />
+		</Section>
+	</div>
 
-	<Section title="Selected work" href="/projects" linkLabel="All projects">
-		<ul class="flex list-none flex-col gap-5">
-			{#each featuredProjects as project (project.title)}
-				<li class="max-w-prose space-y-1">
-					<div class="flex items-baseline justify-between gap-4">
-						{#if project.links?.[0]}
-							<a
-								href={project.links[0].href}
-								class="link-quiet text-foreground"
-								target="_blank"
-								rel="noreferrer">{project.title}</a
-							>
-						{:else}
-							<span class="text-foreground">{project.title}</span>
-						{/if}
-						<span class="tnum flex-shrink-0 text-sm text-ink-30">{project.year}</span>
-					</div>
-					<p class="text-sm text-ink-50">{project.summary}</p>
-				</li>
-			{/each}
-		</ul>
-	</Section>
+	<div use:reveal={{ delay: 100 }}>
+		<Section title="Selected work" href="/projects" linkLabel="All projects">
+			<ul class="flex list-none flex-col gap-5">
+				{#each featuredProjects as project (project.title)}
+					<li class="row-hover max-w-prose space-y-1">
+						<div class="flex items-baseline justify-between gap-4">
+							{#if project.links?.[0]}
+								<a
+									href={project.links[0].href}
+									class="link-quiet text-foreground"
+									target="_blank"
+									rel="noreferrer">{project.title}</a
+								>
+							{:else}
+								<span class="text-foreground">{project.title}</span>
+							{/if}
+							<span class="row-meta tnum flex-shrink-0 text-sm text-ink-30">{project.year}</span>
+						</div>
+						<p class="text-sm text-ink-50">{project.summary}</p>
+					</li>
+				{/each}
+			</ul>
+		</Section>
+	</div>
 
-	<Section title="Community" href="/community" linkLabel="Details">
-		<div class="max-w-prose space-y-2">
-			<p class="text-ink-70">
-				<span class="text-foreground">{call.name}</span>. {call.cadence}, {call.localTime} ({call.utcTime}).
-				Next one <span class="tnum">{formatDayMonth(next)}</span>.
-			</p>
-			<p class="text-sm text-ink-50">{call.audience}</p>
-		</div>
-	</Section>
+	<div use:reveal={{ delay: 140 }}>
+		<Section title="Community" href="/community" linkLabel="Details">
+			<div class="max-w-prose space-y-2">
+				<p class="text-ink-70">
+					<span class="text-foreground">{call.name}</span>. {call.cadence}, {call.localTime} ({call.utcTime}).
+					Next one <span class="tnum">{formatDayMonth(next)}</span>.
+				</p>
+				<p class="text-sm text-ink-50">{call.audience}</p>
+			</div>
+		</Section>
+	</div>
 </div>

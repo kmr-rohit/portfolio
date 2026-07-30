@@ -2,6 +2,7 @@
 	import { Seo } from '$lib/components/site';
 	import { call, nextCall, updates } from '$lib/community';
 	import { formatDate, formatDayMonth } from '$lib/utils';
+	import { reveal } from '$lib/actions/reveal';
 
 	const next = nextCall();
 	const nextDate = next.toISOString().slice(0, 10);
@@ -13,12 +14,12 @@
 />
 
 <div class="space-y-14">
-	<header class="max-w-prose space-y-4">
+	<header use:reveal class="max-w-prose space-y-4">
 		<h1 class="text-2xl text-foreground">Community</h1>
 		<p class="text-ink-50">Open-source work on Kubeflow, and the call that goes with it.</p>
 	</header>
 
-	<section class="space-y-6">
+	<section use:reveal={{ delay: 60 }} class="space-y-6">
 		<h2 class="font-mono text-2xs uppercase tracking-label text-ink-30">The bi-weekly call</h2>
 
 		<div class="max-w-prose space-y-4 text-ink-70">
@@ -75,18 +76,18 @@
 		</p>
 	</section>
 
-	<section class="space-y-5">
+	<section use:reveal class="space-y-5">
 		<h2 class="font-mono text-2xs uppercase tracking-label text-ink-30">Elsewhere</h2>
 		<ul class="list-none space-y-5">
 			{#each updates as update (update.href)}
-				<li class="max-w-prose space-y-1">
+				<li class="row-hover max-w-prose space-y-1">
 					<div class="flex items-baseline justify-between gap-4">
 						<h3>
 							<a href={update.href} class="link-quiet text-foreground" target="_blank" rel="noreferrer">
 								{update.title}
 							</a>
 						</h3>
-						<span class="tnum flex-shrink-0 text-sm text-ink-30">
+						<span class="row-meta tnum flex-shrink-0 text-sm text-ink-30">
 							{formatDayMonth(update.date)}
 						</span>
 					</div>

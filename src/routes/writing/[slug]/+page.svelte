@@ -4,6 +4,7 @@
 	import { commentsEnabled, giscus } from '$lib/config';
 	import { theme } from '$lib/stores';
 	import { formatDate } from '$lib/utils';
+	import { reveal } from '$lib/actions/reveal';
 	import { onMount } from 'svelte';
 
 	export let data;
@@ -26,7 +27,7 @@
 />
 
 <article class="space-y-10">
-	<header class="max-w-prose space-y-4">
+	<header use:reveal class="max-w-prose space-y-4">
 		<div class="tnum flex flex-wrap items-baseline gap-x-3 text-sm text-ink-50">
 			<time datetime={meta.date}>{formatDate(meta.date, 'long')}</time>
 			{#if meta.readTime}
@@ -48,7 +49,7 @@
 
 	<hr class="rule" />
 
-	<div class="mdsvex" id="mdsvex">
+	<div use:reveal={{ delay: 40 }} class="mdsvex" id="mdsvex">
 		<svelte:component this={content} />
 	</div>
 

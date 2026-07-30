@@ -19,16 +19,20 @@
 			{/if}
 			<ul class="flex list-none flex-col gap-4">
 				{#each group.entries as post (post.slug)}
-					<li class="flex flex-col md:flex-row md:items-baseline md:justify-between md:gap-4">
+					<li
+						class="row-hover flex flex-col md:flex-row md:items-baseline md:justify-between md:gap-4"
+					>
 						<div class="flex items-baseline gap-2">
 							<a href="/writing/{post.slug}" class="link-quiet text-foreground">
 								{post.title}
 							</a>
 							{#if post.readTime}
-								<span class="tnum flex-shrink-0 text-sm text-ink-30">{post.readTime} min</span>
+								<span class="row-meta tnum flex-shrink-0 text-sm text-ink-30"
+									>{post.readTime} min</span
+								>
 							{/if}
 						</div>
-						<span class="tnum flex-shrink-0 text-sm text-ink-50 md:text-right">
+						<span class="row-meta tnum flex-shrink-0 text-sm text-ink-50 md:text-right">
 							{formatDayMonth(post.date)}
 						</span>
 					</li>

@@ -12,14 +12,14 @@
 			{#each socials as social (social.href)}
 				<a
 					href={social.href}
-					class="link-quiet"
+					class="link-quiet hover:text-foreground"
 					target={social.href.startsWith('http') ? '_blank' : undefined}
 					rel={social.href.startsWith('http') ? 'noreferrer' : undefined}
 				>
 					{social.display}
 				</a>
 			{/each}
-			<a href="/rss.xml" class="link-quiet">RSS</a>
+			<a href="/rss.xml" class="link-quiet hover:text-foreground">RSS</a>
 		</div>
 	</div>
 </footer>

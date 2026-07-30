@@ -22,7 +22,7 @@
 			{#each routes as route (route.link)}
 				<a
 					href={route.link}
-					class="link-quiet {isActive(route.link) ? 'text-foreground underline' : 'text-ink-50'}"
+					class="nav-link {isActive(route.link) ? 'text-foreground' : 'text-ink-50'}"
 					aria-current={isActive(route.link) ? 'page' : undefined}
 				>
 					{route.name}

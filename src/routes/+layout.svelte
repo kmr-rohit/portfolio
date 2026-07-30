@@ -16,7 +16,10 @@
 
 <div class="flex min-h-dvh flex-col">
 	<Header />
-	<main class="mx-auto w-full max-w-screen-md flex-1 px-5 pb-24 pt-14 md:pt-20">
+	<main
+		class="page mx-auto w-full max-w-screen-md flex-1 px-5 pb-24 pt-14 md:pt-20"
+		style="view-transition-name: page"
+	>
 		<slot />
 	</main>
 	<Footer />
