@@ -20,11 +20,11 @@
 			<span class="blurb">{category(post)}</span>
 
 			{#if post.image}
-				<span class="row-thumb has-image" aria-hidden="true">
+				<span class="row-thumb" aria-hidden="true">
 					<img src={post.image} alt="" loading="lazy" />
 				</span>
 			{:else if post.description}
-				<span class="row-thumb" aria-hidden="true">
+				<span class="row-thumb is-text" aria-hidden="true">
 					<p class="preview-title">{post.title}</p>
 					<p class="preview-body">{post.description}</p>
 				</span>
@@ -33,6 +33,6 @@
 	{/each}
 
 	{#if posts.length === 0}
-		<p class="py-6 text-sm" style="color: var(--ink-soft)">Nothing published yet.</p>
+		<p class="py-6 text-[13px]" style="color: var(--ink-soft)">Nothing published yet.</p>
 	{/if}
 </div>

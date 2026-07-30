@@ -26,9 +26,9 @@
 />
 
 <article>
-	<a href="/writing" class="back-link">← all writing</a>
+	<a href="/writing" class="back">← all writing</a>
 
-	<header class="page-head">
+	<header class="proj-head">
 		<h1>{meta.title}</h1>
 		<p class="meta">
 			{formatDate(meta.date, 'long')}
@@ -44,7 +44,7 @@
 		{/if}
 	</header>
 
-	<hr class="rule mb-[clamp(32px,5vh,48px)]" />
+	<hr class="rule" style="margin-bottom: clamp(32px, 5vh, 48px)" />
 
 	<div class="mdsvex" id="mdsvex">
 		<svelte:component this={content} />
@@ -53,13 +53,13 @@
 	<nav class="pager">
 		<div class="max-w-xs space-y-1">
 			{#if older}
-				<p class="section-label mb-1">Older</p>
+				<p class="section-label" style="margin-bottom: 4px">Older</p>
 				<a href="/writing/{older.slug}">{older.title}</a>
 			{/if}
 		</div>
 		<div class="max-w-xs space-y-1 text-right">
 			{#if newer}
-				<p class="section-label mb-1">Newer</p>
+				<p class="section-label" style="margin-bottom: 4px">Newer</p>
 				<a href="/writing/{newer.slug}">{newer.title}</a>
 			{/if}
 		</div>

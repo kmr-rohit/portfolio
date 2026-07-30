@@ -15,7 +15,7 @@
 	description="Agentic RAG for Kubeflow, an agentic mock-interview platform, voice agents and a node-based LLM workflow runtime."
 />
 
-<header class="page-head">
+<header class="proj-head">
 	<h1>Projects</h1>
 	<p class="lede">
 		The through-line is agents that have to survive contact with a real system — a Kubernetes cluster, a
@@ -24,7 +24,7 @@
 	</p>
 </header>
 
-<section class="mb-[clamp(64px,11vh,140px)]">
+<section>
 	<h2 class="section-label">Work</h2>
 	<div class="rows">
 		{#each work as project (project.title)}
@@ -37,7 +37,7 @@
 				<span class="year tnum">{project.year}</span>
 				<span class="title">{project.title}</span>
 				<span class="blurb">{category(project)}</span>
-				<span class="row-thumb" aria-hidden="true">
+				<span class="row-thumb is-text" aria-hidden="true">
 					<p class="preview-title">{project.title}</p>
 					<p class="preview-body">{project.summary}</p>
 				</span>
@@ -48,7 +48,7 @@
 
 <section>
 	<h2 class="section-label">Smaller things</h2>
-	<div class="play-grid">
+	<div class="play-list">
 		{#each lab as project (project.title)}
 			<a
 				href={project.links?.[0]?.href ?? '/projects'}
@@ -68,18 +68,22 @@
 	</div>
 </section>
 
-<!-- Expanded detail for primary work — same page, quieter reading measure -->
-<section class="mt-[clamp(64px,11vh,140px)] space-y-[clamp(48px,8vh,96px)]">
+<section>
 	<h2 class="section-label">Notes</h2>
 	{#each work as project (project.title)}
-		<article>
+		<article class="mb-[clamp(48px,8vh,96px)] last:mb-0">
 			<header class="mb-5">
-				<h3 class="text-[clamp(22px,3vw,32px)] font-light tracking-display">{project.title}</h3>
-				<p class="meta mt-2 text-[13px] track-nav" style="color: var(--ink-soft)">
+				<h3
+					class="text-[clamp(22px,3vw,32px)] font-light"
+					style="letter-spacing: var(--track-display)"
+				>
+					{project.title}
+				</h3>
+				<p class="meta" style="margin-top: 10px; font-size: 13px; color: var(--ink-soft); letter-spacing: var(--track-nav)">
 					{project.year} · {project.stack.join(' · ')}
 				</p>
 			</header>
-			<div class="prose-block">
+			<div class="proj-body" style="margin-bottom: 0">
 				<p>{project.summary}</p>
 				{#if project.detail}
 					{#each project.detail as paragraph}
@@ -89,7 +93,7 @@
 				{#if project.links?.length}
 					<p class="flex flex-wrap gap-x-5 gap-y-1">
 						{#each project.links as link (link.href)}
-							<a href={link.href} class="link" target="_blank" rel="noreferrer">{link.label}</a>
+							<a href={link.href} class="bio-link" target="_blank" rel="noreferrer">{link.label}</a>
 						{/each}
 					</p>
 				{/if}

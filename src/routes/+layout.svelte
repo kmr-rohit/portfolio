@@ -19,7 +19,7 @@
 
 <div class="flex min-h-dvh flex-col">
 	<Header />
-	<main class="page-shell flex-1 {isHome ? 'home' : ''}">
+	<main class="page flex-1 {isHome ? 'home' : ''}">
 		<slot />
 	</main>
 	<Footer />

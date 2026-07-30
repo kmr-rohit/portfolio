@@ -9,7 +9,7 @@
 	description="Notes on LLM serving, agent design and the systems underneath — vLLM, SGLang, agentic harnesses, retrieval and evaluation."
 />
 
-<header class="page-head">
+<header class="proj-head">
 	<h1>Writing</h1>
 	<p class="lede">
 		Mostly long-form notes on how LLM systems actually work underneath the API — serving engines,

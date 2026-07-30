@@ -4,6 +4,6 @@
 	const year = new Date().getFullYear();
 </script>
 
-<footer class="site-foot">
+<footer class="foot">
 	<p>&copy; {site.name} {year}</p>
 </footer>

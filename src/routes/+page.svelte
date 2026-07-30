@@ -26,41 +26,59 @@
 	<div class="hero-name" aria-hidden="true">{site.name}</div>
 	<div class="hero-stage">
 		<figure class="hero-portrait">
-			<img src={portrait} alt="{site.name}" width="560" height="700" />
+			<img src={portrait} alt={site.name} width="560" height="700" />
 			<figcaption class="hero-caption">Bengaluru · India</figcaption>
 		</figure>
 	</div>
-	<button type="button" class="hero-down no-highlight" on:click={scrollPastHero} aria-label="Scroll to about">
-		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+	<button
+		type="button"
+		class="hero-down no-highlight"
+		on:click={scrollPastHero}
+		aria-label="Scroll to about"
+	>
+		<svg
+			width="18"
+			height="18"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="1.4"
+			aria-hidden="true"
+		>
 			<path d="M6 9l6 6 6-6" />
 			<path d="M6 14l6 6 6-6" opacity="0.55" />
 		</svg>
 	</button>
 </section>
 
-<section id="about" class="about-band">
-	<div class="about-bio space-y-4">
-		<p>
-			I'm Rohit — an AI engineer at <strong>Oracle</strong>, where I build agentic and retrieval
-			systems inside Fusion SCM Cloud. Most of my time goes to the layer between a model and a
-			product someone will actually trust: tool-calling loops, multi-index retrieval, and the
-			evaluation harness that tells you whether last week's prompt change made anything better.
-		</p>
-		<p>
-			Through Google Summer of Code 2026 I work on
-			<a href="https://github.com/kubeflow/docs-agent" class="link" target="_blank" rel="noreferrer"
-				>kubeflow/docs-agent</a
-			>, and run a <a href="/community" class="link">community call every other Saturday</a>. I write
-			here mostly to force myself to understand things properly.
-		</p>
-		<p>
-			Find me on
-			<a href={github?.href} class="link" target="_blank" rel="noreferrer">GitHub</a>
-			and
-			<a href={linkedin?.href} class="link" target="_blank" rel="noreferrer">LinkedIn</a>.
-		</p>
+<section id="about" class="about">
+	<div class="about-text">
+		<div class="bio space-y-4">
+			<p>
+				I'm Rohit — an AI engineer at <strong>Oracle</strong>, where I build agentic and retrieval
+				systems inside Fusion SCM Cloud. Most of my time goes to the layer between a model and a
+				product someone will actually trust: tool-calling loops, multi-index retrieval, and the
+				evaluation harness that tells you whether last week's prompt change made anything better.
+			</p>
+			<p>
+				Through Google Summer of Code 2026 I work on
+				<a
+					href="https://github.com/kubeflow/docs-agent"
+					class="bio-link"
+					target="_blank"
+					rel="noreferrer">kubeflow/docs-agent</a
+				>, and run a <a href="/community" class="bio-link">community call every other Saturday</a>. I
+				write here mostly to force myself to understand things properly.
+			</p>
+			<p>
+				Find me on
+				<a href={github?.href} class="bio-link" target="_blank" rel="noreferrer">GitHub</a>
+				and
+				<a href={linkedin?.href} class="bio-link" target="_blank" rel="noreferrer">LinkedIn</a>.
+			</p>
+		</div>
 	</div>
-	<div class="about-headshot">
+	<div class="headshot">
 		<img src={portrait} alt="" aria-hidden="true" width="264" height="330" loading="lazy" />
 	</div>
 </section>
@@ -77,7 +95,7 @@
 					<span class="year tnum">{project.year}</span>
 					<span class="title">{project.title}</span>
 					<span class="blurb">{project.stack[0]?.toLowerCase() ?? 'project'}</span>
-					<span class="row-thumb" aria-hidden="true">
+					<span class="row-thumb is-text" aria-hidden="true">
 						<p class="preview-title">{project.title}</p>
 						<p class="preview-body">{project.summary}</p>
 					</span>
@@ -93,12 +111,14 @@
 	</div>
 </Section>
 
-<section class="mb-[clamp(40px,8vh,90px)]">
+<section>
 	<h2 class="section-label">Community</h2>
-	<p class="prose-block">
-		<span style="color: var(--ink)">{call.name}</span>. {call.cadence}, {call.localTime}
-		({call.utcTime}). Next one
-		<span class="tnum">{formatDayMonth(next)}</span>.
-		<a href="/community" class="link">Details</a>.
-	</p>
+	<div class="proj-body" style="margin-bottom: 0">
+		<p>
+			<span style="color: var(--ink)">{call.name}</span>. {call.cadence}, {call.localTime}
+			({call.utcTime}). Next one
+			<span class="tnum">{formatDayMonth(next)}</span>.
+			<a href="/community" class="bio-link">Details</a>.
+		</p>
+	</div>
 </section>

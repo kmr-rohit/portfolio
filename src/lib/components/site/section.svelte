@@ -5,11 +5,11 @@
 	export let linkLabel = 'All';
 </script>
 
-<section class="mb-[clamp(64px,11vh,140px)]">
+<section>
 	<div class="mb-5 flex items-baseline justify-between gap-4">
-		<h2 class="section-label mb-0">{title}</h2>
+		<h2 class="section-label" style="margin-bottom: 0">{title}</h2>
 		{#if href}
-			<a {href} class="link-quiet text-[13px] track-nav">{linkLabel}</a>
+			<a {href} class="link-quiet text-[13px]" style="letter-spacing: var(--track-nav)">{linkLabel}</a>
 		{/if}
 	</div>
 	<slot />
