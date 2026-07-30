@@ -13,14 +13,17 @@
 	preparePageTransition();
 
 	$: isHome = $page.url.pathname === '/';
+	$: isLife = $page.url.pathname === '/life';
 </script>
 
 <ModeWatcher />
 
-<div class="flex min-h-dvh flex-col">
+<div class="flex min-h-dvh flex-col" class:life-root={isLife}>
 	<Header />
-	<main class="page flex-1 {isHome ? 'home' : ''}">
+	<main class="page flex-1 {isHome ? 'home' : ''} {isLife ? 'dark life-page' : ''}">
 		<slot />
 	</main>
-	<Footer />
+	{#if !isLife}
+		<Footer />
+	{/if}
 </div>

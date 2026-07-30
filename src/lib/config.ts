@@ -18,6 +18,7 @@ export type Route = {
 export const routes: Route[] = [
 	{ name: 'Writing', link: '/writing' },
 	{ name: 'Projects', link: '/projects' },
+	{ name: 'Life', link: '/life' },
 	{ name: 'Community', link: '/community' },
 	{ name: 'About', link: '/about' }
 ];
