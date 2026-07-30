@@ -364,7 +364,7 @@
 
 	.hero-portrait {
 		position: relative;
-		width: min(72vw, 280px);
+		width: min(68vw, 300px);
 		display: grid;
 		justify-items: center;
 		gap: 20px;
@@ -374,12 +374,12 @@
 	.hero-portrait::before {
 		content: '';
 		position: absolute;
-		left: 12%;
-		right: 12%;
+		left: 10%;
+		right: 10%;
 		top: 8%;
-		bottom: 18%;
+		bottom: 16%;
 		border-radius: 18px;
-		background: rgba(20, 22, 30, 0.15);
+		background: rgba(20, 22, 30, 0.18);
 		filter: blur(28px);
 		z-index: -1;
 	}
@@ -387,7 +387,10 @@
 	.hero-portrait img {
 		width: 100%;
 		border-radius: 4px;
-		box-shadow: 0 18px 48px rgba(20, 22, 30, 0.2);
+		box-shadow: 0 18px 48px rgba(20, 22, 30, 0.22);
+		aspect-ratio: 3 / 4;
+		object-fit: cover;
+		object-position: center 18%;
 	}
 
 	.hero-caption {

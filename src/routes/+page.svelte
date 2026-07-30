@@ -5,6 +5,7 @@
 	import { featuredProjects } from '$lib/projects';
 	import { formatDayMonth } from '$lib/utils';
 	import portrait from '$lib/assets/profile_picture.jpg';
+	import cover from '$lib/assets/kubecon-india-2026.jpg';
 
 	export let data;
 
@@ -26,8 +27,13 @@
 	<div class="hero-name" aria-hidden="true">{site.name}</div>
 	<div class="hero-stage">
 		<figure class="hero-portrait">
-			<img src={portrait} alt={site.name} width="560" height="700" />
-			<figcaption class="hero-caption">Bengaluru · India</figcaption>
+			<img
+				src={cover}
+				alt={`${site.name} at KubeCon + CloudNativeCon India 2026`}
+				width="1152"
+				height="1536"
+			/>
+			<figcaption class="hero-caption">KubeCon · India 2026</figcaption>
 		</figure>
 	</div>
 	<button
