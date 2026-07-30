@@ -176,6 +176,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		gap: 12px 20px;
 		padding-inline: clamp(20px, 4vw, 48px);
 		padding-block: 16px 72px;
 		pointer-events: none;
@@ -228,12 +229,16 @@
 		font-size: 13px;
 		align-items: center;
 		letter-spacing: var(--track-nav);
+		min-width: 0;
+		margin-left: auto;
 	}
 
 	.top nav a {
 		color: var(--ink-soft);
 		transition: color 0.2s;
 		text-transform: lowercase;
+		white-space: nowrap;
+		padding-block: 4px;
 	}
 
 	.top nav a:hover,
@@ -241,13 +246,14 @@
 		color: var(--ink);
 	}
 
-	.top nav .top-socials {
+	.top .top-socials {
 		display: flex;
 		align-items: center;
 		gap: 14px;
 		margin-left: 12px;
 		padding-left: 20px;
 		border-left: 1px solid var(--hairline);
+		flex: none;
 	}
 
 	.icon-btn {
@@ -686,8 +692,16 @@
 	}
 
 	/* —— Life mood board —— */
+	/* Tokens on the root so the fixed header (outside .page) inherits light ink. */
 	.life-root {
+		--paper: #060608;
+		--ink: #f2f4f7;
+		--ink-soft: rgba(242, 244, 247, 0.6);
+		--hairline: rgba(242, 244, 247, 0.18);
+		--ph: #121316;
+		--surface: #121316;
 		background: #060608;
+		color: var(--ink);
 	}
 
 	.life-root .top::before {
@@ -708,15 +722,15 @@
 		max-width: none;
 		padding-inline: 0;
 		padding-bottom: 0;
-		padding-top: calc(clamp(28px, 5vw, 72px) + 28px);
+		padding-top: calc(clamp(28px, 5vw, 72px) + 40px);
 		background: #060608;
+		overflow-x: clip;
 	}
 
 	.life {
-		margin-inline: calc(50% - 50vw);
-		width: 100vw;
+		width: 100%;
 		min-height: calc(100svh - 4rem);
-		padding: clamp(12px, 2vw, 28px) clamp(10px, 2vw, 24px) 12vh;
+		padding: clamp(12px, 2vw, 28px) clamp(12px, 3vw, 24px) 12vh;
 		columns: 220px 4;
 		column-gap: 10px;
 	}
@@ -803,22 +817,43 @@
 	}
 
 	@media (max-width: 640px) {
+		.page.life-page {
+			padding-top: calc(clamp(28px, 5vw, 72px) + 72px);
+		}
+
 		.life {
-			columns: 140px 2;
-			column-gap: 8px;
+			columns: 1;
+			column-gap: 0;
+			padding: 8px 12px 10vh;
+			margin-inline: 0;
+			max-width: none;
 		}
 
 		.life-card {
 			transform: none;
+			margin-bottom: 12px;
 		}
 
 		.life-card:hover,
 		.life-card:focus-within {
-			transform: scale(1.01);
+			transform: none;
+		}
+
+		.life-card figcaption {
+			opacity: 1;
+			padding-top: 36px;
+			background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.62));
 		}
 
 		.spotlight {
 			display: none;
+		}
+	}
+
+	@media (min-width: 641px) and (max-width: 900px) {
+		.life {
+			columns: 2;
+			column-gap: 10px;
 		}
 	}
 
@@ -885,26 +920,43 @@
 	}
 }
 
-@media (max-width: 640px) {
+@media (max-width: 920px) {
+	/* Name + socials on row 1; routes wrap on row 2. */
 	.top {
-		padding-inline: 12px;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		grid-template-areas:
+			'name socials'
+			'nav nav';
+		align-items: center;
+		column-gap: 12px;
+		row-gap: 10px;
+		padding-inline: 16px;
 		padding-block: 12px 56px;
 	}
 
 	.top .name {
-		font-size: 12px;
+		grid-area: name;
+		font-size: 13px;
+		min-width: 0;
 	}
 
 	.top nav {
-		gap: 10px;
-		font-size: 11px;
-		letter-spacing: 0.07em;
+		grid-area: nav;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		gap: 10px 16px;
+		font-size: 12px;
+		letter-spacing: 0.08em;
+		margin-left: 0;
 	}
 
-	.top nav .top-socials {
-		gap: 8px;
+	.top .top-socials {
+		grid-area: socials;
 		margin-left: 0;
-		padding-left: 10px;
+		padding-left: 0;
+		border-left: 0;
+		gap: 10px;
 	}
 
 	.top .icon-btn {
@@ -923,6 +975,23 @@
 	.hero-name {
 		white-space: normal;
 		font-size: clamp(42px, 14vw, 72px);
+	}
+}
+
+@media (max-width: 640px) {
+	.top {
+		padding-inline: 14px;
+		padding-block: 12px 48px;
+		row-gap: 8px;
+	}
+
+	.top nav {
+		gap: 8px 14px;
+		font-size: 11px;
+	}
+
+	.page:not(.life-page):not(.home) {
+		padding-inline: 18px;
 	}
 }
 
