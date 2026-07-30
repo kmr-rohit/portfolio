@@ -12,7 +12,7 @@
 <button
 	type="button"
 	on:click={toggle}
-	class="no-highlight -my-1 translate-y-[1px] text-ink-30 transition-colors hover:text-foreground"
+	class="icon-btn no-highlight"
 	aria-label="Toggle colour theme"
 	title="Toggle colour theme"
 >
@@ -24,12 +24,29 @@
 		stroke-width="1.5"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="h-4 w-4"
+		class="h-[17px] w-[17px]"
 		aria-hidden="true"
 	>
-		<!-- A single circle that fills in on dark, rather than swapping icons. -->
 		<circle cx="12" cy="12" r="7" />
 		<path d="M12 5a7 7 0 0 0 0 14z" class="fill-current dark:hidden" />
 		<path d="M12 5a7 7 0 0 1 0 14z" class="hidden fill-current dark:block" />
 	</svg>
 </button>
+
+<style>
+	.icon-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 4px;
+		color: var(--ink-soft);
+		transition: color 0.2s ease;
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+	}
+
+	.icon-btn:hover {
+		color: var(--ink);
+	}
+</style>

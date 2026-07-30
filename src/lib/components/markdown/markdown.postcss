@@ -1,15 +1,21 @@
 /*
- * Long-form article body. The measure is deliberately narrower than the page
- * container so paragraphs stay around 75 characters.
+ * Long-form article body. Cool-paper measure, Futura-like reading rhythm.
  */
 .mdsvex {
-	@apply max-w-prose;
+	max-width: 620px;
+	font-size: 15.5px;
+	line-height: 1.75;
+	letter-spacing: 0.02em;
+	color: var(--ink-body);
 }
 
 /* Inline code inside prose. */
 .mdsvex :where(p, li, td) > code,
 .mdsvex :where(p, li, td) span[data-rehype-pretty-code-fragment] code {
-	@apply rounded border border-foreground/10 bg-foreground/[0.04] px-1 py-0.5 font-mono text-[0.85em] text-foreground;
+	@apply rounded border px-1 py-0.5 font-mono text-[0.85em];
+	border-color: var(--hairline);
+	background: color-mix(in srgb, var(--ink) 4%, transparent);
+	color: var(--ink);
 }
 
 .mdsvex span[data-rehype-pretty-code-fragment] {
@@ -80,11 +86,15 @@
 }
 
 .mdsvex th {
-	@apply border-b py-2 pr-4 text-left font-medium text-foreground;
+	@apply border-b py-2 pr-4 text-left font-medium;
+	color: var(--ink);
+	border-color: var(--hairline);
 }
 
 .mdsvex td {
-	@apply border-b py-2 pr-4 align-top text-ink-70;
+	@apply border-b py-2 pr-4 align-top;
+	color: var(--ink-body);
+	border-color: var(--hairline);
 }
 
 .mdsvex .katex-display {

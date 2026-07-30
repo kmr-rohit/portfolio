@@ -1,22 +1,25 @@
 <script lang="ts">
-	import '../app.postcss';
-	import { dev } from '$app/environment';
 	import { ModeWatcher } from 'mode-watcher';
 	import { inject } from '@vercel/analytics';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+	import { dev } from '$app/environment';
+	import { page } from '$app/stores';
 	import { preparePageTransition } from '$lib/scripts/page-transitions';
 	import { Header, Footer } from '$lib/components/site';
+	import '../app.postcss';
 
 	inject({ mode: dev ? 'development' : 'production' });
 	injectSpeedInsights();
 	preparePageTransition();
+
+	$: isHome = $page.url.pathname === '/';
 </script>
 
 <ModeWatcher />
 
 <div class="flex min-h-dvh flex-col">
 	<Header />
-	<main class="mx-auto w-full max-w-screen-md flex-1 px-5 pb-24 pt-14 md:pt-20">
+	<main class="page-shell flex-1 {isHome ? 'home' : ''}">
 		<slot />
 	</main>
 	<Footer />

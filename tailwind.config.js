@@ -10,7 +10,7 @@ const config = {
 			center: true,
 			padding: '1rem',
 			screens: {
-				'2xl': '768px'
+				'2xl': '980px'
 			}
 		},
 		extend: {
@@ -20,7 +20,9 @@ const config = {
 				ring: 'hsl(var(--ring) / <alpha-value>)',
 				background: 'hsl(var(--background) / <alpha-value>)',
 				foreground: 'hsl(var(--foreground) / <alpha-value>)',
-				surface: 'hsl(var(--surface) / <alpha-value>)',
+				surface: 'var(--surface)',
+				paper: 'var(--paper)',
+				ink: 'var(--ink)',
 				primary: {
 					DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
 					foreground: 'hsl(var(--primary-foreground) / <alpha-value>)'
@@ -38,7 +40,7 @@ const config = {
 					foreground: 'hsl(var(--muted-foreground) / <alpha-value>)'
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
+					DEFAULT: 'hsl(var(--accent-hsl) / <alpha-value>)',
 					foreground: 'hsl(var(--accent-foreground) / <alpha-value>)'
 				},
 				popover: {
@@ -50,15 +52,11 @@ const config = {
 					foreground: 'hsl(var(--card-foreground) / <alpha-value>)'
 				}
 			},
-			/*
-			 * Body copy sits a little below full contrast so headings read as
-			 * headings without needing extra weight. These are the four steps.
-			 */
 			textColor: {
-				'ink-95': 'hsl(var(--foreground) / 0.95)',
-				'ink-70': 'hsl(var(--foreground) / 0.78)',
-				'ink-50': 'hsl(var(--foreground) / 0.55)',
-				'ink-30': 'hsl(var(--foreground) / 0.32)'
+				'ink-95': 'color-mix(in srgb, var(--ink) 95%, transparent)',
+				'ink-70': 'var(--ink-body)',
+				'ink-50': 'var(--ink-soft)',
+				'ink-30': 'color-mix(in srgb, var(--ink) 32%, transparent)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -66,17 +64,20 @@ const config = {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
-				sans: ['Inter', ...fontFamily.sans],
+				sans: ['Jost', 'Futura', 'Avenir Next', ...fontFamily.sans],
 				mono: ['Geist Mono', ...fontFamily.mono]
 			},
 			fontSize: {
 				'2xs': ['0.6875rem', { lineHeight: '1rem' }]
 			},
 			letterSpacing: {
-				label: '0.12em'
+				label: '0.24em',
+				nav: '0.12em',
+				display: '0.05em'
 			},
 			maxWidth: {
-				prose: '42rem'
+				prose: '42rem',
+				page: '980px'
 			}
 		}
 	}
