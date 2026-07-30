@@ -1,47 +1,38 @@
 <script lang="ts">
 	import type { Post } from '$lib/types';
-	import { formatDayMonth, groupByYear } from '$lib/utils';
+	import { getYear } from '$lib/utils';
 
 	export let posts: Post[] = [];
-	/** When false the posts render as one flat list with no year headings. */
-	export let grouped = true;
 
-	$: groups = grouped
-		? groupByYear(posts)
-		: [{ year: 0, entries: posts }];
+	function category(post: Post) {
+		const tag = post.tags?.find((t) => t && t.trim());
+		if (tag) return tag.toLowerCase();
+		if (post.readTime) return `${post.readTime} min`;
+		return 'note';
+	}
 </script>
 
-<div class="space-y-10">
-	{#each groups as group (group.year)}
-		<section class="space-y-4">
-			{#if grouped}
-				<h2 class="text-lg text-ink-30">{group.year}</h2>
+<div class="rows">
+	{#each posts as post (post.slug)}
+		<a href="/writing/{post.slug}" class="row">
+			<span class="year tnum">{getYear(post.date)}</span>
+			<span class="title">{post.title}</span>
+			<span class="blurb">{category(post)}</span>
+
+			{#if post.image}
+				<span class="row-thumb" aria-hidden="true">
+					<img src={post.image} alt="" loading="lazy" />
+				</span>
+			{:else if post.description}
+				<span class="row-thumb is-text" aria-hidden="true">
+					<p class="preview-title">{post.title}</p>
+					<p class="preview-body">{post.description}</p>
+				</span>
 			{/if}
-			<ul class="flex list-none flex-col gap-4">
-				{#each group.entries as post (post.slug)}
-					<li
-						class="row-hover flex flex-col md:flex-row md:items-baseline md:justify-between md:gap-4"
-					>
-						<div class="flex items-baseline gap-2">
-							<a href="/writing/{post.slug}" class="link-quiet text-foreground">
-								{post.title}
-							</a>
-							{#if post.readTime}
-								<span class="row-meta tnum flex-shrink-0 text-sm text-ink-30"
-									>{post.readTime} min</span
-								>
-							{/if}
-						</div>
-						<span class="row-meta tnum flex-shrink-0 text-sm text-ink-50 md:text-right">
-							{formatDayMonth(post.date)}
-						</span>
-					</li>
-				{/each}
-			</ul>
-		</section>
+		</a>
 	{/each}
 
 	{#if posts.length === 0}
-		<p class="text-ink-50">Nothing published yet.</p>
+		<p class="py-6 text-[13px]" style="color: var(--ink-soft)">Nothing published yet.</p>
 	{/if}
 </div>

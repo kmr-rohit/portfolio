@@ -4,7 +4,6 @@
 	import { commentsEnabled, giscus } from '$lib/config';
 	import { theme } from '$lib/stores';
 	import { formatDate } from '$lib/utils';
-	import { reveal } from '$lib/actions/reveal';
 	import { onMount } from 'svelte';
 
 	export let data;
@@ -26,52 +25,48 @@
 	publishedAt={meta.date}
 />
 
-<article class="space-y-10">
-	<header use:reveal class="max-w-prose space-y-4">
-		<div class="tnum flex flex-wrap items-baseline gap-x-3 text-sm text-ink-50">
-			<time datetime={meta.date}>{formatDate(meta.date, 'long')}</time>
+<article>
+	<a href="/writing" class="back">← all writing</a>
+
+	<header class="proj-head">
+		<h1>{meta.title}</h1>
+		<p class="meta">
+			{formatDate(meta.date, 'long')}
 			{#if meta.readTime}
-				<span class="text-ink-30">{meta.readTime} min read</span>
+				<span aria-hidden="true"> · </span>{meta.readTime} min read
 			{/if}
-		</div>
-		<h1 class="text-2xl leading-snug text-foreground md:text-3xl">{meta.title}</h1>
+			{#if meta.tags?.length}
+				<span aria-hidden="true"> · </span>{meta.tags.filter(Boolean).join(' · ').toLowerCase()}
+			{/if}
+		</p>
 		{#if meta.description}
-			<p class="text-ink-50">{meta.description}</p>
-		{/if}
-		{#if meta.tags?.length}
-			<ul class="flex list-none flex-wrap gap-x-3 gap-y-1 font-mono text-2xs uppercase tracking-label text-ink-30">
-				{#each meta.tags as tag (tag)}
-					<li>{tag}</li>
-				{/each}
-			</ul>
+			<p class="lede">{meta.description}</p>
 		{/if}
 	</header>
 
-	<hr class="rule" />
+	<hr class="rule" style="margin-bottom: clamp(32px, 5vh, 48px)" />
 
-	<div use:reveal={{ delay: 40 }} class="mdsvex" id="mdsvex">
+	<div class="mdsvex" id="mdsvex">
 		<svelte:component this={content} />
 	</div>
 
-	<hr class="rule" />
-
-	<nav class="flex flex-col gap-4 text-sm md:flex-row md:justify-between">
+	<nav class="pager">
 		<div class="max-w-xs space-y-1">
 			{#if older}
-				<p class="font-mono text-2xs uppercase tracking-label text-ink-30">Older</p>
-				<a href="/writing/{older.slug}" class="link-quiet text-ink-70">{older.title}</a>
+				<p class="section-label" style="margin-bottom: 4px">Older</p>
+				<a href="/writing/{older.slug}">{older.title}</a>
 			{/if}
 		</div>
-		<div class="max-w-xs space-y-1 md:text-right">
+		<div class="max-w-xs space-y-1 text-right">
 			{#if newer}
-				<p class="font-mono text-2xs uppercase tracking-label text-ink-30">Newer</p>
-				<a href="/writing/{newer.slug}" class="link-quiet text-ink-70">{newer.title}</a>
+				<p class="section-label" style="margin-bottom: 4px">Newer</p>
+				<a href="/writing/{newer.slug}">{newer.title}</a>
 			{/if}
 		</div>
 	</nav>
 
 	{#if commentsEnabled}
-		<div id="comments" class="pt-4">
+		<div id="comments" class="pt-10">
 			<Giscus
 				repo={giscus.repo}
 				repoId={giscus.repoId}
