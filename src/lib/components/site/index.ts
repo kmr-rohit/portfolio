@@ -4,3 +4,4 @@ export { default as ThemeToggle } from './theme-toggle.svelte';
 export { default as Seo } from './seo.svelte';
 export { default as Section } from './section.svelte';
 export { default as PostList } from './post-list.svelte';
+export { default as Spotlight } from './spotlight.svelte';
