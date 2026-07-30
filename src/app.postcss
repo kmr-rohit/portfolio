@@ -685,12 +685,12 @@
 		padding-top: 4vh;
 	}
 
-	/* —— Inspiration mood board —— */
-	.inspo-root {
+	/* —— Life mood board —— */
+	.life-root {
 		background: #060608;
 	}
 
-	.inspo-root .top::before {
+	.life-root .top::before {
 		background: linear-gradient(
 			180deg,
 			rgba(6, 6, 8, 0.97),
@@ -700,7 +700,7 @@
 	}
 
 	.page.dark,
-	.page.inspo-page {
+	.page.life-page {
 		--ink: #f2f4f7;
 		--ink-soft: rgba(242, 244, 247, 0.6);
 		--hairline: rgba(242, 244, 247, 0.18);
@@ -712,7 +712,7 @@
 		background: #060608;
 	}
 
-	.inspo {
+	.life {
 		margin-inline: calc(50% - 50vw);
 		width: 100vw;
 		min-height: calc(100svh - 4rem);
@@ -721,7 +721,7 @@
 		column-gap: 10px;
 	}
 
-	.inspo-card {
+	.life-card {
 		break-inside: avoid;
 		page-break-inside: avoid;
 		margin: 0 0 10px;
@@ -736,13 +736,13 @@
 		transition: transform 0.35s ease, filter 0.35s ease;
 	}
 
-	.inspo-card img {
+	.life-card img {
 		width: 100%;
 		height: auto;
 		display: block;
 	}
 
-	.inspo-card figcaption {
+	.life-card figcaption {
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -757,18 +757,18 @@
 		transition: opacity 0.25s ease;
 	}
 
-	.inspo-card:hover,
-	.inspo-card:focus-within {
+	.life-card:hover,
+	.life-card:focus-within {
 		transform: translateX(var(--shift, 0)) rotate(var(--rot, 0deg)) scale(1.02);
 		z-index: 20;
 	}
 
-	.inspo-card:hover figcaption,
-	.inspo-card:focus-within figcaption {
+	.life-card:hover figcaption,
+	.life-card:focus-within figcaption {
 		opacity: 1;
 	}
 
-	.inspo-empty {
+	.life-empty {
 		max-width: 420px;
 		margin: 18vh auto 0;
 		padding-inline: 24px;
@@ -797,23 +797,23 @@
 	}
 
 	@media (max-width: 900px) {
-		.inspo {
+		.life {
 			columns: 180px 3;
 		}
 	}
 
 	@media (max-width: 640px) {
-		.inspo {
+		.life {
 			columns: 140px 2;
 			column-gap: 8px;
 		}
 
-		.inspo-card {
+		.life-card {
 			transform: none;
 		}
 
-		.inspo-card:hover,
-		.inspo-card:focus-within {
+		.life-card:hover,
+		.life-card:focus-within {
 			transform: scale(1.01);
 		}
 
@@ -827,7 +827,7 @@
 			display: none;
 		}
 
-		.inspo-card {
+		.life-card {
 			animation: none;
 			transform: none;
 		}

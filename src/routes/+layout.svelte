@@ -13,17 +13,17 @@
 	preparePageTransition();
 
 	$: isHome = $page.url.pathname === '/';
-	$: isInspiration = $page.url.pathname === '/inspiration';
+	$: isLife = $page.url.pathname === '/life';
 </script>
 
 <ModeWatcher />
 
-<div class="flex min-h-dvh flex-col" class:inspo-root={isInspiration}>
+<div class="flex min-h-dvh flex-col" class:life-root={isLife}>
 	<Header />
-	<main class="page flex-1 {isHome ? 'home' : ''} {isInspiration ? 'dark inspo-page' : ''}">
+	<main class="page flex-1 {isHome ? 'home' : ''} {isLife ? 'dark life-page' : ''}">
 		<slot />
 	</main>
-	{#if !isInspiration}
+	{#if !isLife}
 		<Footer />
 	{/if}
 </div>
