@@ -13,22 +13,21 @@ There is a particular disappointment that people building agents all seem to exp
 
 None of those are fixed by a better model. They are properties of the *harness*: everything that surrounds the model call. And since every team has access to roughly the same frontier models, the harness is the part that is actually yours.
 
+This post takes that claim apart. We start from the loop, name each piece that is not the model, and then look at the failure modes that only show up after the demo works.
+
+**What we'll cover**
+
+1. What the harness is (and is not)
+2. Context assembly and tool surfaces
+3. Error handling, observation, and termination
+4. Budgets — tokens, time, and dollars
+5. Why demos lie
+
 ## What the harness is
 
 Strip an agent down and there is a loop:
 
-```
-   ┌──────────────────────────────────────────────┐
-   │                                              │
-   ▼                                              │
- assemble context ──> model call ──> parse intent │
-                                          │       │
-                          ┌───────────────┘       │
-                          ▼                       │
-                   execute tool ──> observe ──────┘
-                          │
-                          └──> terminate?  ──> result
-```
+![The model occupies one box. The harness is every other box, plus every arrow.](/sketches/harness-loop.svg)
 
 The model occupies exactly one box. The harness is every other box, plus every arrow, plus all the decisions the diagram hides: what goes into "assemble context" and in what order, what a tool's interface looks like, what happens when execution fails, what "observe" records and what it throws away, and who decides the loop is over.
 
@@ -100,15 +99,7 @@ That last point generalises into what I think is the single highest-leverage pro
 
 In ordinary software an error propagates up until something handles it. In an agent loop, an error is *information* — it is the environment telling the agent something true about the world. The harness's job is to deliver that information in a form the model can act on, and then let the loop continue.
 
-```
- poor:   tool raises  ──>  harness catches  ──>  "an error occurred"
-                                                  (agent has no idea what to do)
-
- better: tool raises  ──>  harness formats  ──>  what failed
-                                                  why it failed
-                                                  what valid input looks like
-                                                  what to try instead
-```
+![A good harness turns tool failures into actionable input, not opaque exceptions.](/sketches/tool-errors.svg)
 
 A concrete version: a command that fails because a file does not exist should come back with the error *and* a listing of the directory it looked in. Nine times out of ten the model spots the typo immediately. Without the listing it guesses, and guessing is where loops come from.
 

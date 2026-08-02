@@ -19,7 +19,9 @@
 	};
 </script>
 
-<div class="group relative my-8 overflow-hidden rounded border border-white/[0.08] bg-[#1b1a17]">
+<div
+	class="group relative my-8 overflow-hidden rounded-[2px] border border-white/[0.08] bg-[#14151a]"
+>
 	{#if title}
 		<div
 			class="flex items-center justify-between border-b border-white/[0.08] px-4 py-2 font-mono text-2xs uppercase tracking-label text-white/40"

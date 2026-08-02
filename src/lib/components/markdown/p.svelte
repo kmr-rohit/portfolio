@@ -5,6 +5,9 @@
 	export { className as class };
 </script>
 
-<p class={cn('leading-relaxed text-ink-70 [&:not(:first-child)]:mt-5', className)} {...$$restProps}>
+<p
+	class={cn('text-[length:inherit] leading-[inherit] [&:not(:first-child)]:mt-[1.15em]', className)}
+	{...$$restProps}
+>
 	<slot />
 </p>

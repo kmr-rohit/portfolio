@@ -618,6 +618,221 @@
 		color: var(--ink);
 	}
 
+	/* —— Essay / writing article (Bearblog-inspired reading frame) —— */
+	.essay {
+		max-width: 42rem;
+		margin-inline: auto;
+		animation: essay-rise 0.55s ease both;
+	}
+
+	.essay-head {
+		margin-bottom: 0;
+	}
+
+	.essay-kicker {
+		font-family: var(--font);
+		font-size: 11px;
+		font-weight: 400;
+		letter-spacing: var(--track-caps);
+		text-transform: uppercase;
+		color: var(--ink-soft);
+		margin-bottom: 14px;
+	}
+
+	.essay-head h1 {
+		font-family: var(--font);
+		font-weight: 300;
+		font-size: clamp(1.85rem, 4.2vw, 2.65rem);
+		letter-spacing: var(--track-display);
+		line-height: 1.15;
+		text-wrap: balance;
+		color: var(--ink);
+		margin: 0;
+	}
+
+	.essay-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.35rem 0.15rem;
+		margin-top: 16px;
+		font-family: 'Geist Mono', ui-monospace, monospace;
+		font-size: 12px;
+		letter-spacing: 0.04em;
+		color: var(--ink-soft);
+	}
+
+	.essay-meta time {
+		font-style: normal;
+	}
+
+	.essay-dot {
+		margin-inline: 0.45rem;
+		opacity: 0.55;
+	}
+
+	.essay-standfirst {
+		margin-top: 22px;
+		max-width: 38rem;
+		font-family: 'Newsreader', 'Iowan Old Style', Palatino, Georgia, serif;
+		font-size: clamp(1.05rem, 0.35vw + 1rem, 1.2rem);
+		font-style: italic;
+		font-weight: 400;
+		line-height: 1.55;
+		letter-spacing: 0.01em;
+		color: color-mix(in srgb, var(--ink) 72%, transparent);
+		text-wrap: pretty;
+	}
+
+	.essay-rule {
+		height: 0;
+		margin-block: clamp(28px, 5vh, 40px);
+		border: 0;
+		border-top: 1px dashed var(--hairline);
+	}
+
+	.essay-body {
+		/* measure comes from .mdsvex; keep a hook for essay-only tweaks */
+		position: relative;
+	}
+
+	.essay-body > :first-child {
+		margin-top: 0;
+	}
+
+	.essay-foot {
+		margin-top: clamp(40px, 7vh, 64px);
+		padding-top: 20px;
+		border-top: 1px dashed var(--hairline);
+	}
+
+	.essay-foot-note {
+		font-family: 'Newsreader', Georgia, serif;
+		font-size: 0.98rem;
+		line-height: 1.65;
+		color: var(--ink-soft);
+		max-width: 36rem;
+	}
+
+	@keyframes essay-rise {
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.essay {
+			animation: none;
+		}
+	}
+
+	.essay-index-head {
+		margin-bottom: clamp(36px, 6vh, 56px);
+		max-width: 42rem;
+	}
+
+	.essay-index-head h1 {
+		font-weight: 300;
+		font-size: clamp(30px, 5vw, 54px);
+		letter-spacing: var(--track-display);
+	}
+
+	.essay-index-lede {
+		margin-top: 14px;
+		font-family: 'Newsreader', Georgia, serif;
+		font-size: clamp(1.02rem, 0.3vw + 0.95rem, 1.12rem);
+		line-height: 1.65;
+		letter-spacing: 0.01em;
+		color: color-mix(in srgb, var(--ink) 72%, transparent);
+		max-width: 36rem;
+	}
+
+	.essay-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		max-width: 42rem;
+		border-top: 1px solid var(--hairline);
+	}
+
+	.essay-list > li {
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	.essay-list-item {
+		display: grid;
+		grid-template-columns: 6.5rem minmax(0, 1fr);
+		gap: 18px 28px;
+		padding-block: 22px;
+		align-items: start;
+		transition: opacity 0.2s ease;
+	}
+
+	.essay-list-item:hover {
+		opacity: 0.72;
+	}
+
+	.essay-list-date {
+		font-family: 'Geist Mono', ui-monospace, monospace;
+		font-size: 12px;
+		letter-spacing: 0.04em;
+		color: var(--ink-soft);
+		padding-top: 5px;
+	}
+
+	.essay-list-main {
+		display: grid;
+		gap: 6px;
+		min-width: 0;
+	}
+
+	.essay-list-title {
+		font-family: var(--font);
+		font-size: clamp(1.05rem, 0.4vw + 1rem, 1.2rem);
+		font-weight: 400;
+		letter-spacing: 0.02em;
+		line-height: 1.35;
+		color: var(--ink);
+		text-wrap: balance;
+	}
+
+	.essay-list-desc {
+		font-family: 'Newsreader', Georgia, serif;
+		font-size: 0.98rem;
+		line-height: 1.55;
+		color: color-mix(in srgb, var(--ink) 68%, transparent);
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.essay-list-meta {
+		font-family: var(--font);
+		font-size: 11px;
+		letter-spacing: var(--track-nav);
+		text-transform: lowercase;
+		color: var(--ink-soft);
+		margin-top: 2px;
+	}
+
+	@media (max-width: 640px) {
+		.essay-list-item {
+			grid-template-columns: 1fr;
+			gap: 6px;
+			padding-block: 18px;
+		}
+
+		.essay-list-date {
+			padding-top: 0;
+		}
+	}
+
 	/* —— Studio-style grid —— */
 	.play-list {
 		display: grid;

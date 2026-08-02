@@ -1,7 +1,7 @@
 export const site = {
 	name: 'Rohit Kumar',
 	handle: 'rohit',
-	url: 'https://kmrrohit.vercel.app',
+	url: 'https://kmrrohit.space',
 	title: 'Rohit Kumar',
 	role: 'AI engineer',
 	description:
