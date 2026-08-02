@@ -1,7 +1,7 @@
 # Rohit Kumar — Application Profile
 
 > Dense brief for custom application questions, recruiter forms, and “tell me about an AI project” prompts.  
-> Live page: [kmrrohit.vercel.app/profile](https://kmrrohit.vercel.app/profile) · Site: [kmrrohit.vercel.app](https://kmrrohit.vercel.app)  
+> Live page: [kmrrohit.space/profile](https://kmrrohit.space/profile) · Site: [kmrrohit.space](https://kmrrohit.space)  
 > Last updated: August 2026
 
 ---
@@ -18,8 +18,8 @@
 | Email | rr7433446@gmail.com |
 | GitHub | [github.com/kmr-rohit](https://github.com/kmr-rohit) |
 | LinkedIn | [linkedin.com/in/rr7433446](https://www.linkedin.com/in/rr7433446/) |
-| Portfolio | [kmrrohit.vercel.app](https://kmrrohit.vercel.app) |
-| Résumé | [kmrrohit.vercel.app/rohit-kumar-resume.pdf](https://kmrrohit.vercel.app/rohit-kumar-resume.pdf) |
+| Portfolio | [kmrrohit.space](https://kmrrohit.space) |
+| Résumé | [kmrrohit.space/rohit-kumar-resume.pdf](https://kmrrohit.space/rohit-kumar-resume.pdf) |
 | Education | B.Tech, Mechanical Engineering · NIT Warangal · 2020–2024 |
 | Work authorization | India (Bengaluru-based; open to remote / relocation per role) |
 
@@ -111,7 +111,7 @@ Large merged PR (~5.4k LOC); public chatbot path hardened for anonymous use; com
 
 **Stack.** Python, MCP, Agentic RAG, Kubeflow Pipelines, KServe, Istio, Helm, OKE, TEI.
 
-**Links.** [Repository](https://github.com/kubeflow/docs-agent) · [My PRs](https://github.com/kubeflow/docs-agent/pulls?q=is%3Apr+author%3Akmr-rohit) · [Write-up](https://kmrrohit.vercel.app/writing/agentic-rag-for-kubeflow)
+**Links.** [Repository](https://github.com/kubeflow/docs-agent) · [My PRs](https://github.com/kubeflow/docs-agent/pulls?q=is%3Apr+author%3Akmr-rohit) · [Write-up](https://kmrrohit.space/writing/agentic-rag-for-kubeflow)
 
 **Why this project (for interviews).**  
 It shows production RAG judgment: multi-index design, tool boundaries, metadata for filtered retrieval, eval/CI, and serving/security — not just “I called an LLM API.”
@@ -223,19 +223,19 @@ Links: [live](https://aitutor-two-hazel.vercel.app) · [source](https://github.c
 
 | Title | Topic | Link |
 | --- | --- | --- |
-| Teaching a docs agent to read the repo | Kubeflow agentic RAG / MCP | [/writing/agentic-rag-for-kubeflow](https://kmrrohit.vercel.app/writing/agentic-rag-for-kubeflow) |
-| SGLang, or a runtime that remembers | SGLang architecture | [/writing/sglang-architecture](https://kmrrohit.vercel.app/writing/sglang-architecture) |
-| vLLM from the inside | vLLM architecture | [/writing/vllm-architecture](https://kmrrohit.vercel.app/writing/vllm-architecture) |
-| Context engineering, after the window stopped being the problem | Agents / context / retrieval | [/writing/context-engineering-for-agents](https://kmrrohit.vercel.app/writing/context-engineering-for-agents) |
-| The harness is the product | Agent harness design | [/writing/the-agentic-harness](https://kmrrohit.vercel.app/writing/the-agentic-harness) |
-| The two clocks | LLM serving / prefill vs decode | [/writing/the-two-clocks](https://kmrrohit.vercel.app/writing/the-two-clocks) |
+| Teaching a docs agent to read the repo | Kubeflow agentic RAG / MCP | [/writing/agentic-rag-for-kubeflow](https://kmrrohit.space/writing/agentic-rag-for-kubeflow) |
+| SGLang, or a runtime that remembers | SGLang architecture | [/writing/sglang-architecture](https://kmrrohit.space/writing/sglang-architecture) |
+| vLLM from the inside | vLLM architecture | [/writing/vllm-architecture](https://kmrrohit.space/writing/vllm-architecture) |
+| Context engineering, after the window stopped being the problem | Agents / context / retrieval | [/writing/context-engineering-for-agents](https://kmrrohit.space/writing/context-engineering-for-agents) |
+| The harness is the product | Agent harness design | [/writing/the-agentic-harness](https://kmrrohit.space/writing/the-agentic-harness) |
+| The two clocks | LLM serving / prefill vs decode | [/writing/the-two-clocks](https://kmrrohit.space/writing/the-two-clocks) |
 
 ---
 
 ## Community
 
 - **Kubeflow Docs Agent community call** — every other Saturday, 11:00 PM IST (17:30 UTC), Zoom via LFX. Working session: what landed, what’s open, good first issues.  
-  Details: [kmrrohit.vercel.app/community](https://kmrrohit.vercel.app/community)
+  Details: [kmrrohit.space/community](https://kmrrohit.space/community)
 
 ---
 
@@ -279,5 +279,5 @@ National Institute of Technology, Warangal · 2020 — 2024
 - Email: rr7433446@gmail.com  
 - GitHub: [kmr-rohit](https://github.com/kmr-rohit)  
 - LinkedIn: [in/rr7433446](https://www.linkedin.com/in/rr7433446/)  
-- Site: [kmrrohit.vercel.app](https://kmrrohit.vercel.app)  
-- This brief: [kmrrohit.vercel.app/profile](https://kmrrohit.vercel.app/profile) · source: `PROFILE.md` in the portfolio repo
+- Site: [kmrrohit.space](https://kmrrohit.space)  
+- This brief: [kmrrohit.space/profile](https://kmrrohit.space/profile) · source: `PROFILE.md` in the portfolio repo

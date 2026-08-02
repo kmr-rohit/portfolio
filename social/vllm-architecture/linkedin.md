@@ -11,6 +11,6 @@ What I found most clarifying in V1:
 
 I wrote an outside-in architecture walkthrough. Prerequisite: the prefill/decode picture in “The two clocks.”
 
-Read: https://kmrrohit.vercel.app/writing/vllm-architecture
+Read: https://kmrrohit.space/writing/vllm-architecture
 
 #vLLM #Inference #LLM #SystemsEngineering

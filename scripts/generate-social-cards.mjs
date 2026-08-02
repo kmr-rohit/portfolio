@@ -12,7 +12,7 @@ import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
-const siteUrl = 'https://kmrrohit.vercel.app';
+const siteUrl = 'https://kmrrohit.space';
 
 const paper = '#e6e9ed';
 const ink = '#1d1f22';

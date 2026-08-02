@@ -15,6 +15,6 @@ SGLang makes that tree explicit:
 
 I wrote this as a companion to the vLLM piece — same level of detail, different design bet.
 
-Read: https://kmrrohit.vercel.app/writing/sglang-architecture
+Read: https://kmrrohit.space/writing/sglang-architecture
 
 #SGLang #Inference #LLM #Systems

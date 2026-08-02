@@ -16,6 +16,6 @@ That shift reframes the whole toolkit:
 
 Notes from rebuilding the discipline after the window stopped being the bottleneck:
 
-https://kmrrohit.vercel.app/writing/context-engineering-for-agents
+https://kmrrohit.space/writing/context-engineering-for-agents
 
 #Agents #ContextEngineering #LLM #RAG

@@ -4,7 +4,7 @@ Million-token windows did not end context management — they changed what it is
 
 The scarce resource is attention, not space. Curation beats stuffing; sub-agents beat dumping a whole search into the main thread.
 
-https://kmrrohit.vercel.app/writing/context-engineering-for-agents
+https://kmrrohit.space/writing/context-engineering-for-agents
 
 ---
 
@@ -16,4 +16,4 @@ https://kmrrohit.vercel.app/writing/context-engineering-for-agents
 
 3/ Strongest isolation trick: delegate wide search to a sub-agent and keep one verifiable line in the parent.
 
-4/ https://kmrrohit.vercel.app/writing/context-engineering-for-agents
+4/ https://kmrrohit.space/writing/context-engineering-for-agents

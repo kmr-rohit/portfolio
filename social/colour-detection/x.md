@@ -2,4 +2,4 @@
 
 Small OpenCV project: click a pixel → colour name + RGB.
 
-https://kmrrohit.vercel.app/writing/colour-detection
+https://kmrrohit.space/writing/colour-detection

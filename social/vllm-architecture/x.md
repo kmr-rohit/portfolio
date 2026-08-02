@@ -4,7 +4,7 @@ vLLM is more than PagedAttention now.
 
 V1’s real story: kill the host-side tax — process split, a token-budget scheduler, a KV block pool with prefix caching, and piecewise CUDA graphs around eager attention.
 
-Architecture notes: https://kmrrohit.vercel.app/writing/vllm-architecture
+Architecture notes: https://kmrrohit.space/writing/vllm-architecture
 
 ---
 
@@ -16,4 +16,4 @@ Architecture notes: https://kmrrohit.vercel.app/writing/vllm-architecture
 
 3/ Outside-in walkthrough: API/EngineCore split → scheduler → block pool → persistent batch → one request end to end.
 
-4/ https://kmrrohit.vercel.app/writing/vllm-architecture
+4/ https://kmrrohit.space/writing/vllm-architecture

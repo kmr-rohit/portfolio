@@ -4,6 +4,6 @@ A working list of resources that helped me learn DSA and adjacent topics — pla
 
 Not a curriculum pitch. Just a bookmark dump that stayed useful:
 
-https://kmrrohit.vercel.app/writing/learning-resources
+https://kmrrohit.space/writing/learning-resources
 
 #Learning #DSA #Programming

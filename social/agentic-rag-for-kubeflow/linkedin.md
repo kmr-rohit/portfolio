@@ -14,6 +14,6 @@ Retrieval quality was not the bottleneck. **The corpus was.** No amount of reran
 
 So the work became ingestion and tool boundaries: docs, issues, code, manifests — kept distinct, exposed as MCP tools an agent can choose between, with evaluation in CI so ranking regressions fail the build.
 
-Write-up: https://kmrrohit.vercel.app/writing/agentic-rag-for-kubeflow
+Write-up: https://kmrrohit.space/writing/agentic-rag-for-kubeflow
 
 #Kubeflow #RAG #OpenSource #GSoC #MCP

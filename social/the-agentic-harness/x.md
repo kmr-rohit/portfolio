@@ -4,7 +4,7 @@ Everyone ships the same models.
 
 What separates an agent that works from one that demos well is the loop around the model — context, tools, errors, budgets, and knowing when to stop.
 
-https://kmrrohit.vercel.app/writing/the-agentic-harness
+https://kmrrohit.space/writing/the-agentic-harness
 
 ---
 
@@ -16,4 +16,4 @@ https://kmrrohit.vercel.app/writing/the-agentic-harness
 
 3/ Highest leverage I’ve found: treat tool errors as input the model can act on, not as exceptions to swallow.
 
-4/ https://kmrrohit.vercel.app/writing/the-agentic-harness
+4/ https://kmrrohit.space/writing/the-agentic-harness

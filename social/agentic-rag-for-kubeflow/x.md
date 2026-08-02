@@ -4,7 +4,7 @@ Docs-only RAG fails on infrastructure questions. The answers live in issues, CRD
 
 Notes from turning kubeflow/docs-agent into multi-index, tool-routed retrieval (GSoC):
 
-https://kmrrohit.vercel.app/writing/agentic-rag-for-kubeflow
+https://kmrrohit.space/writing/agentic-rag-for-kubeflow
 
 ---
 
@@ -16,4 +16,4 @@ https://kmrrohit.vercel.app/writing/agentic-rag-for-kubeflow
 
 3/ Index issues/code/manifests separately, expose them as tools, evaluate in CI.
 
-4/ https://kmrrohit.vercel.app/writing/agentic-rag-for-kubeflow
+4/ https://kmrrohit.space/writing/agentic-rag-for-kubeflow

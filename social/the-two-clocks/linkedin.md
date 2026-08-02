@@ -14,6 +14,6 @@ Almost every serious serving trick is a move in that game:
 
 I wrote this as a first-principles walkthrough of why those techniques exist, not just what they are called.
 
-Read: https://kmrrohit.vercel.app/writing/the-two-clocks
+Read: https://kmrrohit.space/writing/the-two-clocks
 
 #LLM #Inference #GPUs #Systems

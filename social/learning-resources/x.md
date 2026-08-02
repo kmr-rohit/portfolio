@@ -2,4 +2,4 @@
 
 Bookmark dump of DSA / systems learning links I actually used:
 
-https://kmrrohit.vercel.app/writing/learning-resources
+https://kmrrohit.space/writing/learning-resources

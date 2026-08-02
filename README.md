@@ -1,4 +1,4 @@
-# kmrrohit.vercel.app
+# kmrrohit.space
 
 Personal site and writing, built with SvelteKit, mdsvex and Tailwind, deployed on Vercel.
 

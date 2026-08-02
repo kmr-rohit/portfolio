@@ -4,7 +4,7 @@ Almost everything hard about serving an LLM comes from one fact: generation runs
 
 Prefill is compute-bound. Decode is memory-bound. The KV cache, batching, PagedAttention, speculative decoding — all of them are moves in that game.
 
-https://kmrrohit.vercel.app/writing/the-two-clocks
+https://kmrrohit.space/writing/the-two-clocks
 
 ---
 
@@ -16,4 +16,4 @@ https://kmrrohit.vercel.app/writing/the-two-clocks
 
 3/ That asymmetry is why the KV cache exists, why batching is nearly free for decode, and why frontier stacks now split prefill and decode onto separate GPU pools.
 
-4/ Full walkthrough (10 sections, from roofline to metrics): https://kmrrohit.vercel.app/writing/the-two-clocks
+4/ Full walkthrough (10 sections, from roofline to metrics): https://kmrrohit.space/writing/the-two-clocks

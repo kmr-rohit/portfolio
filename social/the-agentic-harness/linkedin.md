@@ -10,6 +10,6 @@ Since every team has access to roughly the same frontier models, the harness is 
 
 I wrote down the loop, the failure modes that only show up after the demo works, and why “errors as input” beats opaque catch-and-apologize.
 
-Read: https://kmrrohit.vercel.app/writing/the-agentic-harness
+Read: https://kmrrohit.space/writing/the-agentic-harness
 
 #Agents #AIEngineering #LLM

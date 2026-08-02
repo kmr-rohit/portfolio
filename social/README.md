@@ -19,7 +19,7 @@ social/
 1. Open `social/<slug>/`.
 2. Copy `linkedin.md` or `x.md`.
 3. Attach `card.png`.
-4. Add the canonical link: `https://kmrrohit.vercel.app/writing/<slug>`.
+4. Add the canonical link: `https://kmrrohit.space/writing/<slug>`.
 
 ## Regenerating cards
 
