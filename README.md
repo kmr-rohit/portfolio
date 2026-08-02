@@ -17,6 +17,7 @@ npm run dev
 | Projects | `src/lib/projects.ts` |
 | Experience, skills, achievements | `src/lib/work.ts` |
 | Community call details, LinkedIn posts | `src/lib/community.ts` |
+| Application brief (custom form answers) | `PROFILE.md` · `/profile` |
 | Posts | `posts/<slug>/page.md` |
 | Colour tokens and link styles | `src/app.postcss` |
 | Article prose styles | `src/lib/components/markdown/` |
@@ -45,7 +46,7 @@ Two things to know about the markdown pipeline:
 
 ## Routes
 
-`/` home · `/writing` index · `/writing/[slug]` post · `/projects` · `/about` · `/community` · `/rss.xml` · `/sitemap.xml`
+`/` home · `/writing` index · `/writing/[slug]` post · `/projects` · `/life` · `/about` · `/community` · `/profile` (application brief) · `/rss.xml` · `/sitemap.xml`
 
 `/blog` and `/blog/[slug]` 308-redirect to their `/writing` equivalents.
 
