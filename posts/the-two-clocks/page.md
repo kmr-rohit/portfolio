@@ -36,21 +36,7 @@ An LLM generates text autoregressively: it reads a prompt, produces one token, a
 
 **Decode** is what happens after. Now you generate one token at a time. Each step feeds a single new token through the whole network and out comes the next one. The matrix multiplies degenerate into skinny matrix-vector products. There is almost no parallel work available to hide the cost of reading the model's weights out of memory.
 
-```
-PREFILL                              DECODE
-one pass, all tokens, parallel       many passes, one token each
-
-  The cat sat on the                   mat ─> pass
-  └──────┬──────────┘                  pass ─> on
-         │                             on   ─> the
-   large dense GEMMs                    ⋮
-   tensor cores busy                  every step re-reads
-         │                            all model weights
-         ▼                            from HBM
-     "mat"  (1st token)               ────────────────────
-                                      skinny matmuls
-  bounded by FLOPs                    bounded by BANDWIDTH
-```
+![Prefill is one parallel pass; decode is many skinny memory-bound steps.](/sketches/two-clocks.svg)
 
 This distinction is the load-bearing idea of the entire field. Hold onto it, because every technique that follows is an answer to the same question: given that decode wastes the GPU's compute, how do we get that compute back?
 
@@ -62,16 +48,7 @@ Here is a question that pins down why decode behaves the way it does. In attenti
 
 The naive approach recomputes them from scratch every step. That is quadratic waste — by the time you finish a long response you have re-derived the same early keys hundreds of times. So instead you compute each token's K and V once and keep them. That store is the KV cache, and it is the large hidden byproduct that prefill was quietly building the whole time.
 
-```
-                 prefill        step 1   step 2   step 3
-              ┌───────────┐      ┌─┐      ┌─┐      ┌─┐
-   K,V   ──>  │ ░░░░░░░░░ │  +   │█│  +   │█│  +   │█│
-              └───────────┘      └─┘      └─┘      └─┘
-               5 prompt tokens    +1       +1       +1
-
-   ░ read back from cache, never recomputed
-   █ the one new token computed this step
-```
+![Prefill writes Keys and Values into the KV-cache; decode restores them and only appends the new token.](/sketches/prefill-decode-kv.svg)
 
 The cache is a spectacular optimisation for compute, but it moves the problem. That state is enormous, it grows with every token, and it lives in the same scarce GPU memory as the model weights. The size is worth committing to memory:
 
@@ -159,25 +136,15 @@ This one change is often worth a 10–20x throughput improvement over static bat
 
 Before vLLM, serving systems reserved KV-cache memory the obvious way: one contiguous block per sequence, sized for the maximum possible length. This is disastrous. If a request *might* reach 2,048 tokens you reserve for 2,048 even if it stops at 30. The unused space is stranded — internal fragmentation — and the fixed-size holes left by finished requests rarely fit the next one, which is external fragmentation. Measurements found real systems wasting 60–80% of their KV memory this way.
 
+![External fragmentation: free bytes exist, but not as one contiguous run a new request can use.](/sketches/external-fragmentation.svg)
+
 The fix is lifted straight out of operating systems. Your OS does not hand a process one contiguous run of physical RAM. It hands out fixed-size pages and keeps a page table mapping the process's tidy logical address space onto scattered physical frames. PagedAttention does exactly this for the KV cache.
 
-```
- logical blocks            block table         physical memory
- (what the seq sees)                           (fixed frames)
+![GPU memory left after weights and activations is carved into a fixed pool of KV blocks.](/sketches/kv-block-pool.svg)
 
- ┌──────────────┐         0 ──> phys 7        ┌────┬────┬────┐
- │ blk 0 · t0-3 │                             │ p0 │ p1 │ p2 │
- ├──────────────┤         1 ──> phys 2        ├────┼────┼────┤
- │ blk 1 · t4-7 │                             │ p3 │ p4 │ p5 │
- ├──────────────┤         2 ──> phys 5        ├────┼────┼────┤
- │ blk 2 · t8-11│                             │ p6 │ p7 │ p8 │
- └──────────────┘                             └────┴────┴────┘
+Grow one block at a time — no over-reservation, no fragmentation. Two requests sharing a system prompt point their block tables at the *same* physical blocks: copy-on-write, exactly like forked processes.
 
- grow one block at a time — no over-reservation, no fragmentation
-
- two requests sharing a system prompt point their block tables at the
- SAME physical blocks: copy-on-write, exactly like forked processes
-```
+![Shared system-prompt blocks are reference-counted across requests.](/sketches/prefix-cache.svg)
 
 The payoff is twofold. Memory waste drops from roughly 70% to a few percent, so you fit far more concurrent sequences — which, remember, is the actual constraint on throughput. And you get prefix sharing almost free: many requests share a long system prompt, and now they can share the physical KV blocks for it, exactly like forked Unix processes sharing pages. This is the idea that made vLLM the default open-source serving engine, and I have written a [longer breakdown of how the rest of that engine fits together](/writing/vllm-architecture).
 

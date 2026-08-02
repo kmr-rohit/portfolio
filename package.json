@@ -9,6 +9,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"sketches": "node scripts/generate-sketches.mjs",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
@@ -27,6 +28,7 @@
 		"eslint-plugin-svelte": "^2.30.0",
 		"hast-util-to-html": "^9.0.0",
 		"hast-util-to-string": "^3.0.0",
+		"jsdom": "^30.0.1",
 		"mdsvex": "^0.11.0",
 		"postcss": "^8.4.24",
 		"postcss-load-config": "^4.0.1",
@@ -58,6 +60,7 @@
 		"rehype-slug": "^6.0.0",
 		"remark-math": "^6.0.0",
 		"remark-unwrap-images": "^4.0.0",
+		"roughjs": "^4.6.6",
 		"tailwind-merge": "^2.0.0"
 	}
 }

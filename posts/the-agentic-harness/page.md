@@ -27,18 +27,7 @@ This post takes that claim apart. We start from the loop, name each piece that i
 
 Strip an agent down and there is a loop:
 
-```
-   ┌──────────────────────────────────────────────┐
-   │                                              │
-   ▼                                              │
- assemble context ──> model call ──> parse intent │
-                                          │       │
-                          ┌───────────────┘       │
-                          ▼                       │
-                   execute tool ──> observe ──────┘
-                          │
-                          └──> terminate?  ──> result
-```
+![The model occupies one box. The harness is every other box, plus every arrow.](/sketches/harness-loop.svg)
 
 The model occupies exactly one box. The harness is every other box, plus every arrow, plus all the decisions the diagram hides: what goes into "assemble context" and in what order, what a tool's interface looks like, what happens when execution fails, what "observe" records and what it throws away, and who decides the loop is over.
 

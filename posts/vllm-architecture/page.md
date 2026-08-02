@@ -26,21 +26,7 @@ This post builds the engine from the outside in. We start with the shape of a re
 
 At the top level vLLM splits into a front-end that speaks to users and a core that speaks to GPUs, and — since the V1 rewrite — those live in *separate processes* connected by a message queue.
 
-```
- ┌─────────────────────── API server process ───────────────────────┐
- │  HTTP / OpenAI-compatible routes                                  │
- │  tokenization · multimodal preprocessing · detokenization         │
- └───────────────────────────────┬───────────────────────────────────┘
-                                 │  ZeroMQ IPC
- ┌───────────────────────────────▼───────────────────────────────────┐
- │                          EngineCore process                        │
- │                                                                    │
- │   Scheduler  ──>  KVCacheManager  ──>  block pool                 │
- │       │                                                            │
- │       ▼                                                            │
- │   ModelExecutor ──> Worker(s) ──> ModelRunner ──> attention backend│
- └────────────────────────────────────────────────────────────────────┘
-```
+![vLLM V1 puts tokenization and HTTP in one process and the GPU loop in another, linked by ZeroMQ.](/sketches/vllm-process-split.svg)
 
 The split matters more than it looks. Tokenization, detokenization and HTTP serialisation are pure Python, and in V0 they ran on the same thread as the scheduling loop. Every millisecond spent turning token ids back into UTF-8 was a millisecond the GPU spent idle between forward passes. Pushing them into their own process means the engine loop does almost nothing but schedule and launch, and the two halves overlap.
 
@@ -75,16 +61,7 @@ Underneath sits the part everyone knows about, though the implementation has mor
 
 GPU memory is carved up at startup. vLLM runs a profiling pass, measures peak activation memory for the configured maximum batch, subtracts that and the model weights from total memory, and turns whatever is left into a fixed pool of KV blocks. Each block holds a fixed number of tokens — 16 is the common default — for every layer and KV head.
 
-```
- total GPU memory
- ├── model weights            (fixed)
- ├── activation peak          (measured by profiling run)
- └── KV cache  ──>  block pool
-                    ┌────┬────┬────┬────┬────┬────┬────┬────┐
-                    │ b0 │ b1 │ b2 │ b3 │ b4 │ b5 │ b6 │ b7 │
-                    └────┴────┴────┴────┴────┴────┴────┴────┘
-                     free-block queue: [b3, b6, b1, ...]
-```
+![After weights and activation peak, leftover HBM becomes a fixed queue of KV blocks.](/sketches/kv-block-pool.svg)
 
 A sequence never sees this. It sees a contiguous run of logical blocks, and a **block table** maps each to a physical index. When a sequence grows past its current block it takes one more from the free queue. When it finishes, its blocks go back. That is the whole allocation story, and it is why memory waste drops from the 60–80% that contiguous pre-reservation used to burn down to a few percent.
 
@@ -96,14 +73,7 @@ Once KV state lives in shared, addressable blocks, sharing it between requests b
 
 vLLM hashes each block by the tokens it contains *plus the hash of the block before it*. That prefix-chained hash means two sequences with an identical first 600 tokens produce identical hashes for the blocks covering them, and the second request can simply point its block table at the blocks the first one already filled.
 
-```
- request 1:  [system prompt ............][user question A]
- request 2:  [system prompt ............][user question B]
-              └── identical hashes ────┘
-                  same physical blocks, refcounted
-
- hash(block_n) = H(hash(block_n-1), tokens_in_block_n)
-```
+![Two requests with the same system prompt share the physical blocks for that prefix.](/sketches/prefix-cache.svg)
 
 Blocks are reference-counted; a freed block whose refcount is still positive stays alive. Freed blocks go onto an LRU-ordered queue rather than being wiped, so a block can be re-adopted by a later matching request until the pool needs to reuse it. In V1 the bookkeeping was made cheap enough to leave this on by default, which for anything with a long shared system prompt — which is every agent, every RAG pipeline — cuts a large fraction of prefill work outright.
 

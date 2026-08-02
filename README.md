@@ -19,6 +19,7 @@ npm run dev
 | Community call details, LinkedIn posts | `src/lib/community.ts` |
 | Application brief (custom form answers) | `PROFILE.md` · `/profile` |
 | Posts | `posts/<slug>/page.md` |
+| Hand-drawn sketches (Rough.js) | `static/sketches/` · `npm run sketches` |
 | Colour tokens and link styles | `src/app.postcss` |
 | Article prose styles | `src/lib/components/markdown/` |
 
@@ -38,6 +39,22 @@ draft: false
 ```
 
 Read time is computed from the source in `src/lib/posts.ts`, so there is nothing to maintain by hand. Set `readTime` in frontmatter only to override it.
+
+### Sketches
+
+Architecture diagrams use [Rough.js](https://roughjs.com/) — the same sketch engine behind Excalidraw — so they read like notebook scraps rather than ASCII code blocks.
+
+```bash
+npm run sketches   # regenerates SVG into static/sketches/ and src/lib/sketches/
+```
+
+Embed in a post with a normal image whose `alt` becomes the caption:
+
+```md
+![Prefill writes Keys and Values into the KV-cache.](/sketches/prefill-decode-kv.svg)
+```
+
+You can also drop hand-authored Excalidraw SVG exports into those folders; anything under `/sketches/` gets the pasted-note frame.
 
 Two things to know about the markdown pipeline:
 
