@@ -13,6 +13,16 @@ There is a particular disappointment that people building agents all seem to exp
 
 None of those are fixed by a better model. They are properties of the *harness*: everything that surrounds the model call. And since every team has access to roughly the same frontier models, the harness is the part that is actually yours.
 
+This post takes that claim apart. We start from the loop, name each piece that is not the model, and then look at the failure modes that only show up after the demo works.
+
+**What we'll cover**
+
+1. What the harness is (and is not)
+2. Context assembly and tool surfaces
+3. Error handling, observation, and termination
+4. Budgets — tokens, time, and dollars
+5. Why demos lie
+
 ## What the harness is
 
 Strip an agent down and there is a loop:

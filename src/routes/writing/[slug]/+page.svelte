@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Seo } from '$lib/components/site';
 	import { Giscus } from '$lib/components/site/gicsus_';
-	import { commentsEnabled, giscus } from '$lib/config';
+	import { commentsEnabled, giscus, site } from '$lib/config';
 	import { theme } from '$lib/stores';
 	import { formatDate } from '$lib/utils';
 	import { onMount } from 'svelte';
@@ -15,6 +15,8 @@
 	onMount(() => {
 		storedTheme = localStorage.getItem('mode')?.replace(/^"(.*)"$/, '$1');
 	});
+
+	$: tags = (meta.tags ?? []).filter(Boolean);
 </script>
 
 <Seo
@@ -25,30 +27,43 @@
 	publishedAt={meta.date}
 />
 
-<article>
-	<a href="/writing" class="back">← all writing</a>
+<article class="essay">
+	<a href="/writing" class="back">← Writing</a>
 
-	<header class="proj-head">
+	<header class="essay-head">
+		{#if tags.length}
+			<p class="essay-kicker">{tags.join(' · ')}</p>
+		{/if}
 		<h1>{meta.title}</h1>
-		<p class="meta">
-			{formatDate(meta.date, 'long')}
+		<p class="essay-meta">
+			<time datetime={meta.date}>{formatDate(meta.date, 'long')}</time>
 			{#if meta.readTime}
-				<span aria-hidden="true"> · </span>{meta.readTime} min read
+				<span class="essay-dot" aria-hidden="true">·</span>
+				<span>{meta.readTime} min read</span>
 			{/if}
-			{#if meta.tags?.length}
-				<span aria-hidden="true"> · </span>{meta.tags.filter(Boolean).join(' · ').toLowerCase()}
-			{/if}
+			<span class="essay-dot" aria-hidden="true">·</span>
+			<span>{site.name}</span>
 		</p>
 		{#if meta.description}
-			<p class="lede">{meta.description}</p>
+			<p class="essay-standfirst">{meta.description}</p>
 		{/if}
 	</header>
 
-	<hr class="rule" style="margin-bottom: clamp(32px, 5vh, 48px)" />
+	<div class="essay-rule" aria-hidden="true"></div>
 
-	<div class="mdsvex" id="mdsvex">
+	<div class="mdsvex essay-body" id="mdsvex">
 		<svelte:component this={content} />
 	</div>
+
+	<footer class="essay-foot">
+		<p class="essay-foot-note">
+			Thanks for reading. If something here is wrong or unclear, open an issue on the
+			<a href="https://github.com/kmr-rohit/portfolio" class="bio-link" target="_blank" rel="noreferrer"
+				>site repo</a
+			>
+			or write me.
+		</p>
+	</footer>
 
 	<nav class="pager">
 		<div class="max-w-xs space-y-1">

@@ -15,6 +15,15 @@ Then the windows got long. A million tokens is a codebase. It is a year of a con
 
 It was not. It changed shape. Filling a large window is easy and usually makes things worse, and the reason is that **the window measures space while the actual constraint is attention.**
 
+This post rebuilds the discipline from that shift: what still fails at a million tokens, why curation beats stuffing, and how compaction, retrieval and sub-agents fit once attention — not space — is the scarce resource.
+
+**What we'll cover**
+
+1. Positional and length effects that big windows do not erase
+2. Context as a shared attention budget
+3. Compaction, retrieval, and sub-agents under the new constraint
+4. Practical rules for agent prompts
+
 ## The thing that does not scale
 
 Two effects are well documented enough to design around.

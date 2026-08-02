@@ -14,6 +14,16 @@ I spend my open-source time on [kubeflow/docs-agent](https://github.com/kubeflow
 
 The starting point was a reasonable system that did the standard thing: chunk the Markdown docs, embed them, retrieve top-k, generate. It worked, in the sense that it answered documentation questions from documentation. The problem is that most of the questions people actually bring to a Kubeflow assistant are not documentation questions.
 
+This post builds from that failure mode. We look at where answers actually live, why a single undifferentiated index cannot find them, and what it takes to turn issues, code and manifests into MCP tools an agent can choose between.
+
+**What we'll cover**
+
+1. Why docs-only RAG fails on infrastructure questions
+2. Multi-index retrieval with source metadata
+3. MCP tool boundaries instead of one blob
+4. Evaluation and CI so ranking regressions fail the build
+5. What I would still change
+
 ## Where the answer actually lives
 
 Watch what someone types into a help box for a platform like this. A representative sample:

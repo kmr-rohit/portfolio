@@ -11,7 +11,15 @@ draft: false
 
 If [vLLM](/writing/vllm-architecture) starts from the observation that KV cache memory should be managed like virtual memory, SGLang starts from a different one: **the calls an application makes to an LLM are not independent.** They branch from shared prefixes, they repeat, and they come back. A runtime that models that structure can avoid work that a request-at-a-time engine has no way to see.
 
-That single premise produces most of what is distinctive about the system. This is a walk through it.
+That single premise produces most of what is distinctive about the system. This post builds from that observation up: the radix tree over KV state, the scheduler that runs a step ahead of the GPU, and the grammar engine that skips tokens it can already predict.
+
+**What we'll cover**
+
+1. Why real workloads are trees, not queues
+2. RadixAttention and prefix sharing as an addressing problem
+3. The overlapping scheduler
+4. Constrained decoding / grammar
+5. Where SGLang and vLLM diverge on purpose
 
 ## The observation
 

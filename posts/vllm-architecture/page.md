@@ -11,7 +11,16 @@ draft: false
 
 Most people know vLLM as "the PagedAttention one". That was true in 2023. The paper's core idea — treat KV cache memory as paged virtual memory — is still the foundation, but the engine that has grown on top of it is now a fairly elaborate piece of systems software, and the interesting parts are mostly not the attention kernel.
 
-This is a walk through that engine: what happens to a request between the HTTP handler and the first streamed token, and why each layer is shaped the way it is. I am assuming you already have the [prefill/decode picture](/writing/the-two-clocks); if not, that post is the prerequisite.
+This post builds the engine from the outside in. We start with the shape of a request, then the scheduler that stopped caring about prefill vs decode, then the block pool that made PagedAttention real, and finally the host-side tax that V1 spent most of its energy killing. I am assuming you already have the [prefill/decode picture](/writing/the-two-clocks); if not, that post is the prerequisite.
+
+**What we'll cover**
+
+1. The API server / EngineCore split
+2. The token-budget scheduler (and the distinction it dropped)
+3. The KV block pool, admission control, and prefix caching
+4. Persistent batches and piecewise CUDA graphs
+5. One request's life, end to end
+6. What is being built on top — disaggregation and offload
 
 ## The shape of the thing
 
