@@ -20,6 +20,7 @@ npm run dev
 | Application brief (custom form answers) | `PROFILE.md` · `/profile` |
 | Posts | `posts/<slug>/page.md` |
 | Hand-drawn sketches (Rough.js) | `static/sketches/` · `npm run sketches` |
+| LinkedIn / X post drafts + share cards | `social/` · `npm run social-cards` (not on the site) |
 | Colour tokens and link styles | `src/app.postcss` |
 | Article prose styles | `src/lib/components/markdown/` |
 
