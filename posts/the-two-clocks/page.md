@@ -52,19 +52,11 @@ The naive approach recomputes them from scratch every step. That is quadratic wa
 
 The cache is a spectacular optimisation for compute, but it moves the problem. That state is enormous, it grows with every token, and it lives in the same scarce GPU memory as the model weights. The size is worth committing to memory:
 
-```
-KV bytes per token = 2 × layers × kv_heads × head_dim × dtype_bytes
-                     ^
-                     one each for K and V
-```
+![KV bytes per token: one Key and one Value tensor per layer.](/sketches/kv-formula.svg)
 
 Plug in Llama-2-70B — 80 layers, and thanks to grouped-query attention only 8 KV heads of dimension 128, in fp16:
 
-```
-2 × 80 × 8 × 128 × 2 bytes  ≈  320 KB per token
-                             × 4096 tokens
-                             ≈  1.3 GB for a single sequence
-```
+![Llama-2-70B at 4k context: about 1.3 GB of KV for one sequence.](/sketches/kv-size-example.svg)
 
 Now imagine a hundred concurrent users with a few thousand tokens of context each. The KV cache, not the model weights, becomes the thing that decides how many requests you can serve at once. This one number is why half the techniques in this post exist.
 
@@ -82,27 +74,11 @@ A kernel's *arithmetic intensity* is how much math it does per byte it touches. 
 
 Decode's intensity is trivial to estimate. To generate one token a dense model does about `2 × params` FLOPs and must read about `params × dtype_bytes` bytes of weights. In fp16 that is:
 
-```
-intensity ≈ (2 × params) / (2 bytes × params) ≈ 1 FLOP per byte
-```
+![Decode arithmetic intensity collapses to about 1 FLOP per byte.](/sketches/decode-intensity.svg)
 
 One FLOP per byte, against a ridge of several hundred. Decode is not merely below the ridge — it is on the floor. The tensor cores are almost entirely idle and the whole step is, functionally, a memory read of the model.
 
-```
- throughput
-     ▲
-     │              ┌──────────────────  compute roof
-     │            ╱ │
-     │          ╱   │        ● prefill
-     │        ╱     │
-     │      ╱       ridge
-     │    ╱
-     │  ╱ ● decode  (~1 FLOP/byte)
-     └────────────────────────────────>  arithmetic intensity (log)
-
-     batching moves decode rightward:
-     more work per weight-read, same bytes moved
-```
+![Roofline: prefill sits near the compute roof; decode sits on the floor until batching moves it right.](/sketches/roofline.svg)
 
 This yields the most useful consequence in all of serving: **because decode is memory-bound, extra sequences are almost free.** When you read a weight matrix out of HBM you can multiply it against one token-vector or against sixty-four of them for nearly the same memory cost. The FLOPs go up 64x; the expensive memory traffic barely moves. You were wasting that compute anyway.
 
@@ -114,17 +90,7 @@ If more sequences are free, batch them. Easy in principle, genuinely awkward in 
 
 Static batching is the naive version: gather N requests, run them together, return them together. The problem is the ragged finish line. The batch cannot move on until its slowest member is done, so every short request sits idle holding a GPU slot.
 
-```
-STATIC                                CONTINUOUS
-blocked until the longest finishes    a freed slot refills immediately
-
-req A  ████████░░░░░░░░               slot 1  ████│███████│████
-req B  ███░░░░░░░░░░░░░               slot 2  ██│██████│███████
-req C  ██████████████░░               slot 3  ███████│████│████
-req D  ██████░░░░░░░░░                        │ = a request boundary
-       └─ all released together
-       ░ = slot held but idle                 slots stay full
-```
+![Static batching waits on the slowest request; continuous batching refills freed slots immediately.](/sketches/static-vs-continuous.svg)
 
 The fix is continuous batching, sometimes called in-flight batching, introduced by the Orca paper and now standard in every serious serving stack. The insight is to stop treating a batch as a fixed group and start scheduling at the granularity of a single decode iteration. After each step, finished sequences leave, waiting sequences join, and the batch is reassembled on the fly. No slot sits idle waiting for a straggler.
 
@@ -158,17 +124,7 @@ Standard attention computes the full N×N score matrix, writes it to HBM, reads 
 
 FlashAttention refuses to ever materialise the full matrix in HBM. It is IO-aware: it tiles the computation into blocks small enough to live in the chip's fast on-die SRAM, and uses an online softmax, a running normalisation trick that accumulates the correct softmax-weighted result block by block without ever seeing all the scores at once.
 
-```
-STANDARD                          FLASH
-
-HBM ──── N×N scores ────┐         HBM ── K,V once ──┐
- ▲                      │                           ▼
- └──── write/read ×3 ───┘         SRAM: tile ─> online softmax
-                                        (matrix never leaves chip)
- quadratic traffic dominates                       │
-                                                   ▼
-                                              output, one pass
-```
+![FlashAttention keeps the N×N score matrix in on-chip SRAM instead of bouncing it through HBM.](/sketches/flash-attention.svg)
 
 Same numbers, a fraction of the memory traffic, and no quadratic memory footprint — which is also what makes long context windows tractable at all. It is now the default attention kernel essentially everywhere.
 
@@ -198,15 +154,7 @@ Here is the cleverest trick in the set, and it falls straight out of the rooflin
 
 Use two models: a small fast draft model and the large target model you actually want. The draft cheaply guesses the next k tokens. Then — and this is the key move — the target verifies all k guesses in a *single* forward pass, because checking "would I have produced these?" is a parallel operation over the whole guessed chunk, exactly the kind of work decode is starved for.
 
-```
-1 · draft guesses k tokens        (cheap, sequential)
-      the   cat   sat   on   a
-
-2 · target verifies ALL of them   (one parallel forward pass)
-      the✓  cat✓  sat✓  on✗  ─── drop the rest
-
-    cost ≈ one normal decode step … but yields 3 tokens
-```
+![Speculative decoding: a cheap draft proposes; the target verifies many tokens in one pass.](/sketches/speculative-decoding.svg)
 
 If the draft agrees with the target you accept several tokens for the price of one target pass. If it diverges you keep the correct prefix and fall back, so you are never worse than plain decode by more than the draft's small overhead. And crucially, with the right acceptance rule — rejection sampling — the output distribution is provably identical to the target model's. It is a free lunch in quality terms: same model, fewer sequential steps.
 
@@ -224,16 +172,7 @@ Everything so far fits a model on one GPU. Frontier models do not fit, and even 
 
 The deepest structural idea in modern serving, though, comes from taking the two-clocks insight to its logical end. Prefill and decode have opposite resource profiles, and if you run them on the same GPUs they interfere. A long prefill stalls the steady drip of everyone else's decode tokens — a convoy effect — so you cannot tune the system for both at once.
 
-```
-              ┌─────────────────┐   ship KV   ┌──────────────────┐
- requests ──> │  PREFILL pool   │ ──────────> │   DECODE pool    │ ──> tokens
-              │ compute-optimal │   (the one  │ bandwidth-optimal│
-              │ big batches     │   handoff)  │ many sequences   │
-              │ tuned for TTFT  │             │ tuned for TPOT   │
-              └─────────────────┘             └──────────────────┘
-
-        each pool scaled and tuned independently — no interference
-```
+![Disaggregated serving splits prefill and decode onto separately tuned GPU pools.](/sketches/disaggregated-serving.svg)
 
 So the frontier answer is disaggregation: run prefill and decode on physically separate GPU pools. DistServe and Mooncake showed it works, and P/D disaggregation now ships in vLLM and TensorRT-LLM. Prefill machines are provisioned and batched for compute, decode machines for bandwidth and concurrency. When prefill finishes it ships the KV cache over the interconnect to a decode machine, which streams out the tokens. The price is exactly that transfer, which is why so much recent engineering is about making the handoff cheap.
 
@@ -248,12 +187,7 @@ You cannot optimise what you cannot name, and "fast" hides at least four differe
 - **Throughput**, total tokens per second across all concurrent requests. This is the number that sets your cost per token, and it is what batching maximises.
 - **Goodput**, the subtle one: throughput that actually meets your latency targets. You can crank raw throughput by batching harder, but past a point every request's per-token latency degrades and you are serving fast-but-unusable responses. Goodput counts only the requests that stayed inside their SLO.
 
-```
- request in
-     │
-     ├─── prefill ───> 1st token ─── decode ─── decode ─── … done
-     │<────TTFT─────>│            │<TPOT>│
-```
+![TTFT covers prefill to the first token; TPOT is the pace of each decode step after that.](/sketches/latency-metrics.svg)
 
 The central tension of the whole field lives in these four numbers: latency versus throughput. Bigger batches raise throughput and lower cost but worsen each user's latency; smaller batches do the reverse. Every technique in this post is a way to shift that curve — to serve more tokens per second without blowing the latency budget. Goodput is how you keep score.
 

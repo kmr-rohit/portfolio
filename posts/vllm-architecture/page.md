@@ -89,13 +89,7 @@ V1 keeps a **persistent batch** instead. The input tensors live for the lifetime
 
 Below that, the forward pass runs under CUDA graphs. Capturing a graph removes per-kernel launch overhead, which matters enormously for decode, where the kernels are small and there are hundreds of them per step. The complication is that attention has dynamic shapes and cannot be captured naively, so vLLM uses **piecewise graphs**: `torch.compile` splits the model, attention is left out as an eager region, and the long stretches of dense ops around it are captured.
 
-```
- ┌── captured CUDA graph ──┐   eager   ┌── captured CUDA graph ──┐
- │  norm · qkv proj · ...  │──> attn ──>│  o proj · MLP · norm ... │
- └─────────────────────────┘           └──────────────────────────┘
-   no launch overhead        dynamic     no launch overhead
-                             shapes
-```
+![Piecewise CUDA graphs capture dense ops around an eager attention region.](/sketches/cuda-graphs.svg)
 
 Attention itself dispatches to a backend — FlashAttention, FlashInfer, or a platform-specific kernel — through a common interface. The backends differ in which hardware and which features they support, and the abstraction is genuinely load-bearing: it is how vLLM runs on NVIDIA, AMD, TPU and CPU from one codebase.
 

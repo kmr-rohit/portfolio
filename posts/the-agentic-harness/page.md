@@ -99,15 +99,7 @@ That last point generalises into what I think is the single highest-leverage pro
 
 In ordinary software an error propagates up until something handles it. In an agent loop, an error is *information* — it is the environment telling the agent something true about the world. The harness's job is to deliver that information in a form the model can act on, and then let the loop continue.
 
-```
- poor:   tool raises  ──>  harness catches  ──>  "an error occurred"
-                                                  (agent has no idea what to do)
-
- better: tool raises  ──>  harness formats  ──>  what failed
-                                                  why it failed
-                                                  what valid input looks like
-                                                  what to try instead
-```
+![A good harness turns tool failures into actionable input, not opaque exceptions.](/sketches/tool-errors.svg)
 
 A concrete version: a command that fails because a file does not exist should come back with the error *and* a listing of the directory it looked in. Nine times out of ten the model spots the typo immediately. Without the listing it guesses, and guessing is where loops come from.
 

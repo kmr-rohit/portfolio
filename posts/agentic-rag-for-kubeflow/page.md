@@ -44,16 +44,7 @@ The third needs the reconciliation logic — what condition sequence produces th
 
 So the picture is:
 
-```
-   question type            where the answer is        docs coverage
-   ────────────────         ────────────────────       ─────────────
-   "how does X work"        documentation               good
-   "how do I configure Y"   docs + CRD reference        partial
-   "what is the default"    source / CRD schema         poor
-   "why is this failing"    GitHub issues               none
-   "what does this
-    condition mean"         controller source           none
-```
+![Where each question type’s answer actually lives, and how well the docs cover it.](/sketches/answer-sources.svg)
 
 Retrieval quality was not the bottleneck. **The corpus was.** No amount of reranking recovers an answer that was never indexed.
 

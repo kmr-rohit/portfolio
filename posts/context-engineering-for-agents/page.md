@@ -42,24 +42,7 @@ Which restores the discipline that big windows seemed to make obsolete, with a d
 
 I find it useful to think of each turn's context as a fixed allocation across competing claimants, because it forces the tradeoffs to be explicit.
 
-```
- ┌─────────────────────────────────────────────────────────┐
- │ system prompt + rules            stable, cache-friendly │
- ├─────────────────────────────────────────────────────────┤
- │ tool definitions                 stable                 │
- ├─────────────────────────────────────────────────────────┤
- │ durable memory                   slow-changing          │
- │   facts that must survive the whole run                 │
- ├─────────────────────────────────────────────────────────┤
- │ retrieved material               per-turn               │
- ├─────────────────────────────────────────────────────────┤
- │ compacted history                periodically rewritten │
- ├─────────────────────────────────────────────────────────┤
- │ recent trajectory                per-turn, verbatim     │
- └─────────────────────────────────────────────────────────┘
-   ▲                                                      ▲
-   stable prefix                             volatile suffix
-```
+![A turn’s context budget: stable prefix first, volatile suffix last.](/sketches/context-budget.svg)
 
 The ordering is not cosmetic. Serving engines cache KV state by prefix, so everything above the first byte that changes is reused for free and everything below it is recomputed. Put a timestamp or a per-request identifier at the top and you have invalidated the entire prompt on every call — a large and completely invisible cost. Stable first, volatile last, always.
 
@@ -105,20 +88,7 @@ The strongest tool for context management is not compression at all. It is refus
 
 Some sub-tasks are enormous to perform and tiny to report. "Find where retry logic is implemented" might read thirty files and produce one path. If that search happens in the main agent's context, thirty files of source now sit there, diluting attention for the rest of the run. If it happens in a sub-agent, the parent receives one line.
 
-```
- inline                              delegated
- ─────────────────                   ─────────────────────
- main context:                       sub-agent context:
-   ...                                 30 file reads
-   30 file reads   <── 45k tokens      reasoning
-   reasoning           permanently     ▼
-   answer                              returns: "core/retry.py:88"
-   ...
-                                     main context:
-   everything after this               ...
-   competes with 45k                   "core/retry.py:88"  <── 12 tokens
-   tokens of source                    ...
-```
+![Inline search pollutes the main context; a sub-agent returns one verifiable line.](/sketches/subagent-isolation.svg)
 
 The tradeoff is that the sub-agent cannot see the parent's context, so it must be briefed, and a badly briefed sub-agent returns a confidently wrong one-liner that the parent has no way to check. The rule I use: delegate when the task has a **narrow, verifiable output** and a wide search. Delegate a lookup, a search, a summarisation of a known document. Do not delegate a judgement that depends on the full picture, because the sub-agent does not have it.
 

@@ -27,19 +27,7 @@ Look at what real LLM applications actually send. A multi-turn chat resends the 
 
 Drawn out, these are not a list of requests. They are a tree.
 
-```
-        [ system prompt + tool defs ]
-                    │
-        ┌───────────┼───────────┐
-        │           │           │
-   [ turn 1 ]  [ turn 1' ]  [ turn 1'' ]
-        │           │
-   [ turn 2 ]  [ turn 2' ]
-        │
-   [ turn 3 ]
-
-   every edge is KV state that already exists somewhere
-```
+![Real LLM traffic is a tree of shared prefixes, not a flat list of requests.](/sketches/request-tree.svg)
 
 vLLM's hash-chained prefix cache captures a good chunk of this: identical prefixes hash identically and get shared. But the data structure underneath is a flat pool with a hash table over it, which answers "does this exact block exist?" It does not naturally answer "what is the longest prefix of this new request that I already have?", and it does not give the scheduler a way to *order* requests so that shared work lands close together in time.
 
@@ -49,15 +37,7 @@ SGLang's answer is to make the tree explicit.
 
 The KV cache is indexed by a radix tree — a trie whose edges carry token sequences rather than single characters. Each node owns the KV blocks for its edge's tokens. A new request walks the tree from the root, matching as far as it can, and only computes the suffix that falls off the end.
 
-```
- insert: "You are a helpful assistant. What is the capital of France?"
-
- root
-  └─"You are a helpful assistant. "        <── matched, reuse KV
-      ├─"What is the capital of France?"   <── matched, reuse KV
-      └─"Summarise this document:"
-                                           nothing new to compute
-```
+![A radix tree indexes KV by token sequences so longest-prefix match is the natural query.](/sketches/radix-match.svg)
 
 Three properties follow, and they are the whole argument for the design.
 
@@ -67,18 +47,7 @@ Three properties follow, and they are the whole argument for the design.
 
 **The scheduler can see the tree.** This is the part that is genuinely hard to retrofit. If the runtime knows request R shares 900 tokens with a request currently in flight, it can schedule R *now*, while those blocks are certainly resident, rather than in three hundred milliseconds when they may have been evicted. SGLang orders the waiting queue by matched prefix length, which turns cache hit rate from something you hope for into something the scheduler optimises.
 
-```
- cache-agnostic order        cache-aware order
- ─────────────────────       ────────────────────
- R1  (matches A, 900 tok)    R1  (matches A, 900)  ─┐ batched together,
- R2  (matches B,  40 tok)    R3  (matches A, 880)  ─┘ A stays resident
- R3  (matches A, 880 tok)    R5  (matches A, 850)  ─┘
- R4  (matches C, 120 tok)    R4  (matches C, 120)
- R5  (matches A, 850 tok)    R2  (matches B,  40)
-
- A may be evicted between      A is touched by three
- R1 and R3                     consecutive batches
-```
+![Cache-aware scheduling keeps shared prefixes resident across consecutive batches.](/sketches/cache-aware-order.svg)
 
 The cost is real: maintaining a tree is more bookkeeping than maintaining a hash table, and for workloads with no shared structure — a stream of unrelated one-shot prompts — you pay for machinery you do not use. The bet is that such workloads are rare in practice, and it is a good bet. Agents and chat are almost entirely prefix reuse.
 
@@ -92,17 +61,7 @@ Every step, the host has real work to do: pick the batch, allocate and free cach
 
 SGLang's overlap scheduler runs the host-side work for step *n+1* while the GPU is still computing step *n*.
 
-```
- sequential
- CPU  ██ sched ██          ██ sched ██          ██ sched ██
- GPU           ▓▓▓ fwd ▓▓▓           ▓▓▓ fwd ▓▓▓
-               └─ GPU idle during every scheduling gap
-
- overlapped
- CPU  ██ sched n+1 ██ sched n+2 ██ sched n+3 ██
- GPU  ▓▓▓▓ fwd n ▓▓▓▓ ▓▓▓ fwd n+1 ▓▓▓ ▓▓▓ fwd n+2 ▓▓▓
-      └─ GPU never waits for Python
-```
+![Overlapped scheduling runs host work for step n+1 while the GPU finishes step n.](/sketches/overlapped-schedule.svg)
 
 The awkwardness is that scheduling step n+1 requires knowing what step n produced — a sequence that emitted an end-of-sequence token should not be scheduled again. SGLang handles this by scheduling optimistically against placeholder outputs and reconciling once the real tokens land, which costs a small amount of speculative work in exchange for keeping the GPU saturated. When your forward pass is ten milliseconds, hiding three milliseconds of Python is a 30% throughput swing, so the trade is not close.
 
@@ -116,16 +75,7 @@ Consider generating an object with a known key. After the opening brace, the gra
 
 Jump-forward decoding compresses those runs out of the state machine. Any path through the FSM with a single outgoing edge is collapsed into a deterministic string, and when decoding reaches such a state the runtime simply appends the whole string and advances — no forward pass at all.
 
-```
- plain FSM-masked decoding
- step:  1    2    3    4    5    6    7    8
- out:   {    "    n    a    m    e    "    :     ← 8 forward passes
-
- with jump-forward
- step:  1    ────────── jump ──────────    2
- out:   {    "name":                      "Rohit"
-        └ 1 pass  └ 0 passes (determined) └ real generation
-```
+![Jump-forward collapses deterministic grammar paths so those tokens cost zero forward passes.](/sketches/jump-forward.svg)
 
 For schema-heavy output — tool calls, structured extraction, anything where the scaffolding outweighs the content — this removes a large share of the decode steps outright. And the win compounds with everything else in the post, because the steps it eliminates were memory-bound decode steps, the most expensive kind of token you can produce.
 
