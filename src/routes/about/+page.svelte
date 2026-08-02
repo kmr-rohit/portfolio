@@ -97,6 +97,13 @@
 <section>
 	<h2 class="section-label">Elsewhere</h2>
 	<ul class="list-none space-y-3 text-[14px]">
+		<li class="flex items-baseline gap-3">
+			<span
+				class="w-20 flex-shrink-0 text-[12px]"
+				style="color: var(--ink-soft); letter-spacing: var(--track-nav)">Profile</span
+			>
+			<a href="/profile" class="bio-link">Application brief</a>
+		</li>
 		{#each socials as social (social.href)}
 			<li class="flex items-baseline gap-3">
 				<span class="w-20 flex-shrink-0 text-[12px]" style="color: var(--ink-soft); letter-spacing: var(--track-nav)"

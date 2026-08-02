@@ -8,6 +8,7 @@ export const GET: RequestHandler = async () => {
 	const pages = [
 		{ loc: site.url, lastmod: undefined as string | undefined },
 		...routes.map((route) => ({ loc: `${site.url}${route.link}`, lastmod: undefined })),
+		{ loc: `${site.url}/profile`, lastmod: undefined },
 		...posts.map((post) => ({ loc: `${site.url}/writing/${post.slug}`, lastmod: post.date }))
 	];
 
