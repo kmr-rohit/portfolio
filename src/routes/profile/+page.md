@@ -91,6 +91,9 @@ I write to force myself to understand things properly — posts on vLLM, SGLang,
 **Jun 2024 — present · Bengaluru, India**
 
 - Build agentic and retrieval-backed features inside Oracle Fusion SCM Cloud across three customer-facing workflows: catalog lookup, order review and planner assistance.
+- Designed and built an **Alert Notification Microservice** (FastAPI, Kafka, Oracle, SMTP, Docker/Helm): a thin HTTP ingestion API durably enqueues caller-rendered alerts onto a replicated Kafka topic, then a consumer group delivers asynchronously with at-least-once semantics, bounded retries and a dead-letter topic.
+- Implemented idempotent acceptance on `(source, idempotency_key)` with a transactional outbox so caller/producer retries collapse to a single Kafka record; replaced hand-rolled DB row-leasing with Kafka partition assignment and rebalancing for concurrency and worker failover.
+- Instrumented ingestion, produce, consume and delivery with **Prometheus** metrics (including consumer lag and DLQ depth), configured alert rules, and routed operational alerts through **Alertmanager → Slack**.
 - Designed a part-matching pipeline combining fuzzy matching, semantic retrieval, clustering and a web-search fallback over manufacturer and retailer catalogs, lifting match coverage for asset-mapping workflows by around **30%**.
 - Shipped an order-classification agent with batch processing, rule-evaluation guardrails, exception routing and a human-review handoff, handling **10,000+** order lines per run.
 - Built RAG planner-assist flows over exceptions, notes and tabular data that cut repeated manual investigation by around **40%** through source-grounded answers.
@@ -156,22 +159,58 @@ End-to-end product ownership, real-time systems, constrained structured output, 
 
 ---
 
-### 3. Oracle Fusion SCM — production agents & RAG (enterprise impact)
+### 3. MacBatch — batch AI on idle Apple Silicon
 
 **One sentence.**  
-Agentic and retrieval features in Fusion SCM: part matching (+~30% coverage), order-classification agent (10k+ lines/run), planner RAG (−~40% repeated investigation).
+Open-source + hosted batch inference: distribute latency-tolerant AI jobs (embed / OCR / classify) across a pool of idle Macs with lease-based sharding and automatic reassignment.
+
+**Problem.**  
+Backfills and overnight enrichment are billed like urgent interactive traffic. GPU rental is the wrong unit; Apple Silicon often sits idle overnight and can run mid-size open models locally.
+
+**What I built.**  
+- Control plane (FastAPI) holding jobs → shards → tasks; workers lease shards (600s, then reclaim) and run a whole model via Ollama.  
+- Worker CLI (`npm i -g macbatch`) — pull-based so machines behind NAT join with outbound HTTPS only.  
+- Measured **252,686 embed items/hour** on one MacBook Air; **2.8×** from shard batching alone on the same machine.  
+- Product site + package docs; MIT-licensed queue, scheduler and CLI.
+
+**Stack.** TypeScript, Python, FastAPI, Ollama, Apple Silicon, npm.
+
+**Links.** [Product](https://macbatch.vercel.app/) · [Docs](https://kmr-rohit.github.io/macbatch/) · [Source](https://github.com/kmr-rohit/macbatch)
+
+**Why this project.**  
+Systems design for unreliable workers, cost/throughput honesty, and shipping both an open-source scheduler and a product surface.
+
+---
+
+### 4. Oracle Fusion SCM — production agents & RAG (enterprise impact)
+
+**One sentence.**  
+Agentic and retrieval features in Fusion SCM: part matching (+~30% coverage), order-classification agent (10k+ lines/run), planner RAG (−~40% repeated investigation) — plus a Kafka-backed alert notification microservice.
 
 **Highlights to quote.**  
 - Part-matching: fuzzy + semantic retrieval + clustering + web-search fallback.  
 - Order classification: batch processing, rule guardrails, exception routing, human-review handoff.  
-- Planner assist: source-grounded answers over exceptions, notes, tabular data.
+- Planner assist: source-grounded answers over exceptions, notes, tabular data.  
+- Alert Notification Microservice: FastAPI/Kafka/Oracle/SMTP with idempotent ingest, DLQ, Prometheus + Alertmanager → Slack.
 
 **Why this project.**  
-Enterprise constraints, measurable impact, human-in-the-loop, and agents that touch real supply-chain workflows.
+Enterprise constraints, measurable impact, human-in-the-loop, and agents that touch real supply-chain workflows — plus production messaging reliability.
 
 ---
 
-### 4. Shorter alternatives (if they want variety)
+### 5. Alert Notification Microservice — Kafka reliability (systems / backend)
+
+**One sentence.**  
+Reliable FastAPI/Kafka notification platform: idempotent HTTP ingestion, consumer-group SMTP delivery with dead-lettering, Prometheus observability, Alertmanager-to-Slack ops alerts.
+
+**What to emphasize in interviews.**  
+Upstream owns business rules and renders the email; this service owns the reliability boundary (validate → durable enqueue → `202` after produce ack → async delivery). Outbox + `(source, idempotency_key)` dedup; offsets commit only after successful SMTP; retry-exhausted → `alerts.dlq` + Oracle status store. Kafka consumer groups replaced hand-rolled DB lease/heartbeat/fencing.
+
+**Stack.** Python, FastAPI, Kafka, Oracle DB, SMTP, Docker, Kubernetes/Helm, Prometheus, Alertmanager, Slack.
+
+---
+
+### 6. Shorter alternatives (if they want variety)
 
 | Project | One-liner |
 | --- | --- |
@@ -189,6 +228,10 @@ Enterprise constraints, measurable impact, human-in-the-loop, and agents that to
 **Kubeflow docs-agent** (2026) — Agentic RAG + MCP over docs/issues/code/manifests.  
 Stack: Python, MCP, Agentic RAG, KFP, KServe, Istio, Helm, OKE.  
 Links: [repo](https://github.com/kubeflow/docs-agent)
+
+**MacBatch** (2026) — Batch AI jobs across idle Apple Silicon (lease scheduler + worker CLI + Ollama).  
+Stack: TypeScript, Python, FastAPI, Ollama, npm.  
+Links: [product](https://macbatch.vercel.app/) · [docs](https://kmr-rohit.github.io/macbatch/) · [source](https://github.com/kmr-rohit/macbatch)
 
 **CrackRound** (2025) — Agentic mock interviews with voice + live code judge.  
 Stack: Next.js, TypeScript, GPT-4o, WebSockets, Prisma, PostgreSQL, Sarvam.
@@ -229,9 +272,9 @@ Links: [live](https://aitutor-two-hazel.vercel.app) · [source](https://github.c
 
 **Serving & retrieval** — vLLM, SGLang, KServe, TEI, Milvus, FAISS, ChromaDB, Elasticsearch  
 
-**Platform** — Kubernetes, Kubeflow Pipelines, Docker, Istio, Helm, OCI / OKE, GitHub Actions  
+**Platform** — Kubernetes, Kubeflow Pipelines, Docker, Istio, Helm, OCI / OKE, GitHub Actions, Kafka, Prometheus, Alertmanager  
 
-**Languages & frameworks** — Python, TypeScript, Java, C++, FastAPI, Next.js, React, PostgreSQL  
+**Languages & frameworks** — Python, TypeScript, Java, C++, FastAPI, Next.js, React, PostgreSQL, Oracle DB  
 
 ---
 
@@ -271,11 +314,13 @@ Alternate product story: **CrackRound** (voice latency, structured scoring, cost
 
 **Retrieval for infrastructure Q&A:** users ask with error strings and runtime symptoms; answers live in issues/code/manifests. Solution was separate indexes and MCP tools with rich chunk metadata, plus tests so ranking regressions fail CI.
 
+**Or reliable async notifications:** moved from a DB row-lease queue to Kafka — outbox + idempotent produce, consumer-group delivery with offset-after-SMTP, DLQ, and Prometheus/Alertmanager ops path separate from business email delivery.
+
 **Or voice interview latency:** anything slower than ~1.5s broke the illusion of an interview; streaming STT/TTS over WebSockets with the judge/whiteboard in context.
 
 ### “How do you measure success?”
 
-Coverage / investigation-time metrics at Oracle (~30% match coverage lift, ~40% less repeated investigation); session cost ceilings and latency budgets on CrackRound; retrieval test suite and production edge controls on docs-agent.
+Coverage / investigation-time metrics at Oracle (~30% match coverage lift, ~40% less repeated investigation); notifier visibility via consumer lag, delivery failures and DLQ depth; session cost ceilings and latency budgets on CrackRound; retrieval test suite and production edge controls on docs-agent; MacBatch throughput/cost benchmarks published with artifacts.
 
 ### “What are you looking for next?”
 
@@ -297,6 +342,5 @@ National Institute of Technology, Warangal · 2020 — 2024
 - LinkedIn: [in/rr7433446](https://www.linkedin.com/in/rr7433446/)  
 - Site: [kmrrohit.space](https://kmrrohit.space)  
 - This brief: [kmrrohit.space/profile](https://kmrrohit.space/profile) · source: `PROFILE.md` in the portfolio repo
-
 
 </article>
