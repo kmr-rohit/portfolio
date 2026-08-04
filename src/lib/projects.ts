@@ -43,6 +43,25 @@ export const projects: Project[] = [
 		group: 'work'
 	},
 	{
+		title: 'MacBatch',
+		summary:
+			'Batch AI workloads on a pool of idle Apple Silicon machines — a job queue, lease scheduler and worker CLI for embedding, OCR and classification that can wait.',
+		detail: [
+			'Offline AI work is usually billed like interactive traffic. Re-embedding a corpus, OCR over an archive, or overnight classification does not need a latency SLA — it needs cheap throughput on hardware that is already paid for and often idle overnight.',
+			'macbatch is three moving parts: a FastAPI control plane that holds the queue, workers that lease shards (600s lease, then reassign), and Ollama on each Mac running a whole model locally. Workers pull; the control plane never opens a connection inbound, so a laptop behind home NAT can join with outbound HTTPS only.',
+			'Measured 252,686 embed items/hour on one MacBook Air with shard batching (2.8× from batching alone on the same machine). The CLI and control plane are open source; a hosted product surface sits at macbatch.vercel.app.'
+		],
+		year: '2026',
+		stack: ['TypeScript', 'Python', 'FastAPI', 'Ollama', 'Apple Silicon', 'npm'],
+		links: [
+			{ label: 'Product', href: 'https://macbatch.vercel.app/' },
+			{ label: 'Docs', href: 'https://kmr-rohit.github.io/macbatch/' },
+			{ label: 'Source', href: 'https://github.com/kmr-rohit/macbatch' }
+		],
+		featured: true,
+		group: 'work'
+	},
+	{
 		title: 'CrackRound',
 		summary:
 			'An agentic mock-interview platform: five streaming interviewer personas, a real-time voice loop, and a live code judge wired into the model context.',

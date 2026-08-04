@@ -29,6 +29,9 @@ export const roles: Role[] = [
 		location: 'Bengaluru, India',
 		points: [
 			'Build agentic and retrieval-backed features inside Oracle Fusion SCM Cloud across three customer-facing workflows: catalog lookup, order review and planner assistance.',
+			'Designed and built an Alert Notification Microservice (FastAPI, Kafka, Oracle, SMTP, Docker/Helm) — HTTP ingestion durably enqueues caller-rendered alerts onto a replicated Kafka topic, then a consumer group delivers asynchronously with at-least-once semantics, bounded retries and a dead-letter topic.',
+			'Implemented idempotent acceptance on `(source, idempotency_key)` with a transactional outbox so caller/producer retries collapse to a single Kafka record, and replaced hand-rolled DB row-leasing with Kafka partition assignment and rebalancing for concurrency and worker failover.',
+			'Instrumented ingestion, produce, consume and delivery with Prometheus metrics (including consumer lag and DLQ depth), configured alert rules, and routed operational alerts through Alertmanager to Slack.',
 			'Designed a part-matching pipeline combining fuzzy matching, semantic retrieval, clustering and a web-search fallback over manufacturer and retailer catalogs, lifting match coverage for asset-mapping workflows by around 30%.',
 			'Shipped an order-classification agent with batch processing, rule-evaluation guardrails, exception routing and a human-review handoff, handling 10,000+ order lines per run.',
 			'Built RAG planner-assist flows over exceptions, notes and tabular data that cut repeated manual investigation by around 40% through source-grounded answers.',
@@ -85,10 +88,31 @@ export const skills: SkillGroup[] = [
 	},
 	{
 		label: 'Platform',
-		items: ['Kubernetes', 'Kubeflow Pipelines', 'Docker', 'Istio', 'Helm', 'OCI / OKE', 'GitHub Actions']
+		items: [
+			'Kubernetes',
+			'Kubeflow Pipelines',
+			'Docker',
+			'Istio',
+			'Helm',
+			'OCI / OKE',
+			'GitHub Actions',
+			'Kafka',
+			'Prometheus',
+			'Alertmanager'
+		]
 	},
 	{
 		label: 'Languages & frameworks',
-		items: ['Python', 'TypeScript', 'Java', 'C++', 'FastAPI', 'Next.js', 'React', 'PostgreSQL']
+		items: [
+			'Python',
+			'TypeScript',
+			'Java',
+			'C++',
+			'FastAPI',
+			'Next.js',
+			'React',
+			'PostgreSQL',
+			'Oracle DB'
+		]
 	}
 ];
