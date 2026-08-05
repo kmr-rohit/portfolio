@@ -18,6 +18,7 @@ npm run dev
 | Experience, skills, achievements | `src/lib/work.ts` |
 | Community call details, LinkedIn posts | `src/lib/community.ts` |
 | Application brief (custom form answers) | `PROFILE.md` · `/profile` |
+| Referral / cold-DM templates (hidden) | `src/lib/referral.ts` · `/referral` (noindex, not in nav) |
 | Posts | `posts/<slug>/page.md` |
 | Hand-drawn sketches (Rough.js) | `static/sketches/` · `npm run sketches` |
 | LinkedIn / X post drafts + share cards | `social/` · `npm run social-cards` (not on the site) |
