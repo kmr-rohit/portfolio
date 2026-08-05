@@ -63,7 +63,10 @@ export const referralFacts = {
 	links: {
 		site: 'https://kmrrohit.space',
 		profile: 'https://kmrrohit.space/profile',
-		resume: 'https://kmrrohit.space/rohit-kumar-resume.pdf',
+		resumeAi: 'https://kmrrohit.space/rohit-kumar-resume-ai.pdf',
+		resumeSoftware: 'https://kmrrohit.space/rohit-kumar-resume-software.pdf',
+		/** @deprecated Prefer resumeAi / resumeSoftware — kept as AI default for old bookmarks */
+		resume: 'https://kmrrohit.space/rohit-kumar-resume-ai.pdf',
 		github: 'https://github.com/kmr-rohit',
 		linkedin: 'https://www.linkedin.com/in/rr7433446/',
 		gsoc: 'https://github.com/kubeflow/docs-agent',
@@ -76,10 +79,15 @@ export const referralFacts = {
 
 const L = referralFacts.links;
 
+export function resumeFor(track: ReferralTrack): string {
+	return track === 'software' ? L.resumeSoftware : L.resumeAi;
+}
+
 function soft(track: ReferralTrack): string {
+	const resume = resumeFor(track);
 	return track === 'ai'
-		? `I'm an AI engineer at Oracle (Fusion SCM) and a GSoC 2026 contributor on Kubeflow Docs Agent — agentic RAG + MCP. Brief: ${L.profile}`
-		: `I'm an AI/Application Developer at Oracle. Recently I built an Alert Notification Microservice (FastAPI, Kafka, Oracle, SMTP) with idempotent ingest, consumer-group delivery, DLQ, and Prometheus → Slack ops alerting. Brief: ${L.profile}`;
+		? `I'm an AI engineer at Oracle (Fusion SCM) and a GSoC 2026 contributor on Kubeflow Docs Agent — agentic RAG + MCP. Brief: ${L.profile} · Résumé: ${resume}`
+		: `I'm an AI/Application Developer at Oracle. Recently I built an Alert Notification Microservice (FastAPI, Kafka, Oracle, SMTP) with idempotent ingest, consumer-group delivery, DLQ, and Prometheus → Slack ops alerting. Brief: ${L.profile} · Résumé: ${resume}`;
 }
 
 function ask(track: ReferralTrack): string {
@@ -110,7 +118,7 @@ export const templates: ReferralTemplate[] = [
 
 I'm Rohit, AI/Application Developer at Oracle in Bengaluru. Recently I designed and shipped an Alert Notification Microservice (FastAPI + Kafka + Oracle + SMTP): idempotent HTTP ingest, transactional outbox, Kafka consumer-group delivery with DLQ, and Prometheus → Alertmanager → Slack for ops visibility.
 
-Résumé: ${L.resume}
+Résumé: ${L.resumeSoftware}
 Profile: ${L.profile}
 
 Would you have 2 minutes to review whether I'm a fit, or share the right referral path? Happy to send a tailored note for the hiring manager.`
@@ -130,7 +138,7 @@ Quick context: I'm an AI/Application Developer at Oracle (Bengaluru). Day-to-day
 
 Also: GSoC 2026 on kubeflow/docs-agent, and prior agent/RAG work if useful context for full-stack backend strength.
 
-Résumé: ${L.resume}
+Résumé: ${L.resumeSoftware}
 Application brief: ${L.profile}
 GitHub: ${L.github}
 
@@ -176,7 +184,7 @@ ${soft('software')}
 
 If you're open to referring me (or pointing me to the internal process), I can send a ready-to-forward blurb + PDF. Totally fine if now isn't a good time.
 
-Résumé: ${L.resume}
+Résumé: ${L.resumeSoftware}
 Brief: ${L.profile}
 
 Thanks,
@@ -197,7 +205,7 @@ I'm exploring the {{Role}} opening ({{Job link}}). ${soft('software')}
 
 ${ask('software')}
 
-Résumé: ${L.resume}
+Résumé: ${L.resumeSoftware}
 
 Happy to keep it low-effort for you — I can paste a 4-line blurb if useful.`
 	},
@@ -218,7 +226,7 @@ Relevant recent work: Alert Notification Microservice (FastAPI, Kafka, Oracle, S
 
 ${ask('software')}
 
-Résumé: ${L.resume}
+Résumé: ${L.resumeSoftware}
 
 Thanks either way — even a redirect helps.
 Rohit`
@@ -251,7 +259,7 @@ I'm Rohit, AI engineer at Oracle (agentic + RAG in Fusion SCM) and GSoC 2026 on 
 
 One-liner: ${referralFacts.oneLiner}
 
-Résumé: ${L.resume}
+Résumé: ${L.resumeAi}
 Brief: ${L.profile}
 Writing: ${L.writing}
 
@@ -276,7 +284,7 @@ Selected proof points:
 • MacBatch — batch AI workloads on idle Apple Silicon (https://macbatch.vercel.app/)
 • Writing: ${L.writing}
 
-Résumé: ${L.resume}
+Résumé: ${L.resumeAi}
 Application brief (stock answers + projects): ${L.profile}
 GitHub: ${L.github}
 
@@ -324,7 +332,7 @@ If a referral is possible, I'll send a ready-to-paste note. If not, any pointer 
 
 Thanks,
 Rohit
-${L.resume}`
+${L.resumeAi}`
 	},
 
 	/* ── AI · Random ───────────────────────────────────────────── */
@@ -342,7 +350,7 @@ ${soft('ai')}
 
 ${ask('ai')}
 
-Résumé: ${L.resume}`
+Résumé: ${L.resumeAi}`
 	},
 	{
 		id: 'ai-random-mail',
@@ -361,7 +369,7 @@ Relevant: agent platforms / RAG / serving — brief at ${L.profile}, writing at 
 
 ${ask('ai')}
 
-Résumé: ${L.resume}
+Résumé: ${L.resumeAi}
 
 Thanks for reading —
 Rohit`

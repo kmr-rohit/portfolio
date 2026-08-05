@@ -5,6 +5,7 @@
 		kindLabels,
 		placeholderLegend,
 		referralFacts,
+		resumeFor,
 		templatesFor,
 		trackLabels,
 		type ReferralKind,
@@ -20,6 +21,8 @@
 	let copyTimer: ReturnType<typeof setTimeout>;
 
 	$: active = templatesFor(track, kind);
+	$: resumeHref = resumeFor(track);
+	$: resumeLabel = track === 'software' ? 'Résumé · Software' : 'Résumé · AI';
 
 	async function copyText(id: string, text: string) {
 		try {
@@ -60,7 +63,7 @@
 	<p class="ref-links">
 		<a href={referralFacts.links.profile} class="bio-link">Profile</a>
 		·
-		<a href={referralFacts.links.resume} class="bio-link">Résumé</a>
+		<a href={resumeHref} class="bio-link">{resumeLabel}</a>
 		·
 		<a href={referralFacts.links.github} class="bio-link" target="_blank" rel="noreferrer">GitHub</a>
 		·
