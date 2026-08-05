@@ -8,6 +8,8 @@
 	export let image: string | undefined = undefined;
 	export let type: 'website' | 'article' = 'website';
 	export let publishedAt: string | undefined = undefined;
+	/** When true, ask crawlers not to index (hidden utility pages). */
+	export let noindex = false;
 
 	$: fullTitle = title ? `${title} — ${site.name}` : site.name;
 	$: canonical = new URL($page.url.pathname, site.url).href;
@@ -19,6 +21,9 @@
 <svelte:head>
 	<title>{fullTitle}</title>
 	<meta name="description" content={description} />
+	{#if noindex}
+		<meta name="robots" content="noindex, nofollow" />
+	{/if}
 	<link rel="canonical" href={canonical} />
 
 	<meta property="og:type" content={type} />

@@ -38,7 +38,8 @@ export const socials: Social[] = [
 		handle: 'in/rr7433446'
 	},
 	{ display: 'Email', href: 'mailto:rr7433446@gmail.com', handle: 'rr7433446@gmail.com' },
-	{ display: 'Résumé', href: '/rohit-kumar-resume.pdf', handle: 'PDF' }
+	{ display: 'Résumé · AI', href: '/rohit-kumar-resume-ai.pdf', handle: 'PDF' },
+	{ display: 'Résumé · SWE', href: '/rohit-kumar-resume-software.pdf', handle: 'PDF' }
 ];
 
 export const githubConfig = {

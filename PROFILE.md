@@ -19,7 +19,8 @@
 | GitHub | [github.com/kmr-rohit](https://github.com/kmr-rohit) |
 | LinkedIn | [linkedin.com/in/rr7433446](https://www.linkedin.com/in/rr7433446/) |
 | Portfolio | [kmrrohit.space](https://kmrrohit.space) |
-| Résumé | [kmrrohit.space/rohit-kumar-resume.pdf](https://kmrrohit.space/rohit-kumar-resume.pdf) |
+| Résumé · AI | [kmrrohit.space/rohit-kumar-resume-ai.pdf](https://kmrrohit.space/rohit-kumar-resume-ai.pdf) |
+| Résumé · Software | [kmrrohit.space/rohit-kumar-resume-software.pdf](https://kmrrohit.space/rohit-kumar-resume-software.pdf) |
 | Education | B.Tech, Mechanical Engineering · NIT Warangal · 2020–2024 |
 | Work authorization | India (Bengaluru-based; open to remote / relocation per role) |
 
