@@ -19,6 +19,7 @@ npm run dev
 | Community call details, LinkedIn posts | `src/lib/community.ts` |
 | Application brief (custom form answers) | `PROFILE.md` · `/profile` |
 | Referral / cold-DM templates (hidden) | `src/lib/referral.ts` · `/referral` (noindex, not in nav) |
+| Résumés | `static/rohit-kumar-resume-ai.pdf` · `static/rohit-kumar-resume-software.pdf` |
 | Posts | `posts/<slug>/page.md` |
 | Hand-drawn sketches (Rough.js) | `static/sketches/` · `npm run sketches` |
 | LinkedIn / X post drafts + share cards | `social/` · `npm run social-cards` (not on the site) |
