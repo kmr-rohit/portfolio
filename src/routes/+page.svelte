@@ -73,7 +73,7 @@
 					class="bio-link"
 					target="_blank"
 					rel="noreferrer">kubeflow/docs-agent</a
-				>, and run a <a href="/community" class="bio-link">community call every other Saturday</a>. I
+				>, and run a <a href="/opensource" class="bio-link">community call every other Saturday</a>. I
 				write here mostly to force myself to understand things properly.
 			</p>
 			<p>
@@ -118,13 +118,14 @@
 </Section>
 
 <section>
-	<h2 class="section-label">Community</h2>
+	<h2 class="section-label">Open Source</h2>
 	<div class="proj-body" style="margin-bottom: 0">
 		<p>
-			<span style="color: var(--ink)">{call.name}</span>. {call.cadence}, {call.localTime}
-			({call.utcTime}). Next one
+			Kubeflow Docs Agent (GSoC) plus Terraform/Helm work standing up OKE and Kubeflow on OCI.
+			<span style="color: var(--ink)">{call.name}</span>
+			— {call.cadence}, next
 			<span class="tnum">{formatDayMonth(next)}</span>.
-			<a href="/community" class="bio-link">Details</a>.
+			<a href="/opensource" class="bio-link">Contributions &amp; call</a>.
 		</p>
 	</div>
 </section>

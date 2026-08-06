@@ -17,8 +17,9 @@ export const roles: Role[] = [
 		points: [
 			'Expanding kubeflow/docs-agent from a documentation chatbot into an agentic RAG reference architecture for the Kubeflow project.',
 			'Built multi-index retrieval across GitHub issues, application code, Kubernetes manifests and 1,000+ Markdown pages — roughly 10,000 searchable chunks carrying path, product-area, version and source metadata.',
-			'Merged a 5.4k-line change adding a three-tool MCP server, TEI embeddings, the issues and code ingestion pipelines, and CI/CD onto OCI/OKE.',
-			'Now hardening the public edge: rate limiting, CORS lockdown and anonymous session-JWT auth, with Istio configuration migrated into a Helm chart so guardrails ship with the deployment.',
+			'Merged a 5.4k-line change adding a three-tool MCP server, TEI embeddings, the issues and code ingestion pipelines, Terraform for cluster-side pieces (embeddings, Milvus, KServe, Pipelines), and GitHub Actions CI with optional CD onto OCI/OKE.',
+			'Hardened the public edge: migrated Istio Gateway/TLS/CORS/rate-limit config from raw Terraform manifests into a Helm chart (`gateway-guardrails`), plus anonymous session-JWT auth work for the public chatbot.',
+			'Authored Terraform modules to deploy a full OKE cluster and Kubeflow platform on OCI (VCN networking, node pool, cert-manager, Istio, Dex, Knative, KServe, Pipelines) in jaiakash/deploy-kubeflow.',
 			'Added a 71-test suite and CI workflow covering retrieval behaviour, so a regression in ranking fails the build instead of surfacing in production.'
 		]
 	},
@@ -94,6 +95,7 @@ export const skills: SkillGroup[] = [
 			'Docker',
 			'Istio',
 			'Helm',
+			'Terraform',
 			'OCI / OKE',
 			'GitHub Actions',
 			'Kafka',

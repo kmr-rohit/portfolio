@@ -26,7 +26,7 @@
 				>kubeflow/docs-agent</a
 			>
 			through Google Summer of Code 2026, and turn up to the
-			<a href="/community" class="bio-link">{call.name}</a> every other Saturday.
+			<a href="/opensource" class="bio-link">{call.name}</a> every other Saturday.
 		</p>
 		<p>
 			I'm looking for senior AI engineering work: agent platforms, inference and serving, or retrieval
