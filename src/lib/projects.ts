@@ -28,16 +28,45 @@ export const projects: Project[] = [
 		detail: [
 			'My Google Summer of Code 2026 project, and the thing I spend most of my open source time on. The starting point was a documentation chatbot that could only read Markdown. A Kubeflow user with a broken pipeline does not have a documentation problem, they have a "this exact error appeared in an issue eighteen months ago" problem, so the agent needed to read more than prose.',
 			'I added ingestion pipelines for GitHub issues, application code and Kubernetes manifests, and exposed them as separate MCP tools so the agent can choose where to look instead of retrieving from one undifferentiated blob. Every chunk carries path, product area, version and source metadata, which is what makes filtered retrieval possible at query time.',
-			'The largest change was merged as a single 5.4k-line PR covering a three-tool MCP server, TEI embeddings, the issues and code pipelines, and CI/CD onto OKE. Since then the work has moved to the edge: rate limits, CORS lockdown and anonymous session-JWT auth for the public chatbot, with the Istio configuration migrated into a Helm chart so the guardrails ship with the deployment rather than living in someone\'s cluster.'
+			'The largest application change was merged as a single 5.4k-line PR covering a three-tool MCP server, TEI embeddings, the issues and code pipelines, Terraform for embeddings/Milvus/KServe/Pipelines, and GitHub Actions that compile, test, and optionally deploy to OKE. Since then the infra work has moved to the edge: rate limits, CORS lockdown and session-JWT auth, with Istio configuration migrated into a Helm chart so the guardrails ship with the deployment rather than living as unreviewed YAML heredocs in Terraform.'
 		],
 		year: '2026',
-		stack: ['Python', 'MCP', 'Agentic RAG', 'Kubeflow Pipelines', 'KServe', 'Istio', 'Helm', 'OKE'],
+		stack: [
+			'Python',
+			'MCP',
+			'Agentic RAG',
+			'Kubeflow Pipelines',
+			'KServe',
+			'Istio',
+			'Helm',
+			'Terraform',
+			'OKE',
+			'GitHub Actions'
+		],
 		links: [
 			{ label: 'Repository', href: 'https://github.com/kubeflow/docs-agent' },
 			{
 				label: 'My pull requests',
 				href: 'https://github.com/kubeflow/docs-agent/pulls?q=is%3Apr+author%3Akmr-rohit'
-			}
+			},
+			{ label: 'Open source page', href: '/opensource' }
+		],
+		featured: true,
+		group: 'work'
+	},
+	{
+		title: 'Deploy Kubeflow on OCI',
+		summary:
+			'Terraform modules that provision an OKE cluster and install a full Kubeflow platform on Oracle Cloud — networking through Pipelines and KServe.',
+		detail: [
+			'Built for jaiakash/deploy-kubeflow so someone can stand up Kubeflow on OCI without hand-assembling VCN rules and kustomize applies. Two Terraform modules: oke-cluster (VCN, IGW/NAT/Service gateways, three subnets, Flannel-tuned security lists, E5.Flex node pool) and kubeflow-platform (cert-manager, Istio, Dex, Knative, KServe, Pipelines, Central Dashboard, Profiles).',
+			'The install path is the unglamorous part that actually matters: CRI-O short-name image patching, MySQL PVC auto-creation on oci-bv, webhook-aware retries, server-side apply with force-conflicts, plus OCI auth / cluster / install / troubleshooting guides.'
+		],
+		year: '2026',
+		stack: ['Terraform', 'OCI', 'OKE', 'Kubeflow', 'Istio', 'KServe', 'Kustomize'],
+		links: [
+			{ label: 'Repository', href: 'https://github.com/jaiakash/deploy-kubeflow' },
+			{ label: 'Merged PR', href: 'https://github.com/jaiakash/deploy-kubeflow/pull/5' }
 		],
 		featured: true,
 		group: 'work'

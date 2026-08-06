@@ -66,8 +66,9 @@ I write to force myself to understand things properly — posts on vLLM, SGLang,
 
 - Expanding kubeflow/docs-agent from a documentation chatbot into an agentic RAG reference architecture for the Kubeflow project.
 - Built multi-index retrieval across GitHub issues, application code, Kubernetes manifests and 1,000+ Markdown pages — roughly 10,000 searchable chunks carrying path, product-area, version and source metadata.
-- Merged a 5.4k-line change adding a three-tool MCP server, TEI embeddings, the issues and code ingestion pipelines, and CI/CD onto OCI/OKE.
-- Hardening the public edge: rate limiting, CORS lockdown and anonymous session-JWT auth, with Istio configuration migrated into a Helm chart so guardrails ship with the deployment.
+- Merged a 5.4k-line change adding a three-tool MCP server, TEI embeddings, the issues and code ingestion pipelines, **Terraform** for embeddings/Milvus/KServe/Pipelines, and **GitHub Actions CI with optional CD onto OCI/OKE**.
+- Hardened the public edge: migrated Istio Gateway/TLS/CORS/rate-limit config from raw Terraform manifests into a **Helm chart** (`gateway-guardrails`), plus anonymous session-JWT auth for the public chatbot.
+- Authored **Terraform modules** to deploy a full **OKE cluster + Kubeflow platform on OCI** (VCN networking, node pool, cert-manager, Istio, Dex, Knative, KServe, Pipelines) in [jaiakash/deploy-kubeflow](https://github.com/jaiakash/deploy-kubeflow) ([PR #5](https://github.com/jaiakash/deploy-kubeflow/pull/5)).
 - Added a 71-test suite and CI workflow covering retrieval behaviour, so a regression in ranking fails the build instead of surfacing in production.
 - Co-speak at Kubeflow Community Showcase 2026 on production agentic RAG (ingestion, embeddings, index updates as pipeline steps; retrieval evaluation and agent testing as first-class stages).
 - Host / contribute to the bi-weekly Docs Agent community call (every other Saturday).
@@ -107,20 +108,35 @@ A docs-only chatbot fails on real Kubeflow questions. Users bring error strings,
 **What I built.**  
 - Ingestion pipelines for issues, application code, and Kubernetes manifests alongside 1,000+ docs pages (~10k chunks with path / product-area / version / source metadata).  
 - Three MCP tools so the agent chooses *where* to look instead of retrieving from one blob.  
-- TEI embeddings, filtered retrieval, CI/CD onto OKE, Istio/Helm edge guardrails (rate limits, CORS, session JWT).  
+- TEI embeddings, filtered retrieval, **Terraform** for embeddings/Milvus/KServe/Pipelines, **CI/CD onto OKE**, Istio/**Helm** edge guardrails (rate limits, CORS, session JWT).  
 - 71-test retrieval suite in CI.
 
 **Impact / proof.**  
-Large merged PR (~5.4k LOC); public chatbot path hardened for anonymous use; community showcase talk; ongoing community call for contributors.
+Large merged PR (~5.4k LOC); Helm gateway-guardrails chart; public chatbot path hardened; community showcase talk; ongoing community call.
 
-**Stack.** Python, MCP, Agentic RAG, Kubeflow Pipelines, KServe, Istio, Helm, OKE, TEI.
+**Stack.** Python, MCP, Agentic RAG, Kubeflow Pipelines, KServe, Istio, Helm, Terraform, OKE, TEI, GitHub Actions.
 
-**Links.** [Repository](https://github.com/kubeflow/docs-agent) · [My PRs](https://github.com/kubeflow/docs-agent/pulls?q=is%3Apr+author%3Akmr-rohit) · [Write-up](https://kmrrohit.space/writing/agentic-rag-for-kubeflow)
+**Links.** [Repository](https://github.com/kubeflow/docs-agent) · [My PRs](https://github.com/kubeflow/docs-agent/pulls?q=is%3Apr+author%3Akmr-rohit) · [Write-up](https://kmrrohit.space/writing/agentic-rag-for-kubeflow) · [Open source](https://kmrrohit.space/opensource)
 
 **Why this project (for interviews).**  
-It shows production RAG judgment: multi-index design, tool boundaries, metadata for filtered retrieval, eval/CI, and serving/security — not just “I called an LLM API.”
+It shows production RAG judgment *and* platform work: multi-index design, tool boundaries, metadata for filtered retrieval, eval/CI, Terraform/Helm on OKE, and serving/security — not just “I called an LLM API.”
 
 ---
+
+### 1b. Deploy Kubeflow on OCI — Terraform / OKE (infra proof)
+
+**One sentence.**  
+Terraform modules that provision OKE (full VCN + node pool) and install Kubeflow (Istio, Dex, Knative, KServe, Pipelines, …) on Oracle Cloud.
+
+**What I built.**  
+- `oke-cluster` module: IGW/NAT/Service GW, three subnets, Flannel-tuned security lists, E5.Flex node pool.  
+- `kubeflow-platform` module: kustomize-driven install with CRI-O image patching, MySQL PVC on oci-bv, webhook-aware retries.  
+- OCI auth / cluster / install / troubleshooting guides.
+
+**Links.** [Repo](https://github.com/jaiakash/deploy-kubeflow) · [PR #5](https://github.com/jaiakash/deploy-kubeflow/pull/5)
+
+**Why this project.**  
+Concrete cluster + platform IaC — useful when talking to infra / platform architects about Terraform, Helm, and OKE.
 
 ### 2. CrackRound — agentic mock interviews (product / voice / agents)
 
@@ -210,9 +226,13 @@ Upstream owns business rules and renders the email; this service owns the reliab
 
 ### Work
 
-**Kubeflow docs-agent** (2026) — Agentic RAG + MCP over docs/issues/code/manifests.  
-Stack: Python, MCP, Agentic RAG, KFP, KServe, Istio, Helm, OKE.  
-Links: [repo](https://github.com/kubeflow/docs-agent)
+**Kubeflow docs-agent** (2026) — Agentic RAG + MCP over docs/issues/code/manifests; Terraform + Helm edge + OKE CI/CD.  
+Stack: Python, MCP, Agentic RAG, KFP, KServe, Istio, Helm, Terraform, OKE.  
+Links: [repo](https://github.com/kubeflow/docs-agent) · [opensource](https://kmrrohit.space/opensource)
+
+**Deploy Kubeflow on OCI** (2026) — Terraform for OKE + full Kubeflow platform on Oracle Cloud.  
+Stack: Terraform, OCI, OKE, Kubeflow, Istio, KServe.  
+Links: [repo](https://github.com/jaiakash/deploy-kubeflow) · [PR](https://github.com/jaiakash/deploy-kubeflow/pull/5)
 
 **MacBatch** (2026) — Batch AI jobs across idle Apple Silicon (lease scheduler + worker CLI + Ollama).  
 Stack: TypeScript, Python, FastAPI, Ollama, npm.  
@@ -257,7 +277,7 @@ Links: [live](https://aitutor-two-hazel.vercel.app) · [source](https://github.c
 
 **Serving & retrieval** — vLLM, SGLang, KServe, TEI, Milvus, FAISS, ChromaDB, Elasticsearch  
 
-**Platform** — Kubernetes, Kubeflow Pipelines, Docker, Istio, Helm, OCI / OKE, GitHub Actions, Kafka, Prometheus, Alertmanager  
+**Platform** — Kubernetes, Kubeflow Pipelines, Docker, Istio, Helm, Terraform, OCI / OKE, GitHub Actions, Kafka, Prometheus, Alertmanager  
 
 **Languages & frameworks** — Python, TypeScript, Java, C++, FastAPI, Next.js, React, PostgreSQL, Oracle DB  
 
@@ -276,10 +296,11 @@ Links: [live](https://aitutor-two-hazel.vercel.app) · [source](https://github.c
 
 ---
 
-## Community
+## Open source
 
-- **Kubeflow Docs Agent community call** — every other Saturday, 11:00 PM IST (17:30 UTC), Zoom via LFX. Working session: what landed, what’s open, good first issues.  
-  Details: [kmrrohit.space/community](https://kmrrohit.space/community)
+- **Kubeflow Docs Agent** (GSoC 2026) — agentic RAG + MCP; Terraform/Helm on OKE; bi-weekly community call every other Saturday, 11:00 PM IST (17:30 UTC), Zoom via LFX.  
+  Details: [kmrrohit.space/opensource](https://kmrrohit.space/opensource)
+- **Deploy Kubeflow on OCI** — Terraform OKE + platform modules: [jaiakash/deploy-kubeflow](https://github.com/jaiakash/deploy-kubeflow)
 
 ---
 

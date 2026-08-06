@@ -17,6 +17,7 @@ npm run dev
 | Projects | `src/lib/projects.ts` |
 | Experience, skills, achievements | `src/lib/work.ts` |
 | Community call details, LinkedIn posts | `src/lib/community.ts` |
+| Open source contributions (nav: Open Source) | `src/lib/opensource.ts` · `/opensource` (`/community` redirects) |
 | Application brief (custom form answers) | `PROFILE.md` · `/profile` |
 | Referral / cold-DM templates (hidden) | `src/lib/referral.ts` · `/referral` (noindex, not in nav) |
 | Résumés | `static/rohit-kumar-resume-ai.pdf` · `static/rohit-kumar-resume-software.pdf` |
@@ -66,7 +67,7 @@ Two things to know about the markdown pipeline:
 
 ## Routes
 
-`/` home · `/writing` index · `/writing/[slug]` post · `/projects` · `/life` · `/about` · `/community` · `/profile` (application brief) · `/rss.xml` · `/sitemap.xml`
+`/` home · `/writing` index · `/writing/[slug]` post · `/projects` · `/life` · `/about` · `/opensource` · `/profile` (application brief) · `/referral` (hidden) · `/rss.xml` · `/sitemap.xml`
 
 `/blog` and `/blog/[slug]` 308-redirect to their `/writing` equivalents.
 

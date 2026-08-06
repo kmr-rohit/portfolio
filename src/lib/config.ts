@@ -19,7 +19,7 @@ export const routes: Route[] = [
 	{ name: 'Writing', link: '/writing' },
 	{ name: 'Projects', link: '/projects' },
 	{ name: 'Life', link: '/life' },
-	{ name: 'Community', link: '/community' },
+	{ name: 'Open Source', link: '/opensource' },
 	{ name: 'About', link: '/about' }
 ];
 
