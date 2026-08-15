@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="320" viewBox="0 0 880 320" role="img" aria-label="neofetch-style GitHub profile card for Rohit Kumar">
+  <defs>
+    <pattern id="grain" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="2" r="0.5" fill="#e6edf3" opacity="0.035"/>
+      <circle cx="5" cy="6" r="0.4" fill="#e6edf3" opacity="0.025"/>
+    </pattern>
+    <clipPath id="win"><rect x="1" y="1" width="878" height="318" rx="12"/></clipPath>
+    <style>
+      .fade { animation: fade 0.7s ease both; }
+      .d1 { animation-delay: 0.15s; } .d2 { animation-delay: 0.35s; }
+      .d3 { animation-delay: 0.55s; } .d4 { animation-delay: 0.75s; }
+      .d5 { animation-delay: 0.95s; } .d6 { animation-delay: 1.15s; }
+      .d7 { animation-delay: 1.35s; } .d8 { animation-delay: 1.55s; }
+      .cursor { animation: blink 1.1s step-end infinite; }
+      .scan { animation: scan 7s linear infinite; }
+      @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+      @keyframes blink { 50% { opacity: 0; } }
+      @keyframes scan { from { transform: translateY(-20px); } to { transform: translateY(320px); } }
+    </style>
+  </defs>
+  <rect width="880" height="320" rx="12" fill="#0d1117"/>
+  <rect x="1" y="1" width="878" height="318" rx="12" fill="none" stroke="rgba(230,237,243,0.12)" stroke-width="1"/>
+  <g clip-path="url(#win)">
+    <rect width="880" height="36" fill="#161b22"/>
+    <circle cx="22" cy="18" r="5" fill="#f85149" opacity="0.9"/>
+    <circle cx="40" cy="18" r="5" fill="#d29922" opacity="0.9"/>
+    <circle cx="58" cy="18" r="5" fill="#3fb950" opacity="0.9"/>
+    <text x="440" y="22" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">neofetch — kmr-rohit</text>
+    <line x1="1" y1="36" x2="879" y2="36" stroke="rgba(230,237,243,0.12)"/>
+    <text xml:space="preserve" x="24" y="58" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">        :@@%%*%%%#%@*-</text>
+    <text xml:space="preserve" x="24" y="71" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">        %@@%-=%%%#@@@+.</text>
+    <text xml:space="preserve" x="24" y="84" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">       =@@@@+=#%%@@@@@*  #*-</text>
+    <text xml:space="preserve" x="24" y="97" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">       #@@@@*++*%@@@@@@* +@@@-</text>
+    <text xml:space="preserve" x="24" y="110" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">       =@@@@***#%@@@@@%@.*@%=#*</text>
+    <text xml:space="preserve" x="24" y="123" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">       .@@@@#==+#@@@@@@#-@@@=:#*</text>
+    <text xml:space="preserve" x="24" y="136" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">        *@@@@%##@@@@@@@#%@#-%@=+*</text>
+    <text xml:space="preserve" x="24" y="149" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">        .%@@@@@@@@@@@@@@*#. .#@%@=</text>
+    <text xml:space="preserve" x="24" y="162" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">        .=@@@@%%@@@@@@@%---   .*@@</text>
+    <text xml:space="preserve" x="24" y="175" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">     .-=**%@@@@%@@@@@@@#=#+-.   =@</text>
+    <text xml:space="preserve" x="24" y="188" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">    -+**#%#%@@@%@@@@@@@##+==-:.  =</text>
+    <text xml:space="preserve" x="24" y="201" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">  :+#######*#%@%%@@@@@@@#+****+:</text>
+    <text xml:space="preserve" x="24" y="214" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11"> -*##%%##%#%%%%@%@@@@@@%***##%##:</text>
+    <text xml:space="preserve" x="24" y="227" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">-*#%%%%@@%%%%%%%@@@@@@@%%*#%%%##*</text>
+    <text xml:space="preserve" x="24" y="240" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">+%%%%%%%@@@%%%%%@%@%%@@%@%@@@%##%-</text>
+    <text xml:space="preserve" x="24" y="253" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">#%%%%%%%%@@@@%%%%@%%%@@@@@@@@%%%%*</text>
+    <text xml:space="preserve" x="24" y="266" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">#%#%@@@%%%%@@@@%%@%%%%@@%%@%%%%%@#</text>
+    <text x="430" y="52" fill="#3fb950" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13" font-weight="700">kmr-rohit</text>
+    <text x="518" y="52" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">@github</text>
+    <line x1="430" y1="58" x2="720" y2="58" stroke="rgba(230,237,243,0.12)"/>
+    <text class="fade d1" x="430" y="70" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">user</tspan><tspan fill="#484f58">........</tspan><tspan fill="#e6edf3"> kmr-rohit</tspan>
+    </text>
+    <text class="fade d2" x="430" y="90" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">name</tspan><tspan fill="#484f58">........</tspan><tspan fill="#e6edf3"> Rohit Kumar</tspan>
+    </text>
+    <text class="fade d3" x="430" y="110" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">role</tspan><tspan fill="#484f58">........</tspan><tspan fill="#e6edf3"> AI engineer</tspan>
+    </text>
+    <text class="fade d4" x="430" y="130" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">host</tspan><tspan fill="#484f58">........</tspan><tspan fill="#e6edf3"> Oracle · Fusion SCM</tspan>
+    </text>
+    <text class="fade d5" x="430" y="150" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">kernel</tspan><tspan fill="#484f58">......</tspan><tspan fill="#e6edf3"> GSoC 2026 · Kubeflow</tspan>
+    </text>
+    <text class="fade d6" x="430" y="170" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">uptime</tspan><tspan fill="#484f58">......</tspan><tspan fill="#e6edf3"> 2y shipping agents in prod</tspan>
+    </text>
+    <text class="fade d7" x="430" y="190" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">shell</tspan><tspan fill="#484f58">.......</tspan><tspan fill="#e6edf3"> Python · TypeScript</tspan>
+    </text>
+    <text class="fade d8" x="430" y="210" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">wm</tspan><tspan fill="#484f58">..........</tspan><tspan fill="#e6edf3"> MCP · RAG · KServe · Kafka</tspan>
+    </text>
+    <text class="fade d8" x="430" y="230" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">locale</tspan><tspan fill="#484f58">......</tspan><tspan fill="#e6edf3"> Bengaluru, India</tspan>
+    </text>
+    <text class="fade d8" x="430" y="250" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">blog</tspan><tspan fill="#484f58">........</tspan><tspan fill="#e6edf3"> kmrrohit.space</tspan>
+    </text>
+    <text class="fade d8" x="430" y="270" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13">
+      <tspan fill="#6b8ef5" font-weight="700">mail</tspan><tspan fill="#484f58">........</tspan><tspan fill="#e6edf3"> rr7433446@gmail.com</tspan>
+    </text>
+    <rect class="scan" x="1" y="36" width="878" height="18" fill="#6b8ef5" opacity="0.04"/>
+    <rect width="880" height="320" fill="url(#grain)"/>
+  </g>
+</svg>

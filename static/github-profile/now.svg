@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="352" viewBox="0 0 880 352" role="img" aria-label="Latest work: Kubeflow Docs Agent, Oracle Fusion SCM, MacBatch, writing">
+  <defs>
+    <pattern id="grain" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="2" r="0.5" fill="#e6edf3" opacity="0.035"/>
+      <circle cx="5" cy="6" r="0.4" fill="#e6edf3" opacity="0.025"/>
+    </pattern>
+    <clipPath id="win"><rect x="1" y="1" width="878" height="350" rx="12"/></clipPath>
+    <style>
+      .fade { animation: fade 0.7s ease both; }
+      .d1 { animation-delay: 0.15s; } .d2 { animation-delay: 0.35s; }
+      .d3 { animation-delay: 0.55s; } .d4 { animation-delay: 0.75s; }
+      .d5 { animation-delay: 0.95s; } .d6 { animation-delay: 1.15s; }
+      .d7 { animation-delay: 1.35s; } .d8 { animation-delay: 1.55s; }
+      .cursor { animation: blink 1.1s step-end infinite; }
+      .scan { animation: scan 7s linear infinite; }
+      @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+      @keyframes blink { 50% { opacity: 0; } }
+      @keyframes scan { from { transform: translateY(-20px); } to { transform: translateY(352px); } }
+    </style>
+  </defs>
+  <rect width="880" height="352" rx="12" fill="#0d1117"/>
+  <rect x="1" y="1" width="878" height="350" rx="12" fill="none" stroke="rgba(230,237,243,0.12)" stroke-width="1"/>
+  <g clip-path="url(#win)">
+    <rect width="880" height="36" fill="#161b22"/>
+    <circle cx="22" cy="18" r="5" fill="#f85149" opacity="0.9"/>
+    <circle cx="40" cy="18" r="5" fill="#d29922" opacity="0.9"/>
+    <circle cx="58" cy="18" r="5" fill="#3fb950" opacity="0.9"/>
+    <text x="440" y="22" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">now — latest work</text>
+    <line x1="1" y1="36" x2="879" y2="36" stroke="rgba(230,237,243,0.12)"/>
+    <g class="fade d1">
+      <rect x="20" y="52" width="410" height="134" rx="10" fill="#1c2330" stroke="rgba(230,237,243,0.12)"/>
+      <rect x="20" y="52" width="4" height="134" rx="2" fill="#6b8ef5"/>
+      <text x="38" y="80" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11" letter-spacing="0.12em">GSOC 2026</text>
+      <text x="38" y="106" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="18" font-weight="600">Kubeflow Docs Agent</text>
+      <text x="38" y="130" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Agentic RAG over docs, issues,</text>
+      <text x="38" y="146" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">code and manifests. MCP tools,</text>
+      <text x="38" y="162" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Helm edge, Terraform on OKE.</text>
+    </g>
+    <g class="fade d2">
+      <rect x="450" y="52" width="410" height="134" rx="10" fill="#1c2330" stroke="rgba(230,237,243,0.12)"/>
+      <rect x="450" y="52" width="4" height="134" rx="2" fill="#6b8ef5"/>
+      <text x="468" y="80" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11" letter-spacing="0.12em">ORACLE</text>
+      <text x="468" y="106" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="18" font-weight="600">Fusion SCM agents</text>
+      <text x="468" y="130" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Part matching +30% coverage.</text>
+      <text x="468" y="146" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Order agent: 10k+ lines/run.</text>
+      <text x="468" y="162" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Kafka notifier · planner RAG.</text>
+    </g>
+    <g class="fade d3">
+      <rect x="20" y="198" width="410" height="134" rx="10" fill="#1c2330" stroke="rgba(230,237,243,0.12)"/>
+      <rect x="20" y="198" width="4" height="134" rx="2" fill="#6b8ef5"/>
+      <text x="38" y="226" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11" letter-spacing="0.12em">OPEN SOURCE</text>
+      <text x="38" y="252" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="18" font-weight="600">MacBatch</text>
+      <text x="38" y="276" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Batch inference on idle Macs.</text>
+      <text x="38" y="292" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">252,686 embeds/hour, 2.8× from</text>
+      <text x="38" y="308" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">shard batching. Lease scheduler.</text>
+    </g>
+    <g class="fade d4">
+      <rect x="450" y="198" width="410" height="134" rx="10" fill="#1c2330" stroke="rgba(230,237,243,0.12)"/>
+      <rect x="450" y="198" width="4" height="134" rx="2" fill="#6b8ef5"/>
+      <text x="468" y="226" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11" letter-spacing="0.12em">WRITING</text>
+      <text x="468" y="252" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="18" font-weight="600">kmrrohit.space</text>
+      <text x="468" y="276" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">vLLM and SGLang from the inside.</text>
+      <text x="468" y="292" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Context, harnesses, two clocks.</text>
+      <text x="468" y="308" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">First-principles serving notes.</text>
+    </g>
+    <rect class="scan" x="1" y="36" width="878" height="18" fill="#6b8ef5" opacity="0.04"/>
+    <rect width="880" height="352" fill="url(#grain)"/>
+  </g>
+</svg>

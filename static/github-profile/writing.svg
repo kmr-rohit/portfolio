@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="292" viewBox="0 0 880 292" role="img" aria-label="Recent writing on vLLM, SGLang, agents and RAG">
+  <defs>
+    <pattern id="grain" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="2" r="0.5" fill="#e6edf3" opacity="0.035"/>
+      <circle cx="5" cy="6" r="0.4" fill="#e6edf3" opacity="0.025"/>
+    </pattern>
+    <clipPath id="win"><rect x="1" y="1" width="878" height="290" rx="12"/></clipPath>
+    <style>
+      .fade { animation: fade 0.7s ease both; }
+      .d1 { animation-delay: 0.15s; } .d2 { animation-delay: 0.35s; }
+      .d3 { animation-delay: 0.55s; } .d4 { animation-delay: 0.75s; }
+      .d5 { animation-delay: 0.95s; } .d6 { animation-delay: 1.15s; }
+      .d7 { animation-delay: 1.35s; } .d8 { animation-delay: 1.55s; }
+      .cursor { animation: blink 1.1s step-end infinite; }
+      .scan { animation: scan 7s linear infinite; }
+      @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+      @keyframes blink { 50% { opacity: 0; } }
+      @keyframes scan { from { transform: translateY(-20px); } to { transform: translateY(292px); } }
+    </style>
+  </defs>
+  <rect width="880" height="292" rx="12" fill="#0d1117"/>
+  <rect x="1" y="1" width="878" height="290" rx="12" fill="none" stroke="rgba(230,237,243,0.12)" stroke-width="1"/>
+  <g clip-path="url(#win)">
+    <rect width="880" height="36" fill="#161b22"/>
+    <circle cx="22" cy="18" r="5" fill="#f85149" opacity="0.9"/>
+    <circle cx="40" cy="18" r="5" fill="#d29922" opacity="0.9"/>
+    <circle cx="58" cy="18" r="5" fill="#3fb950" opacity="0.9"/>
+    <text x="440" y="22" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">cat ~/writing</text>
+    <line x1="1" y1="36" x2="879" y2="36" stroke="rgba(230,237,243,0.12)"/>
+    <g class="fade d1">
+      <text x="28" y="64" fill="#484f58" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Jul 2026</text>
+      <text x="128" y="64" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15">Teaching a docs agent to read the repo</text>
+      <text x="852" y="64" text-anchor="end" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">Kubeflow · RAG</text>
+      <line x1="28" y1="78" x2="852" y2="78" stroke="rgba(230,237,243,0.12)"/>
+    </g>
+    <g class="fade d2">
+      <text x="28" y="100" fill="#484f58" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Jul 2026</text>
+      <text x="128" y="100" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15">SGLang, or a runtime that remembers</text>
+      <text x="852" y="100" text-anchor="end" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">Serving</text>
+      <line x1="28" y1="114" x2="852" y2="114" stroke="rgba(230,237,243,0.12)"/>
+    </g>
+    <g class="fade d3">
+      <text x="28" y="136" fill="#484f58" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Jun 2026</text>
+      <text x="128" y="136" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15">Context engineering, after the window</text>
+      <text x="852" y="136" text-anchor="end" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">Agents</text>
+      <line x1="28" y1="150" x2="852" y2="150" stroke="rgba(230,237,243,0.12)"/>
+    </g>
+    <g class="fade d4">
+      <text x="28" y="172" fill="#484f58" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">May 2026</text>
+      <text x="128" y="172" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15">vLLM from the inside</text>
+      <text x="852" y="172" text-anchor="end" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">Serving</text>
+      <line x1="28" y1="186" x2="852" y2="186" stroke="rgba(230,237,243,0.12)"/>
+    </g>
+    <g class="fade d5">
+      <text x="28" y="208" fill="#484f58" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Apr 2026</text>
+      <text x="128" y="208" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15">The harness is the product</text>
+      <text x="852" y="208" text-anchor="end" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">Agents</text>
+      <line x1="28" y1="222" x2="852" y2="222" stroke="rgba(230,237,243,0.12)"/>
+    </g>
+    <g class="fade d6">
+      <text x="28" y="244" fill="#484f58" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">Mar 2026</text>
+      <text x="128" y="244" fill="#e6edf3" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15">The two clocks</text>
+      <text x="852" y="244" text-anchor="end" fill="#56d4dd" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11">Prefill / decode</text>
+      
+    </g>
+    <rect class="scan" x="1" y="36" width="878" height="18" fill="#6b8ef5" opacity="0.04"/>
+    <rect width="880" height="292" fill="url(#grain)"/>
+  </g>
+</svg>
