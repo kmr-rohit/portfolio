@@ -739,11 +739,13 @@
       grid-template-columns: 1fr;
       min-height: auto;
       padding-top: 40px;
+      gap: 36px;
     }
 
     .layer-stamp {
       justify-self: start;
-      width: min(84vw, 310px);
+      width: min(100%, 310px);
+      transform: none;
     }
 
     .course-ledger {
@@ -765,6 +767,13 @@
     .method-strip,
     .route-board {
       grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .map-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
     }
 
     .before-grid {
@@ -784,13 +793,40 @@
   }
 
   @media (max-width: 540px) {
+    .course-hub {
+      max-width: 100%;
+    }
+
     .course-hero h1 {
-      font-size: clamp(2.75rem, 14vw, 4.25rem);
+      font-size: clamp(2.4rem, 12vw, 4.25rem);
+    }
+
+    .course-lede {
+      font-size: 1.05rem;
+    }
+
+    .course-actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .course-start {
+      justify-content: space-between;
     }
 
     .course-ledger > div {
       display: grid;
       gap: 2px;
+      padding: 14px 12px;
+    }
+
+    .course-ledger > div:nth-child(odd) {
+      padding-left: 0;
+    }
+
+    .course-ledger > div:nth-child(even) {
+      padding-right: 0;
     }
 
     .course-ledger strong {
@@ -803,6 +839,7 @@
 
     .season-head {
       grid-template-columns: 48px minmax(0, 1fr);
+      gap: 12px;
     }
 
     .season-number {
@@ -818,6 +855,33 @@
       grid-column: 2;
       grid-template-columns: auto 1fr;
       text-align: left;
+    }
+
+    .method-strip li {
+      flex: 1 1 calc(50% - 8px);
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .course-ledger {
+      grid-template-columns: 1fr;
+    }
+
+    .course-ledger > div,
+    .course-ledger > div:nth-child(odd),
+    .course-ledger > div:nth-child(even) {
+      padding-inline: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .course-ledger > div:last-child {
+      border-bottom: 0;
+    }
+
+    .method-strip li {
+      flex-basis: 100%;
     }
   }
 

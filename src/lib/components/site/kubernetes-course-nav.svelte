@@ -47,7 +47,7 @@
     </div>
     <div
       class="course-track"
-      style={`grid-template-columns: repeat(${routeModules.length}, minmax(2px, 1fr));`}
+      style={`grid-template-columns: repeat(${routeModules.length}, minmax(0, 1fr));`}
       aria-hidden="true"
     >
       {#each routeModules as step (step.number)}
@@ -102,6 +102,8 @@
 <style>
   .course-context {
     --ink-soft: color-mix(in srgb, var(--ink) 70%, transparent);
+    width: 100%;
+    min-width: 0;
     margin-bottom: clamp(26px, 5vh, 44px);
     font-family: var(--font);
   }
@@ -136,11 +138,14 @@
 
   .course-track {
     display: grid;
+    width: 100%;
+    min-width: 0;
     gap: 3px;
     margin-top: 13px;
   }
 
   .course-track span {
+    min-width: 0;
     height: 2px;
     background: var(--hairline);
     transition: background 180ms ease, transform 180ms ease;
@@ -166,6 +171,8 @@
   .course-pager {
     --ink-soft: color-mix(in srgb, var(--ink) 70%, transparent);
     display: grid;
+    width: 100%;
+    min-width: 0;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: stretch;
     gap: 18px;
@@ -247,13 +254,19 @@
   }
 
   @media (max-width: 640px) {
+    .course-context-line {
+      gap: 0.25rem 0.45rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+    }
+
     .course-track {
       gap: 2px;
     }
 
     .course-pager {
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 14px;
     }
 
     .course-pager-index {
@@ -262,6 +275,23 @@
 
     .course-pager-side strong {
       font-size: 0.82rem;
+    }
+
+    .course-pager-label {
+      font-size: 0.58rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .course-pager {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .course-pager-next {
+      text-align: left;
+      padding-top: 12px;
+      border-top: 1px dashed var(--hairline);
     }
   }
 </style>

@@ -100,7 +100,10 @@
 
   @media (max-width: 44rem) {
     :global(.mdsvex) .sketch-figure.course-map {
-      width: calc(100vw - 2rem);
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      transform: none;
     }
 
     .course-map :global(.sketch-sheet) {

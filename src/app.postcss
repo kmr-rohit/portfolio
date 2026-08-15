@@ -139,6 +139,8 @@
 	/* —— Page shell —— */
 	.page {
 		min-height: 100dvh;
+		min-width: 0;
+		width: 100%;
 		padding: calc(clamp(28px, 5vw, 72px) + 56px) clamp(28px, 5vw, 72px) 10vh;
 		max-width: 980px;
 		margin: 0 auto;
@@ -620,7 +622,9 @@
 
 	/* —— Essay / writing article (Bearblog-inspired reading frame) —— */
 	.essay {
+		width: 100%;
 		max-width: 42rem;
+		min-width: 0;
 		margin-inline: auto;
 		animation: essay-rise 0.55s ease both;
 	}
@@ -642,10 +646,11 @@
 	.essay-head h1 {
 		font-family: var(--font);
 		font-weight: 300;
-		font-size: clamp(1.85rem, 4.2vw, 2.65rem);
+		font-size: clamp(1.55rem, 6.5vw, 2.65rem);
 		letter-spacing: var(--track-display);
 		line-height: 1.15;
 		text-wrap: balance;
+		overflow-wrap: anywhere;
 		color: var(--ink);
 		margin: 0;
 	}
@@ -1221,12 +1226,17 @@
 	}
 
 	.top nav {
-		gap: 8px 14px;
+		gap: 8px 12px;
 		font-size: 11px;
+		row-gap: 6px;
 	}
 
 	.page:not(.life-page):not(.home) {
-		padding-inline: 18px;
+		padding-inline: 16px;
+	}
+
+	.essay-standfirst {
+		font-size: 1.02rem;
 	}
 }
 
