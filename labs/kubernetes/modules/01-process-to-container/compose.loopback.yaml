@@ -1,0 +1,6 @@
+# Fault overlay: health remains green inside the API container, but neither the
+# Docker bridge nor the published host port can reach a loopback-only listener.
+services:
+  api:
+    environment:
+      WORKBENCH_BIND_HOST: 127.0.0.1

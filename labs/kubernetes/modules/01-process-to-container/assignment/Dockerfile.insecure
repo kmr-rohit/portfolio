@@ -1,0 +1,10 @@
+# Deliberately poor assignment starting point. Do not deploy this image. The
+# base remains digest-pinned so the exercise itself stays reproducible.
+FROM python:3.13.14-alpine3.23@sha256:9fdbf2e3e82628351513560b121e2ee6ce31cac212be9e070c5a5e2769fb5e76
+
+WORKDIR /app
+COPY app/server.py /app/server.py
+
+# Problems to find: root user, writable root filesystem assumed, no runtime
+# metadata, and a shell-form command that obscures signals.
+CMD python /app/server.py
