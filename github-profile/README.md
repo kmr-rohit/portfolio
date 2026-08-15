@@ -80,10 +80,7 @@ I host the [Kubeflow Docs Agent community call](https://kmrrohit.space/opensourc
 
 ## `/proc/stats`
 
-<div align="center">
-  <img height="180" src="https://github-readme-stats.vercel.app/api?username=kmr-rohit&show_icons=true&hide_border=true&bg_color=0d1117&title_color=6b8ef5&icon_color=6b8ef5&text_color=e6edf3&ring_color=6b8ef5&count_private=true" alt="kmr-rohit GitHub stats" />
-  <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=kmr-rohit&layout=compact&hide_border=true&bg_color=0d1117&title_color=6b8ef5&text_color=e6edf3&langs_count=8" alt="Top languages" />
-</div>
+<img src="./assets/stats.svg" alt="GitHub stats and top languages for kmr-rohit" width="880" />
 
 <div align="center">
   <img src="https://streak-stats.demolab.com?user=kmr-rohit&hide_border=true&background=0D1117&ring=6B8EF5&fire=6B8EF5&currStreakNum=E6EDF3&sideNums=E6EDF3&currStreakLabel=6B8EF5&sideLabels=8B949E&dates=8B949E&stroke=161B22" alt="GitHub streak" />

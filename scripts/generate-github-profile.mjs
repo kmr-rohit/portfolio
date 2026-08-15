@@ -7,6 +7,7 @@
  * Copy github-profile/README.md + assets/ into kmr-rohit/kmr-rohit.
  */
 import { writeFileSync, mkdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -321,6 +322,151 @@ function contribSvg() {
 	});
 }
 
+const LANG_SKIP = new Set([
+	'Makefile',
+	'CMake',
+	'Pawn',
+	'Sass',
+	'HTML',
+	'CSS',
+	'Dockerfile',
+	'Shell',
+	'Jupyter Notebook'
+]);
+const LANG_COLOR = {
+	TypeScript: '#3178c6',
+	Python: '#3572a5',
+	JavaScript: '#f1e05a',
+	'C++': '#f34b7d',
+	'Jupyter Notebook': '#da5b0b',
+	TeX: '#3d6117',
+	Java: '#b07219',
+	Svelte: '#ff3e00',
+	Go: '#00add8',
+	Vue: '#41b883'
+};
+
+function fetchGitHubStats() {
+	const fallback = {
+		repos: 101,
+		prs: 75,
+		followers: 19,
+		contributed: 5,
+		year: 129,
+		commits: 55,
+		yearPrs: 52,
+		langs: [
+			{ name: 'TypeScript', pct: 0.31, color: LANG_COLOR.TypeScript },
+			{ name: 'Python', pct: 0.28, color: LANG_COLOR.Python },
+			{ name: 'C++', pct: 0.22, color: LANG_COLOR['C++'] },
+			{ name: 'JavaScript', pct: 0.13, color: LANG_COLOR.JavaScript },
+			{ name: 'TeX', pct: 0.06, color: LANG_COLOR.TeX }
+		]
+	};
+
+	const query = `query {
+  user(login: "kmr-rohit") {
+    followers { totalCount }
+    repositories(privacy: PUBLIC) { totalCount }
+    pullRequests { totalCount }
+    repositoriesContributedTo(contributionTypes: [COMMIT, PULL_REQUEST, ISSUE, REPOSITORY]) { totalCount }
+    contributionsCollection(from: "2026-01-01T00:00:00Z", to: "2026-12-31T23:59:59Z") {
+      contributionCalendar { totalContributions }
+      totalCommitContributions
+      totalPullRequestContributions
+    }
+    owned: repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+      nodes {
+        languages(first: 5, orderBy: {field: SIZE, direction: DESC}) {
+          edges { size node { name } }
+        }
+      }
+    }
+  }
+}`;
+
+	try {
+		const raw = execFileSync('gh', ['api', 'graphql', '-f', `query=${query}`], {
+			encoding: 'utf8',
+			maxBuffer: 2_000_000
+		});
+		const user = JSON.parse(raw).data.user;
+		const bytes = new Map();
+		for (const repo of user.owned.nodes) {
+			for (const edge of repo.languages.edges) {
+				if (LANG_SKIP.has(edge.node.name)) continue;
+				bytes.set(edge.node.name, (bytes.get(edge.node.name) ?? 0) + edge.size);
+			}
+		}
+		const langs = [...bytes.entries()]
+			.sort((a, b) => b[1] - a[1])
+			.slice(0, 6);
+		const total = langs.reduce((s, [, n]) => s + n, 0) || 1;
+		return {
+			repos: user.repositories.totalCount,
+			prs: user.pullRequests.totalCount,
+			followers: user.followers.totalCount,
+			contributed: user.repositoriesContributedTo.totalCount,
+			year: user.contributionsCollection.contributionCalendar.totalContributions,
+			commits: user.contributionsCollection.totalCommitContributions,
+			yearPrs: user.contributionsCollection.totalPullRequestContributions,
+			langs: langs.map(([name, n]) => ({
+				name,
+				pct: n / total,
+				color: LANG_COLOR[name] ?? C.accent
+			}))
+		};
+	} catch (err) {
+		console.warn('github stats fallback:', err.message);
+		return fallback;
+	}
+}
+
+function statsSvg(stats) {
+	const metrics = [
+		['public repos', String(stats.repos)],
+		['PRs authored', String(stats.prs)],
+		['2026 contributions', String(stats.year)],
+		['2026 commits', String(stats.commits)],
+		['2026 PRs', String(stats.yearPrs)],
+		['repos contributed', String(stats.contributed)]
+	];
+	const left = metrics
+		.map(([label, value], i) => {
+			const y = 72 + i * 32;
+			return `<text x="36" y="${y}" font-family="${FONT}" font-size="14">
+      <tspan fill="${C.muted}">${escapeXml(label)}</tspan>
+      <tspan fill="${C.ink}" font-size="16" font-weight="700" dx="12">${escapeXml(value)}</tspan>
+    </text>`;
+		})
+		.join('\n    ');
+
+	const bars = stats.langs
+		.map((lang, i) => {
+			const y = 72 + i * 32;
+			const w = Math.max(8, Math.round(lang.pct * 280));
+			const pct = `${Math.round(lang.pct * 100)}%`;
+			return `<g>
+      <text x="450" y="${y}" fill="${C.ink}" font-family="${FONT}" font-size="13">${escapeXml(lang.name)}</text>
+      <rect x="560" y="${y - 12}" width="280" height="10" rx="5" fill="${C.raised}"/>
+      <rect x="560" y="${y - 12}" width="${w}" height="10" rx="5" fill="${lang.color}"/>
+      <text x="852" y="${y}" text-anchor="end" fill="${C.muted}" font-family="${FONT}" font-size="12">${pct}</text>
+    </g>`;
+		})
+		.join('\n    ');
+
+	return chrome({
+		title: 'procfs — github.com/kmr-rohit',
+		width: 880,
+		height: 292,
+		aria: 'GitHub stats and top languages for kmr-rohit',
+		children: `<text x="36" y="56" fill="${C.cyan}" font-family="${FONT}" font-size="11" letter-spacing="0.12em">STATS</text>
+    <text x="450" y="56" fill="${C.cyan}" font-family="${FONT}" font-size="11" letter-spacing="0.12em">LANGUAGES</text>
+    ${left}
+    ${bars}`
+	});
+}
+
 function writeBoth(name, contents) {
 	const targets = [
 		join(root, 'github-profile', 'assets', name),
@@ -334,16 +480,24 @@ function writeBoth(name, contents) {
 
 async function main() {
 	const portrait = await asciiPortrait();
+	const stats = fetchGitHubStats();
 	writeBoth('banner.svg', bannerSvg());
 	writeBoth('neofetch.svg', neofetchSvg(portrait));
 	writeBoth('now.svg', nowSvg());
 	writeBoth('writing.svg', writingSvg());
 	writeBoth('contrib.svg', contribSvg());
+	writeBoth('stats.svg', statsSvg(stats));
 	writeFileSync(join(root, 'github-profile', 'assets', 'portrait.txt'), portrait.join('\n') + '\n');
 
-	// Keep a copy of the generator outputs list for the site README table.
 	console.log('github-profile assets:');
-	for (const name of ['banner.svg', 'neofetch.svg', 'now.svg', 'writing.svg', 'contrib.svg']) {
+	for (const name of [
+		'banner.svg',
+		'neofetch.svg',
+		'now.svg',
+		'writing.svg',
+		'contrib.svg',
+		'stats.svg'
+	]) {
 		console.log('  ', name);
 	}
 }
