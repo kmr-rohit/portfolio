@@ -58,14 +58,10 @@ function chrome({ title, width, height, children, aria }) {
     ${grain()}
     <clipPath id="win"><rect x="1" y="1" width="${innerW}" height="${innerH}" rx="12"/></clipPath>
     <style>
-      .fade { animation: fade 0.7s ease both; }
-      .d1 { animation-delay: 0.15s; } .d2 { animation-delay: 0.35s; }
-      .d3 { animation-delay: 0.55s; } .d4 { animation-delay: 0.75s; }
-      .d5 { animation-delay: 0.95s; } .d6 { animation-delay: 1.15s; }
-      .d7 { animation-delay: 1.35s; } .d8 { animation-delay: 1.55s; }
+      .fade { animation: fade 0.55s ease; }
       .cursor { animation: blink 1.1s step-end infinite; }
       .scan { animation: scan 7s linear infinite; }
-      @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+      @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
       @keyframes blink { 50% { opacity: 0; } }
       @keyframes scan { from { transform: translateY(-20px); } to { transform: translateY(${height}px); } }
     </style>
