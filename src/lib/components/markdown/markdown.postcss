@@ -6,7 +6,9 @@
 	--ink-body: color-mix(in srgb, var(--ink) 82%, transparent);
 	--read: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
 
+	width: 100%;
 	max-width: 42rem;
+	min-width: 0;
 	font-family: var(--read);
 	font-size: clamp(1.05rem, 0.4vw + 1rem, 1.175rem);
 	font-optical-sizing: auto;
@@ -75,9 +77,12 @@
 .mdsvex [data-rehype-pretty-code-fragment] {
 	position: relative;
 	margin-block: 1.75rem;
+	max-width: 100%;
+	min-width: 0;
 }
 
 .mdsvex pre {
+	max-width: 100%;
 	max-height: 32rem;
 	overflow: auto;
 	padding-block: 1rem;
@@ -86,6 +91,7 @@
 	line-height: 1.65;
 	letter-spacing: 0;
 	scrollbar-width: thin;
+	-webkit-overflow-scrolling: touch;
 }
 
 .mdsvex pre code {

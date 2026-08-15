@@ -210,6 +210,8 @@
   .course-lab-facts li {
     display: grid;
     gap: 2px;
+    min-width: 0;
+    max-width: 100%;
     text-transform: lowercase;
   }
 
@@ -219,5 +221,23 @@
     letter-spacing: var(--track-nav);
     text-transform: uppercase;
     color: var(--ink-soft);
+  }
+
+  @media (max-width: 540px) {
+    .course-lab-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 16px;
+    }
+
+    .course-lab-facts li {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .course-lab-facts {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

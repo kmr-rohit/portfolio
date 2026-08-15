@@ -18,7 +18,7 @@
 
 <ModeWatcher />
 
-<div class="flex min-h-dvh flex-col" class:life-root={isLife}>
+<div class="flex min-h-dvh min-w-0 flex-col overflow-x-clip" class:life-root={isLife}>
 	<Header />
 	<main class="page flex-1 {isHome ? 'home' : ''} {isLife ? 'dark life-page' : ''}">
 		<slot />

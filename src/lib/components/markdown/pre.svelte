@@ -74,13 +74,13 @@
 </script>
 
 <div
-  class="group relative my-8 rounded-[2px] border border-white/[0.08] bg-[#14151a]"
+  class="group relative my-8 max-w-full min-w-0 overflow-hidden rounded-[2px] border border-white/[0.08] bg-[#14151a]"
 >
   {#if title || isLabCommand}
     <div
       class="flex min-h-[2.4rem] items-center justify-between gap-3 border-b border-white/[0.08] px-3 py-1.5 font-mono text-2xs uppercase tracking-label text-white/40 sm:px-4"
     >
-      <span
+      <span class="min-w-0 truncate"
         >{title || "Lab command · run from the portfolio project folder"}</span
       >
       <div class="flex shrink-0 items-center gap-1.5">
