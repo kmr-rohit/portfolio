@@ -1,0 +1,163 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="900"
+  height="650"
+  viewBox="0 0 900 650"
+  role="img"
+  aria-label="Nested execution map of a local kind cluster: kubectl, kind, and Docker clients run on macOS; Docker Desktop supplies one Linux virtual machine and Docker Engine; two kind node containers inside it act as the control-plane and worker nodes. The two Kubernetes nodes are containers, not two Macs."
+>
+  <title>A local Kubernetes cluster is several layers inside one Mac</title>
+  <desc>
+    macOS contains the command-line clients and one Docker Desktop Linux virtual
+    machine. Docker Engine in that virtual machine runs a control-plane node
+    container and a worker node container. Both nodes share the same Linux
+    kernel, virtual machine, laptop, and physical failure domain.
+  </desc>
+
+  <defs>
+    <marker id="layers-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#1d1f22" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="layers-arrow-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#596bb8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
+
+  <style>
+    text {
+      fill: #1d1f22;
+      font-family: 'Architects Daughter', 'Segoe Print', 'Comic Sans MS', cursive;
+      font-weight: 700;
+    }
+    .small { font-size: 13px; }
+    .note { font-size: 15px; }
+    .label { font-size: 17px; }
+    .heading { font-size: 21px; }
+    .ink {
+      fill: none;
+      stroke: #1d1f22;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .blue-line {
+      fill: none;
+      stroke: #596bb8;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .boundary {
+      fill: none;
+      stroke: #6d68b7;
+      stroke-width: 2.2;
+      stroke-dasharray: 10 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .cluster-boundary {
+      fill: none;
+      stroke: #596bb8;
+      stroke-width: 2;
+      stroke-dasharray: 5 6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+
+  <rect width="900" height="650" fill="#f7f5f0" />
+
+  <text x="34" y="38" font-size="27">Where is the cluster, really?</text>
+  <path d="M34 48 C164 51 295 46 426 49" stroke="#e0bd58" stroke-width="5" stroke-linecap="round" opacity="0.62" />
+  <text x="870" y="39" font-size="14" text-anchor="end" fill="#5d6065">MODULE 00 · LOCAL LAB</text>
+
+  <!-- Layer 1: the physical host and its native command-line clients. -->
+  <path
+    d="M24 78 Q194 74 365 79 T876 77 L879 623 Q672 627 469 622 T21 625 Q25 439 20 263 T24 78 Z"
+    fill="#eceeed"
+    stroke="#1d1f22"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <text x="43" y="108" class="heading">1 · macOS host</text>
+  <text x="43" y="126" class="small" fill="#65676b">commands + project files</text>
+
+  <!-- The three similarly placed clients have deliberately different jobs. -->
+  <path d="M43 145 Q112 141 184 145 L182 196 Q111 199 44 195 Z" fill="#dfe9f5" class="ink" />
+  <text x="57" y="168" class="heading">kubectl</text>
+  <text x="57" y="188" class="small">controls the cluster</text>
+
+  <path d="M44 215 Q112 211 183 215 L185 266 Q112 268 42 265 Z" fill="#f6e9b7" class="ink" />
+  <text x="57" y="238" class="heading">kind</text>
+  <text x="57" y="258" class="small">creates the nodes</text>
+
+  <path d="M42 285 Q112 281 185 285 L182 337 Q111 340 44 335 Z" fill="#e4e5e3" class="ink" />
+  <text x="57" y="309" class="heading">docker</text>
+  <text x="57" y="329" class="small">lists containers</text>
+
+  <!-- Layer 2: Docker Desktop's single Linux VM. -->
+  <path
+    d="M218 111 Q378 106 536 111 T855 109 L858 557 Q699 562 539 557 T216 560 Q220 410 215 260 T218 111 Z"
+    fill="#f3f1f6"
+    class="boundary"
+  />
+  <text x="239" y="139" class="heading" fill="#534e9d">2 · Docker Desktop Linux VM</text>
+
+  <path d="M239 153 Q524 148 832 153 L830 217 Q530 221 241 216 Z" fill="#f6e9b7" class="ink" />
+  <text x="258" y="179" class="heading">Docker Engine</text>
+  <text x="258" y="201" class="note">creates, starts, and removes Linux containers</text>
+  <path d="M656 168 Q731 165 812 168 L810 204 Q732 207 655 203 Z" fill="#e4e5e3" stroke="#77797c" stroke-width="1.6" />
+  <text x="733" y="190" class="note" text-anchor="middle">one Linux kernel</text>
+
+  <!-- Client routes: kubectl bypasses Docker and reaches the API; kind and docker reach the Engine. -->
+  <path d="M184 170 C215 170 206 414 283 418" class="blue-line" marker-end="url(#layers-arrow-blue)" />
+  <path d="M184 239 C210 238 211 183 239 183" class="blue-line" marker-end="url(#layers-arrow-blue)" />
+  <path d="M184 310 C217 308 210 203 239 202" class="ink" marker-end="url(#layers-arrow)" />
+
+  <!-- The kind cluster is a networked pair of Docker containers, not another VM. -->
+  <path d="M239 240 Q531 235 831 240 L833 485 Q536 490 238 486 Z" class="cluster-boundary" />
+  <text x="257" y="264" class="label" fill="#4c62ad">local cluster · two connected containers</text>
+
+  <path d="M260 282 Q393 278 521 282 L524 464 Q393 468 261 463 Z" fill="#dfe9f5" class="ink" />
+  <text x="278" y="307" class="heading">control-plane node</text>
+  <text x="278" y="327" class="small" fill="#5d6065">Docker container #1</text>
+  <path d="M278 340 Q393 337 507 340 L505 374 Q394 377 279 374 Z" fill="#e4e5e3" stroke="#77797c" stroke-width="1.5" />
+  <text x="393" y="362" class="note" text-anchor="middle">node software</text>
+  <path d="M278 383 Q393 379 507 383 L509 454 Q392 458 278 454 Z" class="boundary" />
+  <text x="393" y="400" class="small" text-anchor="middle" fill="#534e9d">Kubernetes control programs</text>
+  <path d="M288 406 Q335 403 382 406 L381 430 Q334 433 288 430 Z" fill="#f6e9b7" stroke="#1d1f22" stroke-width="1.5" />
+  <text x="335" y="423" class="small" text-anchor="middle">API server</text>
+  <path d="M394 406 Q446 403 498 406 L496 430 Q445 433 394 430 Z" fill="#e4e5e3" stroke="#1d1f22" stroke-width="1.5" />
+  <text x="445" y="423" class="small" text-anchor="middle">data (etcd)</text>
+  <text x="393" y="449" class="small" text-anchor="middle">scheduler + repair controllers</text>
+
+  <path d="M550 282 Q679 278 809 282 L807 464 Q680 468 551 463 Z" fill="#dcebdc" class="ink" />
+  <text x="568" y="307" class="heading">worker node</text>
+  <text x="568" y="327" class="small" fill="#5d6065">Docker container #2</text>
+  <path d="M568 340 Q679 337 791 340 L793 374 Q681 377 569 374 Z" fill="#e4e5e3" stroke="#77797c" stroke-width="1.5" />
+  <text x="680" y="362" class="note" text-anchor="middle">node software</text>
+  <path d="M568 389 Q679 385 792 389 L790 451 Q680 455 568 451 Z" fill="#eeeeeb" class="cluster-boundary" />
+  <text x="680" y="411" class="small" text-anchor="middle" fill="#77797c">application Pod · later modules</text>
+  <path d="M583 419 Q681 416 777 419 L779 444 Q680 447 583 444 Z" fill="#e4e5e3" stroke="#77797c" stroke-width="1.5" stroke-dasharray="5 5" />
+  <text x="681" y="437" class="small" text-anchor="middle" fill="#77797c">placeholder — none in Module 00</text>
+
+  <text x="534" y="518" class="note" text-anchor="middle">both nodes share one Linux kernel</text>
+  <path d="M350 526 C469 522 603 530 720 525" stroke="#6d68b7" stroke-width="2" stroke-dasharray="5 6" fill="none" />
+
+  <!-- A sticky note makes the central misconception impossible to miss. -->
+  <g transform="rotate(-1.2 114 447)">
+    <path d="M40 368 Q113 363 190 368 L187 535 Q111 539 42 534 Z" fill="#f6e9b7" stroke="#c59e31" stroke-width="1.8" stroke-linejoin="round" />
+    <text x="57" y="397" class="small" fill="#77601f">KEY INTUITION</text>
+    <text x="57" y="430" font-size="22">2 Ready nodes</text>
+    <text x="57" y="462" font-size="21" fill="#4c62ad">= 2 containers</text>
+    <text x="57" y="494" font-size="21">≠ 2 Macs</text>
+    <path d="M55 503 C91 506 132 499 171 503" stroke="#c59e31" stroke-width="3.5" stroke-linecap="round" opacity="0.7" />
+    <text x="57" y="524" class="small">one Mac underneath</text>
+  </g>
+
+  <path d="M43 578 C253 575 653 581 856 577" stroke="#a7a8a5" stroke-width="1.5" stroke-dasharray="3 6" fill="none" />
+  <text x="449" y="606" class="label" text-anchor="middle">
+    If this Mac stops, both Kubernetes nodes stop
+  </text>
+</svg>

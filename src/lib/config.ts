@@ -1,51 +1,64 @@
 export const site = {
-	name: 'Rohit Kumar',
-	handle: 'rohit',
-	url: 'https://kmrrohit.space',
-	title: 'Rohit Kumar',
-	role: 'AI engineer',
-	description:
-		'AI engineer working on agentic systems, retrieval and LLM serving. Oracle by day, and a Google Summer of Code contributor on Kubeflow Docs Agent.',
-	email: 'rr7433446@gmail.com',
-	location: 'Bengaluru, India'
+  name: "Rohit Kumar",
+  handle: "rohit",
+  url: "https://kmrrohit.space",
+  title: "Rohit Kumar",
+  role: "AI engineer",
+  description:
+    "AI engineer working on agentic systems, retrieval and LLM serving. Oracle by day, and a Google Summer of Code contributor on Kubeflow Docs Agent.",
+  email: "rr7433446@gmail.com",
+  location: "Bengaluru, India",
 };
 
 export type Route = {
-	name: string;
-	link: string;
+  name: string;
+  link: string;
 };
 
 export const routes: Route[] = [
-	{ name: 'Writing', link: '/writing' },
-	{ name: 'Projects', link: '/projects' },
-	{ name: 'Life', link: '/life' },
-	{ name: 'Open Source', link: '/opensource' },
-	{ name: 'About', link: '/about' }
+  { name: "Writing", link: "/writing" },
+  { name: "Learn", link: "/learn/kubernetes" },
+  { name: "Projects", link: "/projects" },
+  { name: "Life", link: "/life" },
+  { name: "Open Source", link: "/opensource" },
+  { name: "About", link: "/about" },
 ];
 
 export type Social = {
-	display: string;
-	href: string;
-	/** Shown as the visible label in prose contexts, e.g. "kmr-rohit". */
-	handle: string;
+  display: string;
+  href: string;
+  /** Shown as the visible label in prose contexts, e.g. "kmr-rohit". */
+  handle: string;
 };
 
 export const socials: Social[] = [
-	{ display: 'GitHub', href: 'https://github.com/kmr-rohit', handle: 'kmr-rohit' },
-	{
-		display: 'LinkedIn',
-		href: 'https://www.linkedin.com/in/rr7433446/',
-		handle: 'in/rr7433446'
-	},
-	{ display: 'Email', href: 'mailto:rr7433446@gmail.com', handle: 'rr7433446@gmail.com' },
-	{ display: 'Résumé · AI', href: '/rohit-kumar-resume-ai.pdf', handle: 'PDF' },
-	{ display: 'Résumé · SWE', href: '/rohit-kumar-resume-software.pdf', handle: 'PDF' }
+  {
+    display: "GitHub",
+    href: "https://github.com/kmr-rohit",
+    handle: "kmr-rohit",
+  },
+  {
+    display: "LinkedIn",
+    href: "https://www.linkedin.com/in/rr7433446/",
+    handle: "in/rr7433446",
+  },
+  {
+    display: "Email",
+    href: "mailto:rr7433446@gmail.com",
+    handle: "rr7433446@gmail.com",
+  },
+  { display: "Résumé · AI", href: "/rohit-kumar-resume-ai.pdf", handle: "PDF" },
+  {
+    display: "Résumé · SWE",
+    href: "/rohit-kumar-resume-software.pdf",
+    handle: "PDF",
+  },
 ];
 
 export const githubConfig = {
-	username: 'kmr-rohit',
-	repo: 'portfolio',
-	branch: 'main'
+  username: "kmr-rohit",
+  repo: "portfolio",
+  branch: "main",
 };
 
 /**
@@ -53,19 +66,28 @@ export const githubConfig = {
  * so an unconfigured install shows nothing rather than a broken widget.
  */
 export const giscus: {
-	repo: `${string}/${string}`;
-	repoId: string;
-	category: string;
-	categoryId: string;
+  repo: `${string}/${string}`;
+  repoId: string;
+  category: string;
+  categoryId: string;
 } = {
-	repo: 'kmr-rohit/portfolio',
-	repoId: '',
-	category: 'General',
-	categoryId: ''
+  repo: "kmr-rohit/portfolio",
+  repoId: "",
+  category: "General",
+  categoryId: "",
 };
 
 export const commentsEnabled = Boolean(giscus.repoId && giscus.categoryId);
 
 export const localToGithubURL = ({ src }: { src: string }) => {
-	return `https://raw.githubusercontent.com/${githubConfig.username}/${githubConfig.repo}/${githubConfig.branch}${src}`;
+  return `https://raw.githubusercontent.com/${githubConfig.username}/${githubConfig.repo}/${githubConfig.branch}${src}`;
+};
+
+export const githubTreeURL = (
+  path: string,
+  ref: string = githubConfig.branch
+) => {
+  const normalizedPath = path.replace(/^\/+|\/+$/g, "");
+  const normalizedRef = ref.replace(/^\/+|\/+$/g, "");
+  return `https://github.com/${githubConfig.username}/${githubConfig.repo}/tree/${normalizedRef}/${normalizedPath}`;
 };
