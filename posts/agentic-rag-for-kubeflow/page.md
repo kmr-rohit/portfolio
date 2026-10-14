@@ -10,6 +10,9 @@ tags:
 draft: false
 ---
 
+> **Update, October 2026:** this post covers the first half of the project. The [complete end-to-end write-up](/writing/building-flo-agentic-rag-for-kubeflow) includes everything here plus delivery, evaluation and the feedback loop.
+
+
 I spend my open-source time on [kubeflow/docs-agent](https://github.com/kubeflow/docs-agent), which is the assistant behind the Kubeflow website and my Google Summer of Code 2026 project. The goal is to expand it from a documentation chatbot into an agentic RAG reference architecture that other projects can copy.
 
 The starting point was a reasonable system that did the standard thing: chunk the Markdown docs, embed them, retrieve top-k, generate. It worked, in the sense that it answered documentation questions from documentation. The problem is that most of the questions people actually bring to a Kubeflow assistant are not documentation questions.
