@@ -946,6 +946,109 @@ function sketchIntensity() {
 }
 
 /* run all */
+/* ── docs-agent: delivery and feedback loops ─────────────────────── */
+
+function sketchFloArchitecture() {
+	const { document, svg, rc } = createSvg(860, 470, 'docs-agent architecture');
+	label(document, svg, 'Flo, one question end to end', 40, 40, { size: TITLE });
+
+	const row = (x, y, w, h, fill, lines, size) => {
+		box(rc, svg, x, y, w, h, { fill, hachureGap: 7, fillStyle: 'hachure' });
+		multiline(document, svg, lines, x + w / 2, y + h / 2 - ((lines.length - 1) * 22) / 2 + 6, {
+			anchor: 'middle',
+			size: size ?? SMALL,
+			gap: 22
+		});
+	};
+	row(40, 80, 150, 70, yellow, ['docs-site', 'chat widget']);
+	row(232, 80, 190, 70, grey, ['Istio gateway', 'TLS · limits · JWT']);
+	row(460, 80, 160, 70, purple, ['kagent agent', 'decides tools']);
+	row(670, 80, 150, 70, pink, ['Gemma 4', 'answers']);
+	arrow(rc, svg, 192, 115, 228, 115);
+	arrow(rc, svg, 424, 115, 456, 115);
+	arrow(rc, svg, 622, 115, 666, 115);
+
+	row(460, 200, 160, 70, blue, ['MCP server', '3 search tools']);
+	arrow(rc, svg, 540, 152, 540, 196);
+	row(250, 200, 160, 70, green, ['intent router', 'BM25 · hybrid']);
+	arrow(rc, svg, 456, 235, 414, 235);
+	row(40, 200, 160, 70, green, ['Milvus', 'docs·issues·code']);
+	arrow(rc, svg, 248, 235, 204, 235);
+
+	row(40, 320, 160, 70, yellow, ['KFP ingestion', 'website · issues']);
+	arrow(rc, svg, 120, 318, 120, 274);
+
+	row(460, 320, 160, 70, grey, ['OTel + Langfuse', 'traces · scores']);
+	arrow(rc, svg, 540, 272, 540, 316, { dashed: true });
+	row(670, 320, 150, 70, pink, ['Qwen judge', 'eval · triage']);
+	arrow(rc, svg, 668, 355, 624, 355, { dashed: true });
+
+	label(document, svg, 'Argo CD deploys all of it from Git; staging and production are namespaces', 40, 440, {
+		size: SMALL,
+		fill: muted
+	});
+	save('flo-architecture.svg', svg);
+}
+
+function sketchFloDelivery() {
+	const { document, svg, rc } = createSvg(840, 340, 'How a merge reaches users in docs-agent');
+	label(document, svg, 'Every merge is deployed and graded before users see it', 40, 40, { size: TITLE });
+
+	const steps = [
+		{ x: 40, t: ['merge', 'to main'], c: yellow },
+		{ x: 200, t: ['Argo CD', '→ staging'], c: blue },
+		{ x: 360, t: ['eval:', '58 questions'], c: green },
+		{ x: 520, t: ['review', 'the diff'], c: purple },
+		{ x: 680, t: ['sync', 'production'], c: pink }
+	];
+	for (const s of steps) {
+		box(rc, svg, s.x, 90, 140, 84, { fill: s.c, hachureGap: 6 });
+		s.t.forEach((line, i) => label(document, svg, line, s.x + 70, 126 + i * 24, { anchor: 'middle' }));
+	}
+	for (let i = 0; i < steps.length - 1; i++) arrow(rc, svg, steps[i].x + 142, 132, steps[i + 1].x - 4, 132);
+
+	multiline(document, svg, ['Gemma answers,', 'Qwen grades'], 430, 212, { size: SMALL, fill: muted, anchor: 'middle' });
+	multiline(document, svg, ['gate fails →', 'sync fails'], 430, 266, { size: SMALL, fill: accent, anchor: 'middle' });
+	multiline(document, svg, ['manual,', 'drift visible'], 750, 212, { size: SMALL, fill: muted, anchor: 'middle' });
+	label(document, svg, 'CI tests and builds images; it never touches the cluster', 40, 322, { size: SMALL, fill: muted });
+	save('flo-delivery.svg', svg);
+}
+
+function sketchFloFeedback() {
+	const { document, svg, rc } = createSvg(820, 350, 'From a thumbs-down to an owner');
+	label(document, svg, 'A thumbs-down becomes a layer and an owner', 40, 40, { size: TITLE });
+
+	box(rc, svg, 40, 90, 150, 80, { fill: pink });
+	multiline(document, svg, ['thumbs-down', '+ comment'], 115, 124, { anchor: 'middle' });
+	box(rc, svg, 250, 90, 150, 80, { fill: yellow });
+	multiline(document, svg, ['score on the', 'exact trace'], 325, 124, { anchor: 'middle' });
+	box(rc, svg, 460, 90, 150, 80, { fill: blue });
+	multiline(document, svg, ['nightly', 'triage'], 535, 124, { anchor: 'middle' });
+	arrow(rc, svg, 192, 130, 246, 130);
+	arrow(rc, svg, 402, 130, 456, 130);
+
+	box(rc, svg, 640, 60, 150, 70, { fill: green });
+	multiline(document, svg, ['pipeline bug', '→ docs-agent'], 715, 90, { anchor: 'middle', size: SMALL });
+	box(rc, svg, 640, 150, 150, 70, { fill: purple });
+	multiline(document, svg, ['docs gap', '→ working group'], 715, 180, { anchor: 'middle', size: SMALL });
+	arrow(rc, svg, 612, 118, 636, 98);
+	arrow(rc, svg, 612, 142, 636, 182);
+
+	multiline(
+		document,
+		svg,
+		[
+			're-search the index independently, then ask:',
+			'was it retrieved? does it exist? did the answer stay grounded?'
+		],
+		40,
+		260,
+		{ size: SMALL, fill: muted }
+	);
+	label(document, svg, 'a human files the issue', 40, 325, { size: SMALL, fill: accent });
+	save('flo-feedback.svg', svg);
+}
+
 [
 	sketchPrefillDecodeKv,
 	sketchFragmentation,
@@ -972,7 +1075,10 @@ function sketchIntensity() {
 	sketchDisagg,
 	sketchLatencyMetrics,
 	sketchCudaGraphs,
-	sketchIntensity
+	sketchIntensity,
+	sketchFloArchitecture,
+	sketchFloDelivery,
+	sketchFloFeedback
 ].forEach((fn) => fn());
 
 console.log('done —', outDirs[0]);
