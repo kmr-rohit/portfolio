@@ -59,14 +59,14 @@ Retrieval quality was not the bottleneck. The corpus was. No ranking trick recov
 | Agents | [kagent](https://kagent.dev) `Agent`, `ModelConfig` and `RemoteMCPServer` resources | Agents are Kubernetes objects, reviewed and deployed like any other |
 | Tools | An MCP server with three search tools | The same tools serve the website, an IDE, or any other agent |
 | Data | Milvus collections for docs, issues and code; a TEI embedding service | Each source keeps its own shape and metadata |
-| Models | KServe with vLLM, one model per GPU | Model changes never ride along with app changes |
+| Models | [KServe](https://kserve.github.io/website/) with vLLM, one model per GPU | Model changes never ride along with app changes |
 | Platform | Argo CD, OpenTelemetry, Langfuse | Delivery, tracing and evaluation |
 
 Everything runs on one Oracle Kubernetes Engine cluster with two NVIDIA A10 GPUs.
 
 ## 3. Ingestion: index the sources, not just the docs
 
-The first big change was ingestion, built as Kubeflow Pipelines that write into Milvus:
+The first big change was ingestion, built as [Kubeflow](https://www.kubeflow.org) Pipelines that write into Milvus:
 
 - **Documentation** from `kubeflow/website`. The Hugo pages are parsed with their front matter, split on headings with a token-aware chunker, and tagged with section, version and release date.
 - **GitHub issues** across the Kubeflow repositories. An issue is indexed with its title, problem and resolution together, plus state and labels. A closed issue with a fix is worth more than an open one describing the same symptom.
@@ -102,7 +102,7 @@ The agents are kagent resources: a docs agent, the same agent with thinking enab
 
 ## 6. Choosing the model
 
-We started with Qwen2.5-7B. Two evaluations decided the switch to Gemma 4 E4B: a retrieval and answer-quality eval I ran over the indexed docs, and Santhosh's tool-use eval of 97 cases, each repeated three times.
+We started with Qwen2.5-7B. Two evaluations decided the switch to Gemma 4 E4B: a retrieval and answer-quality eval I ran over the indexed docs, and Santhosh's tool-use eval of 97 cases, each repeated three times ([#261](https://github.com/kubeflow/docs-agent/pull/261)).
 
 | | Qwen2.5-7B | Gemma 4 E4B |
 |---|---|---|
@@ -119,7 +119,7 @@ Answer quality was level, tool use was far better, and answers came back about f
 A public chatbot backed by an LLM is an open invitation to spend someone else's GPU. The edge is a Helm chart, `gateway-guardrails`, so the protections ship with every deployment rather than living in a runbook:
 
 - TLS from cert-manager, a CORS allow-list, and global and per-IP rate limits.
-- **Anonymous session tokens.** The widget asks for a short-lived signed token and sends it on every request. Istio checks the signature and expiry at the gateway, so there are no user accounts, but every client has a bounded identity.
+- **Anonymous session tokens.** The widget asks for a short-lived signed token and sends it on every request. Istio checks the signature and expiry at the gateway, so there are no user accounts, but every client has a bounded identity. The token issuer started life as an image in my personal registry; it is now built by the project's CI into `ghcr.io/kubeflow`, because a project's production should not depend on one contributor's account.
 - **No catch-all route.** The agent UI behind the gateway also serves an admin API. The gateway routes only the agent stream, with a strict path regex, because the UI decodes `%2F` after routing and `/a2a/..%2fapi/sessions` would otherwise escape to the admin API.
 
 One bug from this layer is worth repeating. Long answers were cut off mid-sentence. The cause was a 30-second route timeout: it applied to the whole streamed response, not just to the first byte, and a 7B model regularly streams for longer than that. Streaming changes what a timeout means.
@@ -132,18 +132,24 @@ One difference was invisible to the usual tools. Tracing keys had been added to 
 
 The fix was in stages:
 
-1. **Argo CD in observe-only mode.** An Application per Helm release, pointing at `main`, with no sync policy. Argo CD reports drift and changes nothing. The list of hand-made changes became a dashboard, and we fixed them one pull request at a time.
-2. **Staging as a namespace, not a branch.** `docs-agent-staging` runs the same chart. Argo CD syncs it from `main` automatically and self-heals it. Branch pairs drift and need merge-backs, and in an open-source repository every contributor would have to know which branch to target.
-3. **Production pinned and synced by hand.** Its values live in `deploy/envs/prod/`. A release is a small pull request that changes a pin, and a rollback is reverting it. GPU releases are always synced manually, because a sync reloads a model.
-4. **Configuration in Git, secrets in the cluster.** Environment values are public and reviewed. Secrets are Kubernetes Secrets referenced by name and never committed.
-
-![How a merge reaches users: merge, Argo CD syncs staging, eval, review the diff, sync production.](/sketches/flo-delivery.svg)
+1. **Argo CD in observe-only mode** ([#266](https://github.com/kubeflow/docs-agent/pull/266)). An Application per Helm release, pointing at `main`, with no sync policy. Argo CD reports drift and changes nothing. The list of hand-made changes became a dashboard, and we fixed them one pull request at a time.
+2. **Staging as a namespace, not a branch** ([#267](https://github.com/kubeflow/docs-agent/pull/267)). `docs-agent-staging` runs the same chart. Argo CD syncs it from `main` automatically and self-heals it. Branch pairs drift and need merge-backs, and in an open-source repository every contributor would have to know which branch to target.
+3. **Configuration in Git, secrets in the cluster.** Environment values in `deploy/envs/` are public and reviewed. Secrets are Kubernetes Secrets referenced by name and never committed. Review kept the values honest too: Tarek flagged a node-IP anti-affinity rule copied from the live release, and it turned out to be redundant, because the GPU nodes are already tainted.
+4. **Production promoted by commit** ([#274](https://github.com/kubeflow/docs-agent/pull/274)), described below.
 
 Staging shares the model and Milvus with production. Retrieval only reads, and the model is the most expensive thing in the cluster. What staging must isolate is the code and configuration we are about to ship, and a namespace does that.
 
+**Promoting a commit, not editing a tag.** My first design promoted by pull request: bump the image tag in the production values. Living with it showed two problems. Staging was pinned to an image tag too, so a merge that changed code changed nothing staging deployed, and most merges were never tested there. And a hand-edited tag per release would not survive releasing every week or two with 10 to 20 commits in between.
+
+The design we settled on uses the commit as the unit. CI tags every image on `main` with its short SHA, and Argo CD exposes the commit it is deploying as [`$ARGOCD_APP_REVISION_SHORT`](https://argo-cd.readthedocs.io/en/stable/user-guide/build-environment/). Staging sets its image tag from that variable, so every merge changes what staging runs, and every merge is evaluated. Production is pinned to a commit. `deploy/promote.sh` moves the pin and opens a pull request whose description lists the commits since the last release and the staging eval scores for the new one. Merging it is the deploy, because production syncs automatically to whatever commit is pinned; reverting it is the rollback. A root [app of apps](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/), `flo-apps`, applies the Application definitions from `main`, so nobody runs `kubectl` after a merge. The GPU releases and Langfuse stay manual: a model reload or a database restart should be a decision.
+
+![How a merge reaches users: every merge is built, deployed to staging and evaluated; every week or two a promotion PR moves production.](/sketches/flo-delivery.svg)
+
+One trap appeared before the first sync, while reading the diff. The Langfuse chart creates database passwords with Helm's `lookup`, which reuses the existing Secret during `helm upgrade`. Argo CD renders charts without cluster access, so `lookup` returns nothing and every render invents new passwords. A sync would have overwritten the live credentials and locked Langfuse out of its own data. The fix is two lines of [diffing configuration](https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/): ignore `/data` on those Secrets, and `RespectIgnoreDifferences=true` so the sync honours it. **Read the diff before the first sync of anything stateful.**
+
 ## 9. An eval on every merge
 
-After every staging sync, Argo CD runs a Job that sends 58 real questions through the deployed stack: agent, tools, Milvus and model, exactly the path a user's question takes. It checks:
+After every staging sync, which is now every merge, Argo CD runs a Job that sends 58 real questions through the deployed stack: agent, tools, Milvus and model, exactly the path a user's question takes. It checks:
 
 | Check | Question | Gate |
 |---|---|---|
@@ -156,7 +162,7 @@ If a gate fails, the Job fails and so does the Argo CD sync. The current baselin
 
 Groundedness needs a judge, and **the answer model does not judge itself.** The second GPU, which had been idle, runs Qwen2.5-7B as a separate judge. A different model family grades Gemma's answers, and grading never takes GPU time from users. Qwen is a small judge, so its scores are best for comparing two commits on the same questions, not as an absolute grade.
 
-Each run is stored in Langfuse as an experiment named after the commit, the pull request and its author. A contributor finds their PR by number or GitHub username and compares it with the previous run, question by question. That makes answer quality visible to someone who has never had access to the cluster.
+Each run is stored in Langfuse as an [experiment](https://langfuse.com/docs/evaluation/experiments/overview) named after the commit, the pull request and its author. A contributor finds their PR by number or GitHub username and compares it with the previous run, question by question. That makes answer quality visible to someone who has never had access to the cluster.
 
 ## 10. Tracing two environments
 
@@ -172,7 +178,7 @@ The MCP server's own tracing existed only in that forked image. We ported it int
 
 The eval covers the 58 questions we chose. Users ask the other ten thousand.
 
-Every answer in the widget now has a small *Helpful?* bar, and a thumbs-down can carry a comment. The vote goes to a small service that finds the trace for that exact answer, from the chat's session ID and turn number, and records a score on it. Changing a vote overwrites the score.
+Every answer in the widget now has a small *Helpful?* bar ([#268](https://github.com/kubeflow/docs-agent/pull/268), in review), and a thumbs-down can carry a comment. The vote goes to a small service that finds the trace for that exact answer, from the chat's session ID and turn number, and records a score on it. Changing a vote overwrites the score.
 
 Each night a triage job reads the day's thumbs-down. For each one it takes the question, tool calls, retrieved chunks and answer from the trace, searches the index again independently, and asks the judge two questions. Did the agent see a passage that answers this? Does such a passage exist at all?
 
@@ -187,6 +193,8 @@ Each night a triage job reads the day's thumbs-down. For each one it takes the q
 
 That last split matters for an open-source project. A missing Katib example is not fixed by tuning our prompt; it is fixed by a docs pull request in Katib. The job writes its verdict onto the trace and prints a report grouped by owner, and a person files the issues. Automatic filing can wait until the judge is calibrated. The first real vote showed why: a user commented that a "trainer" question was really about Pipelines, and the keyword-based component guess said Katib.
 
+**Collecting feedback is collecting data**, so two smaller changes ship with it. The widget's disclaimer now says that conversations and feedback are recorded to improve answer quality, and asks people not to share personal information. And the data does not stay forever. Self-hosted Langfuse keeps everything by default, and its [built-in retention](https://langfuse.com/docs/administration/data-retention) is an Enterprise feature, so a weekly CronJob deletes traces, scores and raw events older than four weeks in the live project and two weeks in the evaluation project. The evaluation questions themselves are never deleted, and each release's scores outlive the traces because they are written into its promotion pull request.
+
 ## 12. Challenges, in one table
 
 | Challenge | Root cause | What we did |
@@ -199,7 +207,9 @@ That last split matters for an open-source project. A missing Katib example is n
 | Eval runs recorded but invisible | Langfuse v4 builds experiments from span attributes and ignores the old run API | Send one experiment span per question over OTLP |
 | A model grading itself | One model answering and judging | A separate Qwen judge on the second GPU |
 | Access rules that were never enforced | Istio policies need sidecars, and the namespaces had none | Verified with a test pod; documented with a rollout plan |
-| CI deployed production on its first green run | A deploy job hidden behind weeks of failing tests | CI now only tests and builds; Argo CD is the only deployer |
+| CI deployed production on its first green run | A deploy job hidden behind weeks of failing tests, which [#269](https://github.com/kubeflow/docs-agent/pull/269) made pass | CI now only tests and builds; Argo CD is the only deployer |
+| Most merges never reached staging | Staging was pinned to one image tag | The image tag comes from the commit Argo CD deploys |
+| A sync that would have locked Langfuse out | Helm `lookup` does not run in Argo CD, so every render made new passwords | Ignore those Secrets' data, and respect that on sync |
 | Image pulls failing | Docker Hub's anonymous rate limit | `IfNotPresent` pulls and mirrors that are not Docker Hub |
 
 ## 13. Results and what is next
@@ -211,13 +221,14 @@ Where Flo stands after the project:
 - A public edge with session tokens, rate limits and no route to anything but the agent stream.
 - Every component described in Git, deployed by Argo CD, with drift visible.
 - A staging environment and an end-to-end eval on every merge, visible to any contributor.
-- Live and evaluation traces kept apart, and a feedback loop that sorts failures by owner.
+- Production promoted by commit every week or two, with the changelog and eval in the pull request and a revert as the rollback.
+- Live and evaluation traces kept apart, a feedback loop that sorts failures by owner, and a retention window on the data it collects.
 
 What comes next:
 
 - **Calibrate the judge** against human labels before trusting its absolute scores.
 - **Enforce in-cluster access** with sidecars, starting with the namespace that holds the models and data.
-- **Automate image promotion**: staging picks up new builds automatically, and production moves through a promotion pull request.
+- **Check the eval automatically** when a promotion pull request is opened, instead of a reviewer pasting the scores.
 - **Rewrite the MCP unit tests** that the retrieval refactor left behind.
 
 Flo is now a subproject of the new Kubeflow Agents working group, and it is being discussed as a reference implementation for CNCF work on cloud native agent architecture. The [project documentation](https://kmr-rohit.github.io/docs-agent/) covers the details, and I am walking through all of it at this Saturday's Kubeflow community meeting.
@@ -228,7 +239,16 @@ Flo is now a subproject of the new Kubeflow Agents working group, and it is bein
 - **Chunk by structure, and keep different sources in different tools.**
 - **Make drift visible before you fix it, and give the cluster one writer.**
 - **Never let a model grade itself, and compare runs rather than reading one score.**
+- **Deploy every commit to staging, and promote commits, not tags.**
 - **Let the platform label telemetry instead of each workload.**
 - **Attach feedback to the exact trace, and end the loop with a person and an owner.**
+
+**References**
+
+- Code: [kubeflow/docs-agent](https://github.com/kubeflow/docs-agent); documentation: [kmr-rohit.github.io/docs-agent](https://kmr-rohit.github.io/docs-agent/) (preview on my fork until it moves upstream)
+- Pull requests: [#261](https://github.com/kubeflow/docs-agent/pull/261) Gemma 4 E4B and tool-use evals, [#266](https://github.com/kubeflow/docs-agent/pull/266) Argo CD and the Qwen judge, [#267](https://github.com/kubeflow/docs-agent/pull/267) staging and eval on every sync, [#268](https://github.com/kubeflow/docs-agent/pull/268) feedback and triage, [#269](https://github.com/kubeflow/docs-agent/pull/269) CI checks, [#274](https://github.com/kubeflow/docs-agent/pull/274) promotion and data retention
+- Argo CD: [build environment](https://argo-cd.readthedocs.io/en/stable/user-guide/build-environment/), [diffing customization](https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/), [app of apps](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/)
+- Langfuse: [experiments](https://langfuse.com/docs/evaluation/experiments/overview), [data retention](https://langfuse.com/docs/administration/data-retention)
+- [kagent](https://kagent.dev), [KServe](https://kserve.github.io/website/), [Kubeflow](https://www.kubeflow.org)
 
 *Thanks to my mentors Chase Christensen, Tarek Abouzeid and Santhosh Toorpu. Santhosh built the hybrid retrieval and the Gemma migration this post leans on, and all three reviewed and questioned everything else.*
