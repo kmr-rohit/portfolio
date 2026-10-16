@@ -991,26 +991,34 @@ function sketchFloArchitecture() {
 }
 
 function sketchFloDelivery() {
-	const { document, svg, rc } = createSvg(840, 340, 'How a merge reaches users in docs-agent');
-	label(document, svg, 'Every merge is deployed and graded before users see it', 40, 40, { size: TITLE });
+	const { document, svg, rc } = createSvg(840, 420, 'How a merge reaches users in docs-agent');
+	label(document, svg, 'Every merge is tested in staging; production moves by promotion', 40, 40, { size: TITLE });
 
-	const steps = [
+	label(document, svg, 'every merge', 40, 84, { size: SMALL, fill: accent });
+	const top = [
 		{ x: 40, t: ['merge', 'to main'], c: yellow },
-		{ x: 200, t: ['Argo CD', '→ staging'], c: blue },
-		{ x: 360, t: ['eval:', '58 questions'], c: green },
-		{ x: 520, t: ['review', 'the diff'], c: purple },
-		{ x: 680, t: ['sync', 'production'], c: pink }
+		{ x: 240, t: ['CI builds', 'image :sha'], c: blue },
+		{ x: 440, t: ['Argo CD', '→ staging'], c: blue },
+		{ x: 640, t: ['eval:', '58 questions'], c: green }
 	];
-	for (const s of steps) {
-		box(rc, svg, s.x, 90, 140, 84, { fill: s.c, hachureGap: 6 });
-		s.t.forEach((line, i) => label(document, svg, line, s.x + 70, 126 + i * 24, { anchor: 'middle' }));
+	label(document, svg, 'every week or two', 40, 244, { size: SMALL, fill: accent });
+	const bottom = [
+		{ x: 40, t: ['promote.sh', '<commit>'], c: purple },
+		{ x: 240, t: ['promotion PR:', 'changes + eval'], c: purple },
+		{ x: 440, t: ['review,', 'merge'], c: yellow },
+		{ x: 640, t: ['Argo CD', '→ production'], c: pink }
+	];
+	for (const [row, y] of [[top, 98], [bottom, 258]]) {
+		for (const s of row) {
+			box(rc, svg, s.x, y, 160, 80, { fill: s.c, hachureGap: 6 });
+			s.t.forEach((line, i) => label(document, svg, line, s.x + 80, y + 34 + i * 24, { anchor: 'middle' }));
+		}
+		for (let i = 0; i < row.length - 1; i++) arrow(rc, svg, row[i].x + 162, y + 40, row[i + 1].x - 4, y + 40);
 	}
-	for (let i = 0; i < steps.length - 1; i++) arrow(rc, svg, steps[i].x + 142, 132, steps[i + 1].x - 4, 132);
-
-	multiline(document, svg, ['Gemma answers,', 'Qwen grades'], 430, 212, { size: SMALL, fill: muted, anchor: 'middle' });
-	multiline(document, svg, ['gate fails →', 'sync fails'], 430, 266, { size: SMALL, fill: accent, anchor: 'middle' });
-	multiline(document, svg, ['manual,', 'drift visible'], 750, 212, { size: SMALL, fill: muted, anchor: 'middle' });
-	label(document, svg, 'CI tests and builds images; it never touches the cluster', 40, 322, { size: SMALL, fill: muted });
+	arrow(rc, svg, 700, 182, 330, 254, { dashed: true });
+	multiline(document, svg, ['scores go in', 'the PR'], 770, 210, { size: SMALL, fill: muted, anchor: 'middle' });
+	label(document, svg, 'revert the PR = rollback', 720, 362, { size: SMALL, fill: muted, anchor: 'middle' });
+	label(document, svg, 'CI tests and builds images; only Argo CD touches the cluster', 40, 400, { size: SMALL, fill: muted });
 	save('flo-delivery.svg', svg);
 }
 
