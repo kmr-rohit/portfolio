@@ -6,7 +6,7 @@
 
 <Seo
   title="Writing"
-  description="Long-form notes and learning series on Kubernetes, LLM serving, agent design and the systems underneath."
+  description="Long-form notes on Kubernetes, LLM serving, agent design and the systems underneath."
 />
 
 <header class="essay-index-head">
@@ -18,12 +18,12 @@
     deeper than they need to.
   </p>
 
-  <a class="course-entry" href="/learn/kubernetes">
+  <a class="course-entry" href="/learn/system-design">
     <span>
-      <small>New learning series · 27 modules</small>
-      <strong>Kubernetes from first principles</strong>
+      <small>Learn · {data.conceptCount} concepts</small>
+      <strong>System design, one idea at a time</strong>
     </span>
-    <b>Open course map →</b>
+    <b>Open the shelf →</b>
   </a>
 </header>
 

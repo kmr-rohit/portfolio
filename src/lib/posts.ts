@@ -69,12 +69,3 @@ export function getPosts(options: PostQueryOptions = {}): Post[] {
       new Date(second.date).getTime() - new Date(first.date).getTime()
   );
 }
-
-export function getSeriesPosts(
-  series: string,
-  options: PostQueryOptions = {}
-): Post[] {
-  return getPosts(options)
-    .filter((post) => post.series === series && Number.isInteger(post.module))
-    .sort((first, second) => (first.module ?? 0) - (second.module ?? 0));
-}

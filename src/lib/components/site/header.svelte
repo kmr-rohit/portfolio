@@ -3,14 +3,9 @@
   import { routes, site, socials } from "$lib/config";
   import ThemeToggle from "./theme-toggle.svelte";
 
-  $: isKubernetesCourseArticle =
-    ($page.data as { meta?: { series?: string } }).meta?.series ===
-    "kubernetes";
   $: isActive = (link: string) => {
-    if (isKubernetesCourseArticle) {
-      if (link === "/learn/kubernetes") return true;
-      if (link === "/writing") return false;
-    }
+    if (link.startsWith("/learn/") && $page.url.pathname.startsWith("/learn"))
+      return true;
 
     return (
       $page.url.pathname === link || $page.url.pathname.startsWith(`${link}/`)

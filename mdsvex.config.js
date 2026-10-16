@@ -7,7 +7,6 @@ import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { visit } from "unist-util-visit";
 import { toHtml } from "hast-util-to-html";
-import { toString } from "hast-util-to-string";
 import rehypePrettyCode from "rehype-pretty-code";
 import { BUNDLED_LANGUAGES, getHighlighter } from "shiki-es";
 import { escapeSvelte } from "@huntabyte/mdsvex";
@@ -243,8 +242,6 @@ function rehypeHandleMetadata() {
 
 function rehypeRenderCode() {
   return async (tree) => {
-    let labCommandIndex = 0;
-
     visit(tree, (node) => {
       if (
         node?.type === "element" &&
@@ -253,18 +250,6 @@ function rehypeRenderCode() {
         const codeEl = node.children[0];
         if (codeEl.tagName !== "code") {
           return;
-        }
-
-        if (
-          /(?:^|\n)\s*make\s+-C\s+(?:\.\/)?labs\/kubernetes(?:\s|$)/.test(
-            toString(codeEl)
-          )
-        ) {
-          node.properties["data-lab-command"] = true;
-          node.properties[
-            "data-lab-command-id"
-          ] = `lab-command-${labCommandIndex}`;
-          labCommandIndex += 1;
         }
 
         const codeString = tabsToSpaces(

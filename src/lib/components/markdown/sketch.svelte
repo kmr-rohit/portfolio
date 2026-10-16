@@ -21,10 +21,6 @@
   let markup = "";
   let missing = false;
 
-  $: isCourseMap =
-    src.includes("kubernetes-local-layers.svg") ||
-    src.includes("container-network-boundaries.svg");
-
   async function load(path: string) {
     const file = path.split("/").pop();
     if (!file) {
@@ -49,69 +45,13 @@
 {#if missing}
   <p class="text-sm" style="color: var(--ink-soft)">Missing sketch: {src}</p>
 {:else if markup}
-  <figure class={cn("sketch-figure", isCourseMap && "course-map", className)}>
-    <!-- A focusable overflow region lets keyboard users pan a wide diagram. -->
-    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-    <div
-      class:course-map-viewport={isCourseMap}
-      role={isCourseMap ? "region" : undefined}
-      tabindex={isCourseMap ? 0 : undefined}
-      aria-label={isCourseMap ? "Scrollable teaching diagram" : undefined}
-    >
-      <div class="sketch-sheet">
-        {@html markup}
-      </div>
+  <figure class={cn("sketch-figure", className)}>
+    <div class="sketch-sheet">
+      {@html markup}
     </div>
-    {#if isCourseMap}
-      <p class="course-map-hint" aria-hidden="true">
-        Swipe or scroll to explore the whole map →
-      </p>
-    {/if}
     {#if label}
       <figcaption>{label}</figcaption>
     {/if}
   </figure>
 {/if}
 
-<style>
-  :global(.mdsvex) .sketch-figure.course-map {
-    width: min(60rem, calc(100vw - 3rem));
-    max-width: none;
-    margin-left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .course-map-viewport {
-    max-width: 100%;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: thin;
-  }
-
-  .course-map-hint {
-    display: none;
-    margin: 0.5rem 0 0;
-    font-family: "Geist Mono", ui-monospace, monospace;
-    font-size: 0.64rem;
-    letter-spacing: 0.04em;
-    color: var(--ink-soft);
-    text-align: right;
-  }
-
-  @media (max-width: 44rem) {
-    :global(.mdsvex) .sketch-figure.course-map {
-      width: 100%;
-      max-width: 100%;
-      margin-left: 0;
-      transform: none;
-    }
-
-    .course-map :global(.sketch-sheet) {
-      min-width: 47rem;
-    }
-
-    .course-map-hint {
-      display: block;
-    }
-  }
-</style>
