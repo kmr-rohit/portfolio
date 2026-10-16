@@ -1,5 +1,6 @@
 import { routes, site } from '$lib/config';
 import { getPosts } from '$lib/posts';
+import { getConcepts } from '$lib/system-design';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async () => {
@@ -9,7 +10,11 @@ export const GET: RequestHandler = async () => {
 		{ loc: site.url, lastmod: undefined as string | undefined },
 		...routes.map((route) => ({ loc: `${site.url}${route.link}`, lastmod: undefined })),
 		{ loc: `${site.url}/profile`, lastmod: undefined },
-		...posts.map((post) => ({ loc: `${site.url}/writing/${post.slug}`, lastmod: post.date }))
+		...posts.map((post) => ({ loc: `${site.url}/writing/${post.slug}`, lastmod: post.date })),
+		...getConcepts().map((concept) => ({
+			loc: `${site.url}/learn/system-design/${concept.slug}`,
+			lastmod: undefined
+		}))
 	];
 
 	const urls = pages

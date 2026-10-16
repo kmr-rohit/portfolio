@@ -1,43 +1,14 @@
 <script lang="ts">
-  import { KubernetesCourseNav, Seo } from "$lib/components/site";
-  import {
-    markdownLabContextKey,
-    type MarkdownLabContext,
-  } from "$lib/components/markdown/lab-context";
+  import { Seo } from "$lib/components/site";
   import { Giscus } from "$lib/components/site/gicsus_";
-  import {
-    commentsEnabled,
-    giscus,
-    githubConfig,
-    githubTreeURL,
-    site,
-  } from "$lib/config";
+  import { commentsEnabled, giscus, site } from "$lib/config";
   import { theme } from "$lib/stores";
   import { formatDate } from "$lib/utils";
-  import { onMount, setContext } from "svelte";
+  import { onMount } from "svelte";
 
   export let data;
 
-  const labContext: MarkdownLabContext = {
-    get path() {
-      return data?.meta?.labPath ?? "";
-    },
-    get ref() {
-      return data?.meta?.labRef ?? githubConfig.branch;
-    },
-    get pinned() {
-      return Boolean(data?.meta?.labRef);
-    },
-    get url() {
-      const path = data?.meta?.labPath;
-      const ref = data?.meta?.labRef ?? githubConfig.branch;
-      return path ? githubTreeURL(path, ref) : "";
-    },
-  };
-
-  setContext(markdownLabContextKey, labContext);
-
-  $: ({ content, meta, newer, older, seriesNavigation } = data);
+  $: ({ content, meta, newer, older } = data);
 
   let storedTheme: string | undefined;
 
@@ -46,26 +17,6 @@
   });
 
   $: tags = (meta.tags ?? []).filter(Boolean);
-
-  function runtimeLabel(value: string) {
-    if (value === "docker") return "Docker only";
-    if (value === "kubernetes") return "Docker + Kubernetes";
-    if (value === "remote") return "Remote environment";
-    return value;
-  }
-
-  function clusterLabel(value: string) {
-    if (value === "core") return "2-node local cluster";
-    if (value === "networked") return "Local network lab";
-    if (value === "inference") return "Local inference lab";
-    return value;
-  }
-
-  function laptopLabel(value: string) {
-    if (value === "LOCAL-CORE") return "16 GB Mac";
-    if (value === "LOCAL-HEAVY") return "24 GB+ Mac";
-    return value;
-  }
 </script>
 
 <Seo
@@ -77,16 +28,7 @@
 />
 
 <article class="essay">
-  {#if seriesNavigation}
-    <KubernetesCourseNav
-      current={seriesNavigation.current}
-      previous={seriesNavigation.previous}
-      next={seriesNavigation.next}
-      route={seriesNavigation.route}
-    />
-  {:else}
-    <a href="/writing" class="back">← Writing</a>
-  {/if}
+  <a href="/writing" class="back">← Writing</a>
 
   <header class="essay-head">
     {#if tags.length}
@@ -104,27 +46,6 @@
     </p>
     {#if meta.description}
       <p class="essay-standfirst">{meta.description}</p>
-    {/if}
-    {#if seriesNavigation}
-      <ul class="course-lab-facts" aria-label="Lab requirements">
-        {#if meta.labTime}<li>
-            <span>Practice time</span>{meta.labTime} min
-          </li>{/if}
-        {#if meta.labRuntime}<li>
-            <span>Uses</span>{runtimeLabel(meta.labRuntime)}
-          </li>{/if}
-        {#if meta.clusterProfile}<li>
-            <span>Cluster setup</span>{clusterLabel(meta.clusterProfile)}
-          </li>{/if}
-        {#if meta.resourceTier}<li>
-            <span>Laptop</span>{laptopLabel(meta.resourceTier)}
-          </li>{/if}
-        <li>
-          <span>Last tested</span>{meta.lastVerified
-            ? formatDate(meta.lastVerified)
-            : "pending local run"}
-        </li>
-      </ul>
     {/if}
   </header>
 
@@ -148,30 +69,20 @@
     </p>
   </footer>
 
-  {#if seriesNavigation}
-    <KubernetesCourseNav
-      variant="pager"
-      current={seriesNavigation.current}
-      previous={seriesNavigation.previous}
-      next={seriesNavigation.next}
-      route={seriesNavigation.route}
-    />
-  {:else}
-    <nav class="pager">
-      <div class="max-w-xs space-y-1">
-        {#if older}
-          <p class="section-label" style="margin-bottom: 4px">Older</p>
-          <a href="/writing/{older.slug}">{older.title}</a>
-        {/if}
-      </div>
-      <div class="max-w-xs space-y-1 text-right">
-        {#if newer}
-          <p class="section-label" style="margin-bottom: 4px">Newer</p>
-          <a href="/writing/{newer.slug}">{newer.title}</a>
-        {/if}
-      </div>
-    </nav>
-  {/if}
+  <nav class="pager">
+    <div class="max-w-xs space-y-1">
+      {#if older}
+        <p class="section-label" style="margin-bottom: 4px">Older</p>
+        <a href="/writing/{older.slug}">{older.title}</a>
+      {/if}
+    </div>
+    <div class="max-w-xs space-y-1 text-right">
+      {#if newer}
+        <p class="section-label" style="margin-bottom: 4px">Newer</p>
+        <a href="/writing/{newer.slug}">{newer.title}</a>
+      {/if}
+    </div>
+  </nav>
 
   {#if commentsEnabled}
     <div id="comments" class="pt-10">
@@ -192,52 +103,3 @@
   {/if}
 </article>
 
-<style>
-  .course-lab-facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 20px;
-    margin: 24px 0 0;
-    padding: 14px 0 0;
-    border-top: 1px solid var(--hairline);
-    list-style: none;
-    font-family: "Geist Mono", ui-monospace, monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.035em;
-    color: var(--ink);
-  }
-
-  .course-lab-facts li {
-    display: grid;
-    gap: 2px;
-    min-width: 0;
-    max-width: 100%;
-    text-transform: lowercase;
-  }
-
-  .course-lab-facts span {
-    font-family: var(--font);
-    font-size: 0.58rem;
-    letter-spacing: var(--track-nav);
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-
-  @media (max-width: 540px) {
-    .course-lab-facts {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px 16px;
-    }
-
-    .course-lab-facts li {
-      overflow-wrap: anywhere;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .course-lab-facts {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

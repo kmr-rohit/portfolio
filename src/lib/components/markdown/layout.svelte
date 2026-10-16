@@ -42,41 +42,17 @@
   export let draft = false;
   // svelte-ignore unused-export-let
   export let readTime = undefined;
+  // System design notes (content/system-design) share this layout.
   // svelte-ignore unused-export-let
-  export let series = "";
+  export let summary = "";
   // svelte-ignore unused-export-let
-  export let seriesTitle = "";
+  export let stage = undefined;
   // svelte-ignore unused-export-let
-  export let module = undefined;
+  export let stageName = "";
   // svelte-ignore unused-export-let
-  export let season = undefined;
+  export let tier = "";
   // svelte-ignore unused-export-let
-  /** @type {string[]} */
-  export let tracks = [];
-  // svelte-ignore unused-export-let
-  export let difficulty = "";
-  // svelte-ignore unused-export-let
-  export let resourceTier = "";
-  // svelte-ignore unused-export-let
-  export let clusterProfile = "";
-  // svelte-ignore unused-export-let
-  export let labRuntime = "";
-  // svelte-ignore unused-export-let
-  /** @type {string[]} */
-  export let requiredAddons = [];
-  // svelte-ignore unused-export-let
-  export let labTime = undefined;
-  // svelte-ignore unused-export-let
-  /** @type {string[]} */
-  export let prerequisites = [];
-  // svelte-ignore unused-export-let
-  export let labPath = "";
-  // svelte-ignore unused-export-let
-  export let labRelease = null;
-  // svelte-ignore unused-export-let
-  export let labRef = null;
-  // svelte-ignore unused-export-let
-  export let lastVerified = null;
+  export let seq = undefined;
 </script>
 
 <svelte:head>
