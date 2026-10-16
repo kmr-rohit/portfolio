@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="348" viewBox="0 0 880 348" role="img" aria-label="Rohit Kumar, AI engineer at Oracle, GSoC 2026 on Kubeflow">
+  <defs>
+    <pattern id="grain" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="2" r="0.5" fill="#e6edf3" opacity="0.035"/>
+      <circle cx="5" cy="6" r="0.4" fill="#e6edf3" opacity="0.025"/>
+    </pattern>
+    <clipPath id="win"><rect x="1" y="1" width="878" height="346" rx="12"/></clipPath>
+    <style>
+      .fade { animation: fade 0.55s ease; }
+      .cursor { animation: blink 1.1s step-end infinite; }
+      .scan { animation: scan 7s linear infinite; }
+      @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+      @keyframes blink { 50% { opacity: 0; } }
+      @keyframes scan { from { transform: translateY(-20px); } to { transform: translateY(348px); } }
+    </style>
+  </defs>
+  <rect width="880" height="348" rx="12" fill="#0d1117"/>
+  <rect x="1" y="1" width="878" height="346" rx="12" fill="none" stroke="rgba(230,237,243,0.12)" stroke-width="1"/>
+  <g clip-path="url(#win)">
+    <rect width="880" height="36" fill="#161b22"/>
+    <circle cx="22" cy="18" r="5" fill="#f85149" opacity="0.9"/>
+    <circle cx="40" cy="18" r="5" fill="#d29922" opacity="0.9"/>
+    <circle cx="58" cy="18" r="5" fill="#3fb950" opacity="0.9"/>
+    <text x="440" y="22" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="12">kmr-rohit — whoami</text>
+    <line x1="1" y1="36" x2="879" y2="36" stroke="rgba(230,237,243,0.12)"/>
+    <text xml:space="preserve" class="fade d1" x="28" y="72" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="15">  ____            _     _ _</text>
+    <text xml:space="preserve" class="fade d2" x="28" y="90" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="15"> |  _ \ ___   ___| |__ (_) |_</text>
+    <text xml:space="preserve" class="fade d3" x="28" y="108" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="15"> | |_) / _ \ / _ \ '_ \| | __|</text>
+    <text xml:space="preserve" class="fade d4" x="28" y="126" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="15"> |  _ &lt; (_) |  __/ | | | | |_</text>
+    <text xml:space="preserve" class="fade d5" x="28" y="144" fill="#6b8ef5" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="15"> |_| \_\___/ \___|_| |_|_|\__|</text>
+    <text class="fade d1" x="28" y="178" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13"><tspan fill="#3fb950">kmr-rohit</tspan><tspan fill="#8b949e">@</tspan><tspan fill="#56d4dd">oracle</tspan> <tspan fill="#8b949e">~</tspan> <tspan fill="#e6edf3">$</tspan> <tspan fill="#e6edf3">whoami</tspan></text>
+    <text class="fade d2" x="28" y="200" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13"><tspan fill="#e6edf3">Rohit Kumar  ·  AI engineer  ·  Bengaluru</tspan></text>
+    <text class="fade d3" x="28" y="230" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13"><tspan fill="#3fb950">kmr-rohit</tspan><tspan fill="#8b949e">@</tspan><tspan fill="#56d4dd">oracle</tspan> <tspan fill="#8b949e">~</tspan> <tspan fill="#e6edf3">$</tspan> <tspan fill="#e6edf3">head -n 4 ~/.now</tspan></text>
+    <text class="fade d4" x="28" y="252" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13"><tspan fill="#d29922">GSoC 2026</tspan><tspan fill="#8b949e">  —  Kubeflow Docs Agent (agentic RAG + MCP)</tspan></text>
+    <text class="fade d5" x="28" y="274" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13"><tspan fill="#d29922">Oracle</tspan><tspan fill="#8b949e">     —  Fusion SCM agents, retrieval, Kafka alerts</tspan></text>
+    <text class="fade d6" x="28" y="296" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13"><tspan fill="#d29922">Writing</tspan><tspan fill="#8b949e">    —  vLLM, SGLang, harnesses  ·  kmrrohit.space</tspan></text>
+    <text class="fade d7" x="28" y="318" font-family="ui-monospace, SFMono-Regular, 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13"><tspan fill="#3fb950">kmr-rohit</tspan><tspan fill="#8b949e">@</tspan><tspan fill="#56d4dd">oracle</tspan> <tspan fill="#8b949e">~</tspan> <tspan fill="#e6edf3">$</tspan> <tspan class="cursor" fill="#6b8ef5">█</tspan></text>
+    <rect class="scan" x="1" y="36" width="878" height="18" fill="#6b8ef5" opacity="0.04"/>
+    <rect width="880" height="348" fill="url(#grain)"/>
+  </g>
+</svg>

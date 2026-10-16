@@ -24,6 +24,7 @@ npm run dev
 | Posts | `posts/<slug>/page.md` |
 | Hand-drawn sketches (Rough.js) | `static/sketches/` · `npm run sketches` |
 | LinkedIn / X post drafts + share cards | `social/` · `npm run social-cards` (not on the site) |
+| GitHub profile README (drop-in for `kmr-rohit/kmr-rohit`) | `github-profile/` · `npm run github-profile` |
 | Colour tokens and link styles | `src/app.postcss` |
 | Article prose styles | `src/lib/components/markdown/` |
 
