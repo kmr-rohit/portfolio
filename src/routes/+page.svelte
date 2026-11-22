@@ -23,7 +23,7 @@
 <Seo description={site.description} />
 
 <section class="hero" aria-label="Introduction">
-	<p class="hero-kicker">AI engineer / Oracle / GSoC @ Kubeflow</p>
+	<p class="hero-kicker">SDE 2 / Akamai / Kubeflow maintainer</p>
 	<div class="hero-name" aria-hidden="true">{site.name}</div>
 	<div class="hero-stage">
 		<figure class="hero-portrait">
@@ -61,19 +61,20 @@
 	<div class="about-text">
 		<div class="bio space-y-4">
 			<p>
-				I'm Rohit — an AI engineer at <strong>Oracle</strong>, where I build agentic and retrieval
-				systems inside Fusion SCM Cloud. Most of my time goes to the layer between a model and a
+				I'm Rohit — an SDE 2 at <strong>Akamai</strong>, working on the internal Kubernetes
+				platform app teams use to build and ship their services. Before that I built agentic and
+				retrieval systems at Oracle. Most of my time goes to the layer between a model and a
 				product someone will actually trust: tool-calling loops, multi-index retrieval, and the
 				evaluation harness that tells you whether last week's prompt change made anything better.
 			</p>
 			<p>
-				Through Google Summer of Code 2026 I work on
+				Through Google Summer of Code 2026 I built Flo on
 				<a
 					href="https://github.com/kubeflow/docs-agent"
 					class="bio-link"
 					target="_blank"
 					rel="noreferrer">kubeflow/docs-agent</a
-				>, and run a <a href="/opensource" class="bio-link">community call every other Saturday</a>. I
+				>, which I still maintain, and run a <a href="/opensource" class="bio-link">community call every other Saturday</a>. I
 				write here mostly to force myself to understand things properly.
 			</p>
 			<p>

@@ -30,6 +30,16 @@ export const contributions: Contribution[] = [
 	{
 		repo: 'kubeflow/docs-agent',
 		repoHref: 'https://github.com/kubeflow/docs-agent',
+		title: 'Recurring ingest, community-distribution docs, and a live reranker',
+		blurb:
+			'Registers the docs, issues and code pipelines as Kubeflow Pipelines recurring runs from an Argo CD PostSync job, so the index refreshes without anyone kicking it. Indexes kubeflow/community-distribution, prunes pages removed upstream (refusing to drop more than 20%), deploys the cross-encoder reranker that was silently skipped, and fixes certificate renewal and the Langfuse retention job.',
+		href: 'https://github.com/kubeflow/docs-agent/pull/290',
+		status: 'Open · Nov 2026 · +1.1k / −183',
+		tags: ['Kubeflow Pipelines', 'Argo CD', 'RAG', 'Reranker', 'Ingestion']
+	},
+	{
+		repo: 'kubeflow/docs-agent',
+		repoHref: 'https://github.com/kubeflow/docs-agent',
 		title: 'Promotion by commit, Argo CD auto-sync, and data retention',
 		blurb:
 			'Production pins a reviewed main commit and deploys the matching image tags, so a promotion is one small PR and a rollback is a revert. A script builds the promotion PR with changelog and eval results. Safe apps auto-sync through an app-of-apps, and a weekly CronJob trims Langfuse traces in ClickHouse and S3 (4 weeks live, 2 weeks eval).',
@@ -148,6 +158,6 @@ export const opensourceRepos = [
 	{
 		name: 'kubeflow/docs-agent',
 		href: 'https://github.com/kubeflow/docs-agent',
-		oneLiner: 'GSoC 2026 — Flo, an agentic RAG assistant: MCP tools, guarded Istio edge, Argo CD GitOps, staging evals, Langfuse feedback.'
+		oneLiner: 'GSoC 2026 — Flo, an agentic RAG assistant: MCP tools, guarded Istio edge, Argo CD GitOps, staging evals, Langfuse feedback, recurring ingest.'
 	}
 ];

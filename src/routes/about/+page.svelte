@@ -7,7 +7,7 @@
 
 <Seo
 	title="About"
-	description="AI engineer at Oracle and a Google Summer of Code 2026 contributor on Kubeflow Docs Agent, working on agentic systems, retrieval and LLM serving."
+	description="SDE 2 at Akamai and a Kubeflow maintainer (GSoC 2026) on Kubeflow Docs Agent, working on agentic systems, retrieval and LLM serving."
 />
 
 <header class="proj-head">
@@ -20,12 +20,12 @@
 			mind halfway through, is where the engineering is.
 		</p>
 		<p>
-			At Oracle I work inside Fusion SCM Cloud on agentic and retrieval-backed workflows. Outside that
-			I work on
+			I'm an SDE 2 at Akamai on Next-Gen AppBattery, the internal Kubernetes platform teams use to
+			build, sign and deploy their apps. Before that I spent two years at Oracle on agentic and
+			retrieval-backed workflows in Fusion SCM Cloud. Outside work I maintain
 			<a href="https://github.com/kubeflow/docs-agent" class="bio-link" target="_blank" rel="noreferrer"
 				>kubeflow/docs-agent</a
-			>
-			through Google Summer of Code 2026, and turn up to the
+			>, where I built Flo through Google Summer of Code 2026, and turn up to the
 			<a href="/opensource" class="bio-link">{call.name}</a> every other Saturday.
 		</p>
 		<p>
