@@ -2,7 +2,7 @@
 
 > Dense brief for custom application questions, recruiter forms, and “tell me about an AI project” prompts.  
 > Live page: [kmrrohit.space/profile](https://kmrrohit.space/profile) · Site: [kmrrohit.space](https://kmrrohit.space)  
-> Last updated: August 2026
+> Last updated: November 2026
 
 ---
 
@@ -11,9 +11,10 @@
 | Field | Value |
 | --- | --- |
 | Full name | Rohit Kumar |
-| Role | AI engineer |
-| Current employer | Oracle (AI Application Developer) |
-| Open source | Google Summer of Code 2026 · Kubeflow Docs Agent |
+| Role | Software Development Engineer 2 (SDE 2) |
+| Current employer | Akamai · SDE 2, Next-Gen AppBattery (NGAB) · since 29 Oct 2026 |
+| Previous employer | Oracle · AI Application Developer · Jun 2024 – Oct 2026 |
+| Open source | Kubeflow (CNCF) maintainer · GSoC 2026 · Kubeflow Docs Agent (Flo) |
 | Location | Bengaluru, India |
 | Email | rr7433446@gmail.com |
 | GitHub | [github.com/kmr-rohit](https://github.com/kmr-rohit) |
@@ -29,13 +30,13 @@
 ## Elevator pitches (pick a length)
 
 **One line.**  
-AI engineer at Oracle building agentic and retrieval systems in Fusion SCM; GSoC 2026 contributor on Kubeflow Docs Agent (agentic RAG + MCP).
+SDE 2 at Akamai on NGAB, the internal Kubernetes PaaS; previously built agentic and retrieval systems at Oracle; Kubeflow maintainer who built Flo, the agentic RAG docs assistant on Kubeflow Docs Agent (GSoC 2026).
 
 **Three lines.**  
-I build AI systems that have to survive production: tool-calling loops, multi-index retrieval, and the eval harness that tells you whether a prompt change helped. By day I ship agentic workflows inside Oracle Fusion SCM Cloud. Outside that I expand kubeflow/docs-agent through Google Summer of Code 2026 and write about inference, agents, and RAG.
+I build AI systems that have to survive production: tool-calling loops, multi-index retrieval, and the eval harness that tells you whether a prompt change helped. By day I'm an SDE 2 at Akamai on Next-Gen AppBattery, the Kubernetes platform internal teams use to build, sign and deploy apps; before that I shipped agentic workflows in Oracle Fusion SCM Cloud. Outside work I maintain kubeflow/docs-agent, where I built Flo through Google Summer of Code 2026, and write about inference, agents, and RAG.
 
 **Short paragraph.**  
-I’m an AI engineer focused on the layer between a model and a product someone will trust — agents with real side effects, retrieval that spans more than docs, and serving systems where latency and cost are first-class. At Oracle I own agentic and RAG features across catalog, order, and planner workflows. Through GSoC 2026 I turned Kubeflow’s docs chatbot into a multi-source agentic RAG reference architecture with MCP tools, and I run the project’s bi-weekly community call. I’m looking for senior AI engineering work on agent platforms, inference/serving, or retrieval at a scale where the naive approach stops working.
+I’m an AI engineer focused on the layer between a model and a product someone will trust — agents with real side effects, retrieval that spans more than docs, and serving systems where latency and cost are first-class. I'm now an SDE 2 at Akamai on Next-Gen AppBattery (NGAB), Akamai's internal Kubernetes PaaS: a Flask control-plane API, Jenkins pipelines, Argo CD GitOps and cosign-signed supply chain across commercial and gov environments. Before that, at Oracle, I owned agentic and RAG features across catalog, order, and planner workflows. Through GSoC 2026 I turned Kubeflow’s docs chatbot into a multi-source agentic RAG reference architecture with MCP tools, took it to production as Flo with Argo CD GitOps, staging evals and user feedback, and I run the project’s bi-weekly community call. I’m looking for senior AI engineering work on agent platforms, inference/serving, or retrieval at a scale where the naive approach stops working.
 
 ---
 
@@ -51,7 +52,7 @@ I’m an AI engineer focused on the layer between a model and a product someone 
 
 I build AI applications — the unglamorous part, mostly. Getting a model to produce something impressive once is easy now. Getting a system to produce something correct on the ten thousandth call, when the input is malformed and the tool times out and the user changes their mind halfway through, is where the engineering is.
 
-At Oracle I work inside Fusion SCM Cloud on agentic and retrieval-backed workflows. Outside that I work on [kubeflow/docs-agent](https://github.com/kubeflow/docs-agent) through Google Summer of Code 2026, and turn up to the Kubeflow Docs Agent community call every other Saturday.
+At Akamai I work on Next-Gen AppBattery, the internal Kubernetes platform app teams use to build, sign and deploy their services. Before that I spent two years at Oracle on agentic and retrieval-backed workflows in Fusion SCM Cloud. Outside work I maintain [kubeflow/docs-agent](https://github.com/kubeflow/docs-agent), where I built Flo through Google Summer of Code 2026, and turn up to the Kubeflow Docs Agent community call every other Saturday.
 
 I write to force myself to understand things properly — posts on vLLM, SGLang, context engineering, agent harnesses, and building agentic RAG for Kubeflow.
 
@@ -61,7 +62,14 @@ I write to force myself to understand things properly — posts on vLLM, SGLang,
 
 ## Work experience
 
-### Open source contributor, docs-agent — Kubeflow · Google Summer of Code 2026  
+### Software Development Engineer 2 — Akamai · Next-Gen AppBattery (NGAB)  
+**Oct 2026 — present · Bengaluru, India** (joined 29 Oct 2026)
+
+- Work on NGAB, Akamai's internal Kubernetes PaaS that lets app teams provision, build, sign, deploy and operate services on **RKE2** clusters through a control-plane API, CI/CD pipelines and **Argo CD** GitOps.
+- Build on the Python services behind it: the **Flask** control-plane API, **Jenkins/CloudBees** build and deploy pipelines, Jinja2-rendered Kubernetes manifests with traffic splits, and **Helm** charts for the platform stack (Cilium, Envoy Gateway, Longhorn, Loki/Grafana, Kyverno).
+- Platform work spans supply-chain security (**cosign** signing and verification, KMI-backed secrets, mTLS) and per-node daemons for secrets, metadata, logging and leader election, across commercial and gov environments.
+
+### Maintainer & GSoC 2026 contributor, docs-agent (Flo) — Kubeflow (CNCF) · Google Summer of Code 2026  
 **May 2026 — present · Remote** · [github.com/kubeflow/docs-agent](https://github.com/kubeflow/docs-agent)
 
 - Expanding kubeflow/docs-agent from a documentation chatbot into an agentic RAG reference architecture for the Kubeflow project.
@@ -71,10 +79,13 @@ I write to force myself to understand things properly — posts on vLLM, SGLang,
 - Authored **Terraform modules** to deploy a full **OKE cluster + Kubeflow platform on OCI** (VCN networking, node pool, cert-manager, Istio, Dex, Knative, KServe, Pipelines) in [jaiakash/deploy-kubeflow](https://github.com/jaiakash/deploy-kubeflow) ([PR #5](https://github.com/jaiakash/deploy-kubeflow/pull/5)).
 - Added a 71-test suite and CI workflow covering retrieval behaviour, so a regression in ranking fails the build instead of surfacing in production.
 - Co-speak at Kubeflow Community Showcase 2026 on production agentic RAG (ingestion, embeddings, index updates as pipeline steps; retrieval evaluation and agent testing as first-class stages).
+- Took Flo to production with GitOps: **Argo CD** multi-source Applications, a staging copy that runs an LLM-as-judge eval set on every sync, and promotion by pinned commit so a release is one small PR and a rollback is a revert ([#266](https://github.com/kubeflow/docs-agent/pull/266), [#267](https://github.com/kubeflow/docs-agent/pull/267), [#274](https://github.com/kubeflow/docs-agent/pull/274)).
+- Closed the loop with users: thumbs up/down recorded as **Langfuse** scores with nightly triage of bad answers, a Material 3 chat widget, and a weekly retention job for traces in ClickHouse and S3 ([#268](https://github.com/kubeflow/docs-agent/pull/268)).
+- In review: ingestion that runs on its own — docs, issues and code pipelines as **Kubeflow Pipelines** recurring runs from an Argo CD PostSync job, kubeflow/community-distribution indexed, the cross-encoder reranker deployed, and removed pages pruned from the index ([#290](https://github.com/kubeflow/docs-agent/pull/290)).
 - Host / contribute to the bi-weekly Docs Agent community call (every other Saturday).
 
 ### AI Application Developer — Oracle  
-**Jun 2024 — present · Bengaluru, India**
+**Jun 2024 — Oct 2026 · Bengaluru, India**
 
 - Build agentic and retrieval-backed features inside Oracle Fusion SCM Cloud across three customer-facing workflows: catalog lookup, order review and planner assistance.
 - Designed and built an **Alert Notification Microservice** (FastAPI, Kafka, Oracle, SMTP, Docker/Helm): a thin HTTP ingestion API durably enqueues caller-rendered alerts onto a replicated Kafka topic, then a consumer group delivers asynchronously with at-least-once semantics, bounded retries and a dead-letter topic.
@@ -111,10 +122,12 @@ A docs-only chatbot fails on real Kubeflow questions. Users bring error strings,
 - TEI embeddings, filtered retrieval, **Terraform** for embeddings/Milvus/KServe/Pipelines, **CI/CD onto OKE**, Istio/**Helm** edge guardrails (rate limits, CORS, session JWT).  
 - 71-test retrieval suite in CI.
 
-**Impact / proof.**  
-Large merged PR (~5.4k LOC); Helm gateway-guardrails chart; public chatbot path hardened; community showcase talk; ongoing community call.
+- Production as **Flo**: Argo CD GitOps, staging LLM-as-judge evals on every sync, promote-by-commit releases, Langfuse feedback scores with nightly triage; recurring KFP ingest in review.
 
-**Stack.** Python, MCP, Agentic RAG, Kubeflow Pipelines, KServe, Istio, Helm, Terraform, OKE, TEI, GitHub Actions.
+**Impact / proof.**  
+Large merged PR (~5.4k LOC); Helm gateway-guardrails chart; public chatbot path hardened; Flo running in production with GitOps and evals; community showcase talk; ongoing community call; Kubeflow maintainer.
+
+**Stack.** Python, MCP, Agentic RAG, Kubeflow Pipelines, KServe, Istio, Helm, Terraform, OKE, TEI, Argo CD, Langfuse, GitHub Actions.
 
 **Links.** [Repository](https://github.com/kubeflow/docs-agent) · [My PRs](https://github.com/kubeflow/docs-agent/pulls?q=is%3Apr+author%3Akmr-rohit) · [Write-up](https://kmrrohit.space/writing/agentic-rag-for-kubeflow) · [Open source](https://kmrrohit.space/opensource)
 
@@ -226,7 +239,7 @@ Upstream owns business rules and renders the email; this service owns the reliab
 
 ### Work
 
-**Kubeflow docs-agent** (2026) — Agentic RAG + MCP over docs/issues/code/manifests; Terraform + Helm edge + OKE CI/CD.  
+**Kubeflow docs-agent / Flo** (2026) — Agentic RAG + MCP over docs/issues/code/manifests; Terraform + Helm edge + OKE CI/CD; Argo CD GitOps, staging evals, Langfuse feedback.  
 Stack: Python, MCP, Agentic RAG, KFP, KServe, Istio, Helm, Terraform, OKE.  
 Links: [repo](https://github.com/kubeflow/docs-agent) · [opensource](https://kmrrohit.space/opensource)
 
@@ -277,7 +290,7 @@ Links: [live](https://aitutor-two-hazel.vercel.app) · [source](https://github.c
 
 **Serving & retrieval** — vLLM, SGLang, KServe, TEI, Milvus, FAISS, ChromaDB, Elasticsearch  
 
-**Platform** — Kubernetes, Kubeflow Pipelines, Docker, Istio, Helm, Terraform, OCI / OKE, GitHub Actions, Kafka, Prometheus, Alertmanager  
+**Platform** — Kubernetes, Argo CD, Kubeflow Pipelines, Docker, Istio, Helm, Terraform, OCI / OKE, GitHub Actions, Kafka, Prometheus, Alertmanager  
 
 **Languages & frameworks** — Python, TypeScript, Java, C++, FastAPI, Next.js, React, PostgreSQL, Oracle DB  
 
@@ -298,7 +311,7 @@ Links: [live](https://aitutor-two-hazel.vercel.app) · [source](https://github.c
 
 ## Open source
 
-- **Kubeflow Docs Agent** (GSoC 2026) — agentic RAG + MCP; Terraform/Helm on OKE; bi-weekly community call every other Saturday, 11:00 PM IST (17:30 UTC), Zoom via LFX.  
+- **Kubeflow Docs Agent / Flo** (maintainer, GSoC 2026) — agentic RAG + MCP; Terraform/Helm on OKE; Argo CD GitOps, staging evals, Langfuse feedback; bi-weekly community call every other Saturday, 11:00 PM IST (17:30 UTC), Zoom via LFX.  
   Details: [kmrrohit.space/opensource](https://kmrrohit.space/opensource)
 - **Deploy Kubeflow on OCI** — Terraform OKE + platform modules: [jaiakash/deploy-kubeflow](https://github.com/jaiakash/deploy-kubeflow)
 
@@ -308,7 +321,7 @@ Links: [live](https://aitutor-two-hazel.vercel.app) · [source](https://github.c
 
 ### “Tell me about yourself” (~60–90 seconds)
 
-I’m Rohit, an AI engineer at Oracle in Bengaluru. I work on agentic and retrieval-backed features inside Fusion SCM — things like part matching, order classification agents, and planner assist over messy enterprise data. Outside Oracle I’m a Google Summer of Code contributor on Kubeflow Docs Agent, where I expanded a docs chatbot into multi-source agentic RAG with MCP tools, and I help run the project’s community call. Before that I studied Mechanical Engineering at NIT Warangal and came up through competitive programming. I’m looking for roles where I own agent or inference systems end to end — not just demos, but systems that stay correct under load and bad inputs.
+I’m Rohit, an SDE 2 at Akamai in Bengaluru, on Next-Gen AppBattery, the internal Kubernetes platform app teams use to build, sign and deploy their services. Before that I spent two years at Oracle on agentic and retrieval-backed features inside Fusion SCM — part matching, order classification agents, and planner assist over messy enterprise data. Outside work I’m a Kubeflow maintainer: through Google Summer of Code I turned the docs chatbot into Flo, a multi-source agentic RAG assistant with MCP tools that now runs in production with GitOps and evals, and I help run the project’s community call. Before that I studied Mechanical Engineering at NIT Warangal and came up through competitive programming. I’m looking for roles where I own agent or inference systems end to end — not just demos, but systems that stay correct under load and bad inputs.
 
 ### “Walk me through your strongest AI project”
 

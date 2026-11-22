@@ -5,7 +5,7 @@ export const site = {
   title: "Rohit Kumar",
   role: "AI engineer",
   description:
-    "AI engineer working on agentic systems, retrieval and LLM serving. Oracle by day, and a Google Summer of Code contributor on Kubeflow Docs Agent.",
+    "AI engineer working on agentic systems, retrieval and LLM serving. SDE 2 at Akamai by day, and a Kubeflow maintainer building Flo on Kubeflow Docs Agent.",
   email: "rr7433446@gmail.com",
   location: "Bengaluru, India",
 };

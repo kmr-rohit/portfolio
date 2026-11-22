@@ -9,8 +9,20 @@ export type Role = {
 
 export const roles: Role[] = [
 	{
-		title: 'Open source contributor, docs-agent',
-		org: 'Kubeflow · Google Summer of Code 2026',
+		title: 'Software Development Engineer 2',
+		org: 'Akamai · Next-Gen AppBattery (NGAB)',
+		orgHref: 'https://www.akamai.com',
+		period: 'Oct 2026 — present',
+		location: 'Bengaluru, India',
+		points: [
+			'Work on NGAB, Akamai\'s internal Kubernetes PaaS that lets app teams provision, build, sign, deploy and operate services on RKE2 clusters through a control-plane API, CI/CD pipelines and Argo CD GitOps.',
+			'Build on the Python services behind it: the Flask control-plane API, Jenkins/CloudBees build and deploy pipelines, Jinja2-rendered Kubernetes manifests with traffic splits, and Helm charts for the platform stack.',
+			'Platform work spans supply-chain security (cosign signing and verification, KMI-backed secrets, mTLS) and per-node daemons for secrets, metadata, logging and leader election, across commercial and gov environments.'
+		]
+	},
+	{
+		title: 'Maintainer & GSoC 2026 contributor, docs-agent (Flo)',
+		org: 'Kubeflow (CNCF) · Google Summer of Code 2026',
 		orgHref: 'https://github.com/kubeflow/docs-agent',
 		period: 'May 2026 — present',
 		location: 'Remote',
@@ -20,13 +32,16 @@ export const roles: Role[] = [
 			'Merged a 5.4k-line change adding a three-tool MCP server, TEI embeddings, the issues and code ingestion pipelines, Terraform for cluster-side pieces (embeddings, Milvus, KServe, Pipelines), and GitHub Actions CI with optional CD onto OCI/OKE.',
 			'Hardened the public edge: migrated Istio Gateway/TLS/CORS/rate-limit config from raw Terraform manifests into a Helm chart (`gateway-guardrails`), plus anonymous session-JWT auth work for the public chatbot.',
 			'Authored Terraform modules to deploy a full OKE cluster and Kubeflow platform on OCI (VCN networking, node pool, cert-manager, Istio, Dex, Knative, KServe, Pipelines) in jaiakash/deploy-kubeflow.',
-			'Added a 71-test suite and CI workflow covering retrieval behaviour, so a regression in ranking fails the build instead of surfacing in production.'
+			'Added a 71-test suite and CI workflow covering retrieval behaviour, so a regression in ranking fails the build instead of surfacing in production.',
+			'Took Flo, the docs assistant, to production with GitOps: Argo CD multi-source Applications, a staging copy that runs an LLM-as-judge eval set on every sync, and promotion by pinned commit so a release is one small PR and a rollback is a revert.',
+			'Closed the loop with users: thumbs up/down recorded as Langfuse scores with nightly triage of bad answers, a Material 3 chat widget, and a weekly retention job for Langfuse traces in ClickHouse and S3.',
+			'Now making ingestion run on its own: docs, issues and code pipelines registered as Kubeflow Pipelines recurring runs from an Argo CD PostSync job, community-distribution docs indexed, the cross-encoder reranker deployed, and pages removed upstream pruned from the index.'
 		]
 	},
 	{
 		title: 'AI Application Developer',
 		org: 'Oracle',
-		period: 'Jun 2024 — present',
+		period: 'Jun 2024 — Oct 2026',
 		location: 'Bengaluru, India',
 		points: [
 			'Build agentic and retrieval-backed features inside Oracle Fusion SCM Cloud across three customer-facing workflows: catalog lookup, order review and planner assistance.',
@@ -91,6 +106,7 @@ export const skills: SkillGroup[] = [
 		label: 'Platform',
 		items: [
 			'Kubernetes',
+			'Argo CD',
 			'Kubeflow Pipelines',
 			'Docker',
 			'Istio',
